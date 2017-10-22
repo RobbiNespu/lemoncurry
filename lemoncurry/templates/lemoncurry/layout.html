@@ -30,7 +30,11 @@
 			{% block main %}{% endblock %}
 		</main>
 
-		<footer></footer>
+		<footer>
+			<p>all content licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">cc by-sa 4.0</a></p>
+			{% get_package_json as package %}
+			<p>powered by <a rel="code-repository" href="{{ package.repository }}/tree/v{{ package.version }}">{{ package.name }} {{ package.version }}</a></p>
+		</footer>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"
 						integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"></script>
