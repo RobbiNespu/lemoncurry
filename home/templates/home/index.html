@@ -2,10 +2,12 @@
 {% block main %}
 <aside class="author">
 	<article class="h-card card p-author">
+		{% if user.avatar %}<img class="card-img-top u-photo" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }}" />{% endif %}
 		<div class="card-body">
 			<h4 class="card-title p-name">
 				<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
 			</h4>
+			{% if user.note %}<p class="p-note">{{ user.note }}</p>{% endif %}
 		</div>
 
 		<div class="card-footer">
