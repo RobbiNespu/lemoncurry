@@ -5,4 +5,4 @@ register = template.Library()
 
 @register.simple_tag
 def site_name():
-    return settings.SITE_NAME
+    return settings.LEMONCURRY_SITE_NAME
