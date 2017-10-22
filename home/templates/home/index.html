@@ -1,0 +1,10 @@
+{% extends 'lemoncurry/layout.html' %}
+{% block main %}
+<aside class="author">
+	<article class="h-card card p-author">
+		<h4 class="card-title p-name">
+			<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
+		</h4>
+	</article>
+</aside>
+{% endblock %}
