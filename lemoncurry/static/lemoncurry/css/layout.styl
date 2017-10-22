@@ -1,0 +1,60 @@
+@import 'base16-material-darker'
+
+$sm =  576px
+$md =  768px
+$lg =  992px
+$xl = 1200px
+
+html
+	background-color $base01
+
+a
+	color $base0D
+	&:hover
+		color $base0C
+
+body
+	display flex
+	flex-direction column
+	min-height 100vh
+	background-color $base00
+	color $base07
+	> header
+		background-color $base01
+		#navbar
+			justify-content space-between
+
+	> main
+		margin 2rem
+		flex 1
+		display flex
+		flex-direction column
+		align-items center
+		@media (min-width $sm)
+			flex-direction row-reverse
+			align-items unset
+
+	> footer
+		display flex
+		justify-content space-evenly
+		margin auto 1rem
+		text-align center
+
+.card
+	background-color $base02
+	&.h-card
+		max-width 25rem
+		position sticky
+		top 1rem
+
+		.p-note
+			color $base04
+
+		.profiles
+			list-style none
+			text-align center
+			margin 0
+			padding 0
+			> li
+				display inline-block
+				margin-right 5px

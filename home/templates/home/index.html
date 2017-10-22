@@ -2,9 +2,19 @@
 {% block main %}
 <aside class="author">
 	<article class="h-card card p-author">
-		<h4 class="card-title p-name">
-			<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
-		</h4>
+		<div class="card-body">
+			<h4 class="card-title p-name">
+				<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
+			</h4>
+		</div>
+
+		<div class="card-footer">
+			<ul class="profiles">
+				<li>
+					<a class="u-email" rel="me" href="mailto:{{ user.email }}"><i class="fa fa-envelope"></i> {{ user.email }}</a>
+				</li>
+			</ul>
+		</div>
 	</article>
 </aside>
 {% endblock %}
