@@ -27,6 +27,31 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Settings to tighten up security - these can safely be on in dev mode too,
+# since I dev using a local HTTPS server.
+
+# Strict-Transport-Security: max out everything, we never want to serve
+# anything over insecure HTTP.
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Only allow cookies to be sent from the client over secure HTTP.
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Miscellanous headers to protect against attacks.
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+# This technically isn't needed, since nginx doesn't let the app be accessed
+# over insecure HTTP anyway. Just for completeness!
+SECURE_SSL_REDIRECT = True
+
+# We run behind nginx, so we need nginx to tell us whether we're using HTTPS or
+# not.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
