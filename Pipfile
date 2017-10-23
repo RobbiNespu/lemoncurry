@@ -12,6 +12,7 @@ django-compressor = "*"
 gunicorn = "*"
 "psycopg2" = "*"
 pillow = "*"
+python-memcached = "*"
 
 
 [dev-packages]
