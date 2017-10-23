@@ -7,6 +7,14 @@
 			<h4 class="card-title p-name">
 				<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
 			</h4>
+			{% for key in user.keys.all %}
+			<h6 class="card-subtitle">
+				<a class="u-key" href="{{ key.file.url }}">
+					<i class="fa fa-key"></i>
+					{{ key.pretty_print }}
+				</a>
+			</h6>
+			{% endfor %}
 			{% if user.note %}<p class="card-text p-note">{{ user.note }}</p>{% endif %}
 		</div>
 
