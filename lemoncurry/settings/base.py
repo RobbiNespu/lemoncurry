@@ -100,6 +100,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lemoncurry.wsgi.application'
 
+# Cache
+# https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-CACHES
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
