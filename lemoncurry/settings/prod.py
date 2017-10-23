@@ -7,5 +7,6 @@ DATABASES['default'] = {
     'NAME': 'lemoncurry',
     'USER': 'lemoncurry',
 }
+DEBUG = False
 STATIC_URL = 'https://cdn.00dani.me/'
 MEDIA_URL = STATIC_URL + 'media/'
