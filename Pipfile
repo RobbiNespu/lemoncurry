@@ -9,6 +9,8 @@ name = "pypi"
 
 django = "*"
 django-compressor = "*"
+gunicorn = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]
