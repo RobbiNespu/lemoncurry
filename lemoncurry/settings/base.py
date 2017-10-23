@@ -137,6 +137,9 @@ COMPRESS_PRECOMPILERS = (
     ('text/stylus', os.path.join(BASE_DIR, 'node_modules', '.bin', 'stylus') + ' {infile} -o {outfile}'),
 )
 
+MEDIA_URL = STATIC_URL + 'media/'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+
 
 # Settings specific to lemoncurry
 LEMONCURRY_SITE_NAME = '00dani.me'
