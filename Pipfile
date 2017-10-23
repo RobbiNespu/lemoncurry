@@ -11,6 +11,7 @@ django = "*"
 django-compressor = "*"
 gunicorn = "*"
 "psycopg2" = "*"
+pillow = "*"
 
 
 [dev-packages]
