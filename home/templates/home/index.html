@@ -7,7 +7,7 @@
 			<h4 class="card-title p-name">
 				<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
 			</h4>
-			{% if user.note %}<p class="p-note">{{ user.note }}</p>{% endif %}
+			{% if user.note %}<p class="card-text p-note">{{ user.note }}</p>{% endif %}
 		</div>
 
 		<div class="card-footer">
