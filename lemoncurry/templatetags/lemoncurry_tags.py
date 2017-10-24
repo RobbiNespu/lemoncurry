@@ -1,12 +1,21 @@
 import json
+from collections import namedtuple
 from os.path import join
 from types import SimpleNamespace
 
 from django import template
 from django.conf import settings
+from django.urls import reverse
 
 register = template.Library()
 cache = SimpleNamespace(package_json=None)
+
+
+class MenuItem:
+    def __init__(self, label, icon, url):
+        self.label = label
+        self.icon = icon
+        self.url = reverse(url)
 
 
 @register.simple_tag
@@ -21,3 +30,23 @@ def get_package_json():
 @register.simple_tag
 def site_name():
     return settings.LEMONCURRY_SITE_NAME
+
+
+@register.inclusion_tag('lemoncurry/tags/nav.html')
+def nav_left():
+    items = ()
+    return {'items': items}
+
+
+@register.inclusion_tag('lemoncurry/tags/nav.html')
+def nav_right(request):
+    if request.user.is_authenticated():
+        items = (
+            MenuItem(label='admin', icon='fa fa-gear', url='admin:index'),
+            MenuItem(label='log out', icon='fa fa-sign-out', url='admin:logout'),
+        )
+    else:
+        items = (
+            MenuItem(label='log in', icon='fa fa-sign-in', url='admin:login'),
+        )
+    return {'items': items}
