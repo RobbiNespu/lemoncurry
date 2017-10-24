@@ -13,6 +13,7 @@ gunicorn = "*"
 "psycopg2" = "*"
 pillow = "*"
 python-memcached = "*"
+django-favicon-plus = "*"
 
 
 [dev-packages]
