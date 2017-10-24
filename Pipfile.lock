@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "60ee6c91a6c7b88c2a424a70428f3f380adc142716ebe82ce35f31a10cedeb3c"
+            "sha256": "fa6658473328c969ebdea65f63e97d71b2c184e06918229b969cf0585a9d2a7b"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -66,6 +66,12 @@
                 "sha256:4a7dc51c40fd6a097825040af29ee0e049f1fce29b006e39f266f80ba988bac6"
             ],
             "version": "==1.4"
+        },
+        "django-redis-cache": {
+            "hashes": [
+                "sha256:2b4e3510bbcaf3d331975717afd6f15a36fbaf7622504599d2727dc99f90c64d"
+            ],
+            "version": "==1.7.1"
         },
         "gunicorn": {
             "hashes": [
@@ -193,6 +199,13 @@
                 "sha256:ca87b695d3d7864157773a61263e5abb96006e9ff0e021eff90cbe0e1ba18270"
             ],
             "version": "==1.0.6"
+        },
+        "redis": {
+            "hashes": [
+                "sha256:8a1900a9f2a0a44ecf6e8b5eb3e967a9909dfed219ad66df094f27f7d6f330fb",
+                "sha256:a22ca993cea2962dbb588f9f30d0015ac4afcc45bee27d3978c0dbe9e97c6c0f"
+            ],
+            "version": "==2.10.6"
         },
         "rjsmin": {
             "hashes": [

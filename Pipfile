@@ -15,6 +15,7 @@ pillow = "*"
 python-memcached = "*"
 django-favicon-plus = "*"
 django-meta = "*"
+django-redis-cache = "*"
 
 
 [dev-packages]
