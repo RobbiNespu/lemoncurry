@@ -27,10 +27,26 @@ class User(ModelMeta, AbstractUser):
     def avatar_url(self):
         return self.avatar.url
 
+    @property
+    def facebook_id(self):
+        try:
+            return self.profiles.filter(site__name='Facebook')[0].username
+        except IndexError:
+            return None
+
+    @property
+    def twitter_username(self):
+        try:
+            return '@' + self.profiles.filter(site__name='Twitter')[0].username
+        except IndexError:
+            return None
+
     _metadata = {
         'image': 'avatar_url',
         'description': 'note',
         'og_type': 'profile',
+        'og_profile_id': 'facebook_id',
+        'twitter_creator': 'twitter_username',
     }
 
 
