@@ -17,6 +17,8 @@ django-favicon-plus = "*"
 django-meta = "*"
 django-redis-cache = "*"
 django-activeurl = "*"
+django-otp = "*"
+qrcode = "*"
 
 
 [dev-packages]

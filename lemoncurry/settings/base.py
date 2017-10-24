@@ -66,6 +66,8 @@ INSTALLED_APPS = [
 
     'compressor',
     'django_activeurl',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
     'favicon',
     'meta',
 
@@ -82,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -189,6 +192,10 @@ MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 
 # Settings specific to lemoncurry
 LEMONCURRY_SITE_NAME = '00dani.me'
+
+# django-otp
+# https://django-otp-official.readthedocs.io/en/latest/overview.html
+OTP_TOTP_ISSUER = LEMONCURRY_SITE_NAME
 
 # django-meta
 # https://django-meta.readthedocs.io/en/latest/settings.html
