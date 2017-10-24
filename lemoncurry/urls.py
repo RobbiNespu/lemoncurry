@@ -16,8 +16,20 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+import django.contrib.sitemaps.views as sitemap
+from home.sitemaps import HomeSitemap
+
+sections = {
+    'home': HomeSitemap,
+}
+maps = {'sitemaps': sections}
+
 urlpatterns = [
-    url(r'^', include('home.urls')),
-    url(r'^.well-known/', include('wellknowns.urls')),
-    url(r'^admin/', admin.site.urls),
+    url('', include('home.urls')),
+    url('^.well-known/', include('wellknowns.urls')),
+    url('^admin/', admin.site.urls),
+
+    url(r'^sitemap\.xml$', sitemap.index, maps),
+    url(r'^sitemaps/(?P<section>.+)\.xml$', sitemap.sitemap, maps,
+        name='django.contrib.sitemaps.views.sitemap'),
 ]
