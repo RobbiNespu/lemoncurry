@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django_otp.admin import OTPAdminSite
 
 import django.contrib.sitemaps.views as sitemap
 from home.sitemaps import HomeSitemap
+
+otp_admin_site = OTPAdminSite()
+for model_cls, model_admin in admin.site._registry.items():
+    otp_admin_site.register(model_cls, model_admin.__class__)
+
 
 sections = {
     'home': HomeSitemap,
@@ -27,7 +33,7 @@ maps = {'sitemaps': sections}
 urlpatterns = [
     url('', include('home.urls')),
     url('^.well-known/', include('wellknowns.urls')),
-    url('^admin/', admin.site.urls),
+    url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),
 
     url(r'^sitemap\.xml$', sitemap.index, maps),
