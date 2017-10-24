@@ -35,9 +35,9 @@ def site_name():
 
 
 @register.inclusion_tag('lemoncurry/tags/nav.html')
-def nav_left():
+def nav_left(request):
     items = ()
-    return {'items': items}
+    return {'items': items, 'request': request}
 
 
 @register.inclusion_tag('lemoncurry/tags/nav.html')
@@ -51,7 +51,7 @@ def nav_right(request):
         items = (
             MenuItem(label='log in', icon='fa fa-sign-in', url='lemonauth:login'),
         )
-    return {'items': items}
+    return {'items': items, 'request': request}
 
 
 @register.inclusion_tag('lemoncurry/tags/breadcrumbs.html')

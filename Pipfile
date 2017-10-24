@@ -16,6 +16,7 @@ python-memcached = "*"
 django-favicon-plus = "*"
 django-meta = "*"
 django-redis-cache = "*"
+django-activeurl = "*"
 
 
 [dev-packages]

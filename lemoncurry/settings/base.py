@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'compressor',
+    'django_activeurl',
     'favicon',
     'meta',
 
