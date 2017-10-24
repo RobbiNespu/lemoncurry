@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'lemoncurry',
     'home',
     'users',
+    'wellknowns',
 ]
 
 MIDDLEWARE = [
