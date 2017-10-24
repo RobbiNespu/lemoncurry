@@ -1,12 +1,16 @@
 {% load compress favtags lemoncurry_tags meta static %}<!doctype html>
 <html lang="en" class="{% block html_class %}{% endblock %}">
-	<head{% meta_namespaces %}>
-		<title class="p-name">{% block title %}{% site_name %}{% endblock %}</title>
+	<head{% meta_namespaces %}>{% site_name as site_name %}{% request_uri request as uri %}
+		<title class="p-name">{% if title %}{{ title }} ~ {% endif %}{{ site_name }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		{% include 'meta/meta.html' %}
+		<link rel="canonical" href="{{ uri }}" />
 
+		<meta property="og:url" content="{{ uri }}" />
+		<meta property="og:title" content="{% firstof title site_name %}" />
+		{% include 'meta/meta.html' %}
 		{% placeFavicon %}
+
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
 					integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
 		{% compress css %}

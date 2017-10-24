@@ -30,6 +30,15 @@ def get_package_json():
 
 
 @register.simple_tag
+def request_uri(request):
+    return '{scheme}://{host}{path}'.format(
+        scheme=request.scheme,
+        host=request.META['HTTP_HOST'],
+        path=request.path
+    )
+
+
+@register.simple_tag
 def site_name():
     return settings.LEMONCURRY_SITE_NAME
 
