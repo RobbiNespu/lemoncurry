@@ -1,9 +1,10 @@
-{% load compress favtags lemoncurry_tags static %}<!doctype html>
+{% load compress favtags lemoncurry_tags meta static %}<!doctype html>
 <html lang="en" class="{% block html_class %}{% endblock %}">
-	<head>
+	<head{% meta_namespaces %}>
 		<title class="p-name">{% site_name %}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		{% include 'meta/meta.html' %}
 
 		{% placeFavicon %}
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"

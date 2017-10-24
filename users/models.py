@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from meta.models import ModelMeta
 
 
 def avatar_path(instance, name):
@@ -18,9 +19,19 @@ class Site(models.Model):
         ordering = ('name',)
 
 
-class User(AbstractUser):
+class User(ModelMeta, AbstractUser):
     avatar = models.ImageField(upload_to=avatar_path)
     note = models.TextField(blank=True)
+
+    @property
+    def avatar_url(self):
+        return self.avatar.url
+
+    _metadata = {
+        'image': 'avatar_url',
+        'description': 'note',
+        'og_type': 'profile',
+    }
 
 
 class Profile(models.Model):

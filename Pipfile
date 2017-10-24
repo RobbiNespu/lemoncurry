@@ -14,6 +14,7 @@ gunicorn = "*"
 pillow = "*"
 python-memcached = "*"
 django-favicon-plus = "*"
+django-meta = "*"
 
 
 [dev-packages]

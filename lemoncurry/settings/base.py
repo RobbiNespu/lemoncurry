@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
     'compressor',
     'favicon',
+    'meta',
 
     'lemoncurry',
     'home',
@@ -182,3 +183,10 @@ MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 
 # Settings specific to lemoncurry
 LEMONCURRY_SITE_NAME = '00dani.me'
+
+# django-meta
+# https://django-meta.readthedocs.io/en/latest/settings.html
+META_SITE_PROTOCOL = 'https'
+META_SITE_NAME = LEMONCURRY_SITE_NAME
+META_USE_OG_PROPERTIES = True
+META_USE_TWITTER_PROPERTIES = True
