@@ -28,6 +28,7 @@ urlpatterns = [
     url('', include('home.urls')),
     url('^.well-known/', include('wellknowns.urls')),
     url('^admin/', admin.site.urls),
+    url('^auth/', include('lemonauth.urls')),
 
     url(r'^sitemap\.xml$', sitemap.index, maps),
     url(r'^sitemaps/(?P<section>.+)\.xml$', sitemap.sitemap, maps,

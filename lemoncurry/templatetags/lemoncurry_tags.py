@@ -43,10 +43,10 @@ def nav_right(request):
     if request.user.is_authenticated():
         items = (
             MenuItem(label='admin', icon='fa fa-gear', url='admin:index'),
-            MenuItem(label='log out', icon='fa fa-sign-out', url='admin:logout'),
+            MenuItem(label='log out', icon='fa fa-sign-out', url='lemonauth:logout'),
         )
     else:
         items = (
-            MenuItem(label='log in', icon='fa fa-sign-in', url='admin:login'),
+            MenuItem(label='log in', icon='fa fa-sign-in', url='lemonauth:login'),
         )
     return {'items': items}
