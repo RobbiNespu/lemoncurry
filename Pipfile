@@ -19,6 +19,7 @@ django-redis-cache = "*"
 django-activeurl = "*"
 django-otp = "*"
 qrcode = "*"
+django-otp-agents = "*"
 
 
 [dev-packages]

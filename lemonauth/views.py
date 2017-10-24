@@ -1,5 +1,5 @@
 from django.contrib.auth import views as auth_views
-from django_otp.forms import OTPAuthenticationForm
+from otp_agents.forms import OTPAuthenticationForm
 from lemoncurry import breadcrumbs
 
 breadcrumbs.add(route='lemonauth:login', label='log in', parent='home:index')

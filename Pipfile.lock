@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "26e312dcbf4057505a29d0fa5b15c856ba3ba45a7b9545e20cc682dbef43d7df"
+            "sha256": "1d582e5b51466de2e917f117b537193fd1826f51d3a9a218f83d392d68d0c461"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -39,6 +39,13 @@
                 "sha256:7ebc4a34f91e18f29eb02bfac503057d69b4e1b6f9e8dd1297798387876e54da"
             ],
             "version": "==0.1.11"
+        },
+        "django-agent-trust": {
+            "hashes": [
+                "sha256:962653c4eeab63715a6efd27649a00302082c9fb1d931e3df959e57605eb8c25",
+                "sha256:b262db89410b9901c32f27f7dd6697bf61bfcfdc01651fe40699d0b81ebc4fcc"
+            ],
+            "version": "==0.3.0"
         },
         "django-appconf": {
             "hashes": [
@@ -86,6 +93,13 @@
                 "sha256:46fa6f2ae30a69a09bdc448b06a370c88d95fb0c3a9ba5771ca4d0d7740d56d7"
             ],
             "version": "==0.4.1.1"
+        },
+        "django-otp-agents": {
+            "hashes": [
+                "sha256:4ca8fae30418e0a813840cee5068d2fb96e3759787a5820d54921b90c7beaa7a",
+                "sha256:8d9f26d5a186b059251bd03e1ab509b5861a678e463c49de9b0766080b2c16a5"
+            ],
+            "version": "==0.3.0"
         },
         "django-redis-cache": {
             "hashes": [
