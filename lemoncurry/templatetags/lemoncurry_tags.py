@@ -7,6 +7,8 @@ from django import template
 from django.conf import settings
 from django.urls import reverse
 
+from .. import breadcrumbs
+
 register = template.Library()
 cache = SimpleNamespace(package_json=None)
 
@@ -50,3 +52,10 @@ def nav_right(request):
             MenuItem(label='log in', icon='fa fa-sign-in', url='lemonauth:login'),
         )
     return {'items': items}
+
+
+@register.inclusion_tag('lemoncurry/tags/breadcrumbs.html')
+def nav_crumbs(route):
+    crumbs = breadcrumbs.find(route)
+    current = crumbs.pop()
+    return {'crumbs': crumbs, 'current': current}

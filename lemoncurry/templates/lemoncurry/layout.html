@@ -29,6 +29,9 @@
 					{% nav_right request %}
 				</div>
 			</nav>
+			{% if request.resolver_match.view_name %}
+			{% nav_crumbs request.resolver_match.view_name %}
+			{% endif %}
 		</header>
 
 		<main>

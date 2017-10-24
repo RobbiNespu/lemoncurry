@@ -1,5 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from users.models import User
+from lemoncurry import breadcrumbs
+
+breadcrumbs.add('home:index', 'home')
 
 
 def index(request):

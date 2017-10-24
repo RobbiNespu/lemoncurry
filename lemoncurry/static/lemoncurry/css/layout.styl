@@ -20,9 +20,16 @@ body
 	background-color $base00
 	color $base07
 	> header
-		background-color $base01
-		#navbar
-			justify-content space-between
+		> .navbar
+			background-color $base01
+			#navbar
+				justify-content space-between
+		> .breadcrumbs
+			background-color $base02
+			> .breadcrumb
+				background-color transparent
+				border-radius 0
+
 
 	> main
 		margin 2rem
