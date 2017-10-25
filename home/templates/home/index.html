@@ -1,5 +1,6 @@
 {% extends 'lemoncurry/layout.html' %}
 {% load markdown_deux_tags static %}
+{% block html_class %}h-feed{% endblock %}
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
 <link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
