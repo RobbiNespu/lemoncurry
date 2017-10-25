@@ -1,4 +1,8 @@
 {% extends 'lemoncurry/layout.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
+{% endblock %}
 {% block main %}
 <aside class="author">
 	<article class="h-card card p-author">

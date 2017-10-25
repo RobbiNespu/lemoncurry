@@ -1,7 +1,11 @@
 {% extends 'lemoncurry/layout.html' %}
+{% load static %}
 {% block html_class %}h-feed{% endblock %}
+{% block styles %}
+<link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
+{% endblock %}
 {% block main %}
-<ol class="list-unstyled">
+<ol class="container list-unstyled">
 	{% for entry in entries %}
 	<li>
 		{% include 'entries/h-entry.html' %}

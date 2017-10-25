@@ -1,4 +1,12 @@
 {% extends 'lemoncurry/layout.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
+{% endblock %}
+
 {% block main %}
+<div class="container">
 {% include 'entries/h-entry.html' %}
+</div>
 {% endblock %}
