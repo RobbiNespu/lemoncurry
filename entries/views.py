@@ -8,3 +8,11 @@ def index(request, kind):
         'entries': entries,
         'title': kind.plural
     })
+
+
+def entry(request, id, slug=None):
+    entry = Entry.objects.get(pk=id)
+    return render(request, 'entries/entry.html', {
+        'entry': entry,
+        'title': entry.name or entry.content
+    })

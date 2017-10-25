@@ -2,13 +2,9 @@
 <nav class="breadcrumbs" aria-label="breadcrumb" role="navigation">
 	<ol class="breadcrumb">
 		{% for crumb in crumbs %}
-		<li class="breadcrumb-item">
-			<a href="{% url crumb.route %}">{{ crumb.label }}</a>
-		</li>
+		<li class="breadcrumb-item"><a href="{% url crumb.route %}">{{ crumb.label }}</a></li>
 		{% endfor %}
-		<li class="breadcrumb-item active" aria-current="page">
-			{{ current.label }}
-		</li>
+		<li class="breadcrumb-item active" aria-current="page">{% firstof current.label title %}</li>
 	</ol>
 </nav>
 {% endif %}

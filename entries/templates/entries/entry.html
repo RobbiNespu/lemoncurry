@@ -1,24 +1,4 @@
-{% load humanize %}<article class="card h-entry">
-	<div class="card-body">
-		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
-		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content }}</div>
-	</div>
-	<div class="card-footer">
-		<a class="p-author h-card" href="{{ entry.author.url }}">
-			<img class="u-photo" src="{{ entry.author.avatar.url }}" />
-			{{ entry.author.first_name }} {{ entry.author.last_name }}
-		</a>
-		<a class="u-url" href="{{ entry.url }}">
-			<time class="dt-published" datetime="{{ entry.published.isoformat }}">
-				<i class="fa fa-calendar"></i>
-				{{ entry.published | naturaltime }}
-			</time>
-		</a>
-		{% if entry.updated != entry.published %}
-		<time class="dt-updated" datetime="{{ entry.updated.isoformat }}">
-			<i class="fa fa-pencil"></i>
-			{{ entry.updated | naturaltime }}
-		</time>
-		{% endif %}
-	</div>
-</article>
+{% extends 'lemoncurry/layout.html' %}
+{% block main %}
+{% include 'entries/h-entry.html' %}
+{% endblock %}

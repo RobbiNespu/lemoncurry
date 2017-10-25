@@ -68,7 +68,7 @@ def nav_right(request):
 
 
 @register.inclusion_tag('lemoncurry/tags/breadcrumbs.html')
-def nav_crumbs(route):
+def nav_crumbs(route, title):
     crumbs = breadcrumbs.find(route)
     current = crumbs.pop()
-    return {'crumbs': crumbs, 'current': current}
+    return {'crumbs': crumbs, 'current': current, 'title': title}

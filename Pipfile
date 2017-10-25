@@ -20,6 +20,7 @@ django-activeurl = "*"
 django-otp = "*"
 qrcode = "*"
 django-otp-agents = "*"
+python-slugify = "*"
 
 
 [dev-packages]

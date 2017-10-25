@@ -1,7 +1,7 @@
 breadcrumbs = {}
 
 
-def add(route, label, parent=None):
+def add(route, label=None, parent=None):
     breadcrumbs[route] = {'label': label, 'route': route, 'parent': parent}
 
 
