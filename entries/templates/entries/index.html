@@ -1,0 +1,11 @@
+{% extends 'lemoncurry/layout.html' %}
+{% block html_class %}h-feed{% endblock %}
+{% block main %}
+<ol class="list-unstyled">
+	{% for entry in entries %}
+	<li>
+		{% include 'entries/entry.html' %}
+	</li>
+	{% endfor %}
+</ol>
+{% endblock %}

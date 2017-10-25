@@ -1,5 +1,4 @@
 import json
-from collections import namedtuple
 from os.path import join
 from types import SimpleNamespace
 
@@ -8,6 +7,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from .. import breadcrumbs
+from entries import kinds
 
 register = template.Library()
 cache = SimpleNamespace(package_json=None)
@@ -45,7 +45,11 @@ def site_name():
 
 @register.inclusion_tag('lemoncurry/tags/nav.html')
 def nav_left(request):
-    items = ()
+    items = (MenuItem(
+        label=k.plural,
+        icon=k.icon,
+        url='entries:'+k.plural+'_index'
+    ) for k in kinds.all)
     return {'items': items, 'request': request}
 
 
