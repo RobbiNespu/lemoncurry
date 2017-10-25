@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import re
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -216,16 +217,42 @@ def copy_update(source_dict, **kwargs):
     return copy
 
 
+link_patterns = [(re.compile(pat), rep) for (pat, rep) in (
+    # autolink actual URLs in text
+    (
+        r'((([A-Za-z]{3,9}:(?:\/\/)?)' +  # scheme
+        r'(?:[\-;:&=\+\$,\w]+@)?' +  # basic auth
+        r'[A-Za-z0-9\.\-]+(:[0-9]+)?' +  # ip address
+        r'|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)' +  # or hostname
+        r'((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)' +  # path
+        r'#?(?:[\.\!\/\\\w]*))?)',  # hash
+        r'\1'
+    ),
+)]
+
+
 MARKDOWN_DEUX_DEFAULT_STYLE = {
-    "extras": {
-        "code-friendly": None,
-    },
-    "safe_mode": "escape",
+    'extras': (
+        'code-friendly',
+        'cuddled-lists',
+        'fenced-code-blocks',
+        'footnotes',
+        'header-ids',
+        'link-patterns',
+        'spoiler',
+        'tag-friendly',
+    ),
+    'link_patterns': link_patterns,
+    'safe_mode': 'escape',
 }
 
 MARKDOWN_DEUX_STYLES = {
     'default': MARKDOWN_DEUX_DEFAULT_STYLE,
-    'trusted': copy_update(MARKDOWN_DEUX_DEFAULT_STYLE, safe_mode=False),
+    'trusted': copy_update(
+        MARKDOWN_DEUX_DEFAULT_STYLE,
+        link_patterns=[],
+        safe_mode=False,
+    ),
 }
 
 # django-meta
