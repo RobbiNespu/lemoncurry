@@ -7,7 +7,7 @@ from meta.models import ModelMeta
 from users.models import Profile
 
 from . import kinds
-ENTRY_KINDS = [(k.id, k.__name__) for k in kinds.all]
+ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
 class Entry(ModelMeta, models.Model):
