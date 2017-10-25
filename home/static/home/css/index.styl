@@ -6,6 +6,13 @@ $xl = 1200px
 main
 	flex-direction column
 	align-items center
+	aside.author
+		margin-bottom 1rem
 	@media (min-width $md)
 		flex-direction row-reverse
 		align-items unset
+		aside.author
+			margin-bottom 0
+		ol.entries
+			margin-right 2rem
+			justify-content flex-start

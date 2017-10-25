@@ -2,6 +2,7 @@
 {% load static %}
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
+<link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
 {% endblock %}
 {% block main %}
 <aside class="author">
@@ -35,4 +36,11 @@
 		</div>
 	</article>
 </aside>
+<ol class="list-unstyled entries">
+	{% for entry in entries %}
+	<li>
+		{% include 'entries/h-entry.html' %}
+	</li>
+	{% endfor %}
+</ol>
 {% endblock %}
