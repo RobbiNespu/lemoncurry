@@ -238,7 +238,6 @@ MARKDOWN_DEUX_DEFAULT_STYLE = {
         'fenced-code-blocks',
         'footnotes',
         'header-ids',
-        'link-patterns',
         'spoiler',
         'tag-friendly',
     ),
