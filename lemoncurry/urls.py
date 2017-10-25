@@ -18,6 +18,7 @@ from django.contrib import admin
 from otp_agents.admin import TrustedAgentAdminSite
 
 import django.contrib.sitemaps.views as sitemap
+from entries.sitemaps import EntriesSitemap
 from home.sitemaps import HomeSitemap
 
 otp_admin_site = TrustedAgentAdminSite()
@@ -26,6 +27,7 @@ for model_cls, model_admin in admin.site._registry.items():
 
 
 sections = {
+    'entries': EntriesSitemap,
     'home': HomeSitemap,
 }
 maps = {'sitemaps': sections}
