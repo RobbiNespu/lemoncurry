@@ -27,6 +27,7 @@ class Entry(ModelMeta, models.Model):
 
     _metadata = {
         'description': 'content',
+        'image': 'image_url',
         'twitter_creator': 'twitter_creator',
         'og_profile_id': 'og_profile_id',
     }
@@ -38,6 +39,10 @@ class Entry(ModelMeta, models.Model):
     @property
     def og_profile_id(self):
         return self.author.facebook_id
+
+    @property
+    def image_url(self):
+        return self.author.avatar_url
 
     def __str__(self):
         return '{kind} {id}: {content}'.format(
