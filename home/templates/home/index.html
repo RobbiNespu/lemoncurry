@@ -1,5 +1,5 @@
 {% extends 'lemoncurry/layout.html' %}
-{% load static %}
+{% load markdown_deux_tags static %}
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
 <link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
@@ -21,7 +21,7 @@
 				</a>
 			</h6>
 			{% endfor %}
-			{% if user.note %}<p class="card-text p-note">{{ user.note }}</p>{% endif %}
+			{% if user.note %}<div class="p-note">{{ user.note | markdown:'trusted' }}</div>{% endif %}
 		</div>
 
 		<div class="card-footer">

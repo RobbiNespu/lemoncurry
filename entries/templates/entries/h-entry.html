@@ -1,7 +1,7 @@
-{% load humanize %}<article class="card h-entry">
+{% load humanize markdown_deux_tags %}<article class="card h-entry">
 	<div class="card-body">
 		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
-		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content }}</div>
+		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content | markdown }}</div>
 	</div>
 	<div class="card-footer">
 		<a class="p-author h-card" href="{{ entry.author.url }}">

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -71,6 +72,7 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'favicon',
+    'markdown_deux',
     'meta',
 
     'lemoncurry',
@@ -204,6 +206,27 @@ AGENT_COOKIE_SECURE = True
 # django-otp
 # https://django-otp-official.readthedocs.io/en/latest/overview.html
 OTP_TOTP_ISSUER = LEMONCURRY_SITE_NAME
+
+
+# django-markdown-deux
+# https://github.com/trentm/django-markdown-deux
+def copy_update(source_dict, **kwargs):
+    copy = source_dict.copy()
+    copy.update(**kwargs)
+    return copy
+
+
+MARKDOWN_DEUX_DEFAULT_STYLE = {
+    "extras": {
+        "code-friendly": None,
+    },
+    "safe_mode": "escape",
+}
+
+MARKDOWN_DEUX_STYLES = {
+    'default': MARKDOWN_DEUX_DEFAULT_STYLE,
+    'trusted': copy_update(MARKDOWN_DEUX_DEFAULT_STYLE, safe_mode=False),
+}
 
 # django-meta
 # https://django-meta.readthedocs.io/en/latest/settings.html
