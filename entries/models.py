@@ -3,12 +3,14 @@ from django.db import models
 from django.urls import reverse
 from slugify import slugify
 
+from meta.models import ModelMeta
 from users.models import Profile
+
 from . import kinds
 ENTRY_KINDS = [(k.id, k.__name__) for k in kinds.all]
 
 
-class Entry(models.Model):
+class Entry(ModelMeta, models.Model):
     kind = models.CharField(
         max_length=30,
         choices=ENTRY_KINDS,
@@ -16,13 +18,26 @@ class Entry(models.Model):
     )
 
     name = models.CharField(max_length=100, blank=True)
-    summary = models.TextField(blank=True)
     content = models.TextField()
 
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     published = models.DateTimeField()
     updated = models.DateTimeField()
+
+    _metadata = {
+        'description': 'content',
+        'twitter_creator': 'twitter_creator',
+        'og_profile_id': 'og_profile_id',
+    }
+
+    @property
+    def twitter_creator(self):
+        return self.author.twitter_username
+
+    @property
+    def og_profile_id(self):
+        return self.author.facebook_id
 
     def __str__(self):
         return '{kind} {id}: {content}'.format(

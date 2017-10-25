@@ -14,5 +14,6 @@ def entry(request, id, slug=None):
     entry = Entry.objects.get(pk=id)
     return render(request, 'entries/entry.html', {
         'entry': entry,
-        'title': entry.name or entry.content
+        'title': entry.name or entry.content,
+        'meta': entry.as_meta(request)
     })
