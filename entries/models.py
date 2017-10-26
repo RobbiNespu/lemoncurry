@@ -10,17 +10,29 @@ from . import kinds
 ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
+class EntryManager(models.Manager):
+    def get_queryset(self):
+        qs = super(EntryManager, self).get_queryset()
+        return qs.select_related('author').prefetch_related('syndications')
+
+
 class Entry(ModelMeta, models.Model):
+    objects = EntryManager()
     kind = models.CharField(
         max_length=30,
         choices=ENTRY_KINDS,
+        db_index=True,
         default=ENTRY_KINDS[0][0]
     )
 
     name = models.CharField(max_length=100, blank=True)
     content = models.TextField()
 
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        get_user_model(),
+        related_name='entries',
+        on_delete=models.CASCADE,
+    )
 
     published = models.DateTimeField()
     updated = models.DateTimeField()
@@ -70,7 +82,14 @@ class Entry(ModelMeta, models.Model):
         ordering = ['-published']
 
 
+class SyndicationManager(models.Manager):
+    def get_queryset(self):
+        qs = super(SyndicationManager, self).get_queryset()
+        return qs.select_related('profile__site')
+
+
 class Syndication(models.Model):
+    objects = SyndicationManager()
     entry = models.ForeignKey(
         Entry,
         related_name='syndications',

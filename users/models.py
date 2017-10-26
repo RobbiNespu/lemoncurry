@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.functional import cached_property
 from meta.models import ModelMeta
 
 
@@ -30,17 +31,17 @@ class User(ModelMeta, AbstractUser):
     def avatar_url(self):
         return self.avatar.url
 
-    @property
+    @cached_property
     def facebook_id(self):
         try:
-            return self.profiles.filter(site__name='Facebook')[0].username
+            return self.profiles.filter(site__name='Facebook').values('username')[0]['username']
         except IndexError:
             return None
 
-    @property
+    @cached_property
     def twitter_username(self):
         try:
-            return '@' + self.profiles.filter(site__name='Twitter')[0].username
+            return '@' + self.profiles.filter(site__name='Twitter').values('username')[0]['username']
         except IndexError:
             return None
 
@@ -53,7 +54,13 @@ class User(ModelMeta, AbstractUser):
     }
 
 
+class ProfileManager(models.Manager):
+    def get_queryset(self):
+        return super(ProfileManager, self).get_queryset().select_related('site')
+
+
 class Profile(models.Model):
+    objects = ProfileManager()
     user = models.ForeignKey(
         User,
         related_name='profiles',
