@@ -30,12 +30,16 @@ def get_package_json():
 
 
 @register.simple_tag
-def request_uri(request):
-    return '{scheme}://{host}{path}'.format(
+def request_origin(request):
+    return '{scheme}://{host}'.format(
         scheme=request.scheme,
         host=request.META['HTTP_HOST'],
-        path=request.path
     )
+
+
+@register.simple_tag
+def request_uri(request):
+    return request_origin(request) + request.path
 
 
 @register.simple_tag
