@@ -28,6 +28,7 @@ SECRET_KEY = '6riil57g@r^wprf7mdy((+bs&(6l*phcn9&fd$l0@t-kzj+xww'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = ['127.0.0.1', '::1']
 
 # Settings to tighten up security - these can safely be on in dev mode too,
 # since I dev using a local HTTPS server.
@@ -68,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'compressor',
+    'debug_toolbar',
     'django_activeurl',
     'django_agent_trust',
     'django_otp',
@@ -84,6 +86,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
