@@ -73,7 +73,6 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'favicon',
-    'markdown_deux',
     'meta',
 
     'lemoncurry',
@@ -207,52 +206,6 @@ AGENT_COOKIE_SECURE = True
 # django-otp
 # https://django-otp-official.readthedocs.io/en/latest/overview.html
 OTP_TOTP_ISSUER = LEMONCURRY_SITE_NAME
-
-
-# django-markdown-deux
-# https://github.com/trentm/django-markdown-deux
-def copy_update(source_dict, **kwargs):
-    copy = source_dict.copy()
-    copy.update(**kwargs)
-    return copy
-
-
-link_patterns = [(re.compile(pat), rep) for (pat, rep) in (
-    # autolink actual URLs in text
-    (
-        r'((([A-Za-z]{3,9}:(?:\/\/)?)' +  # scheme
-        r'(?:[\-;:&=\+\$,\w]+@)?' +  # basic auth
-        r'[A-Za-z0-9\.\-]+(:[0-9]+)?' +  # ip address
-        r'|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)' +  # or hostname
-        r'((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)' +  # path
-        r'#?(?:[\.\!\/\\\w]*))?)',  # hash
-        r'\1'
-    ),
-)]
-
-
-MARKDOWN_DEUX_DEFAULT_STYLE = {
-    'extras': (
-        'code-friendly',
-        'cuddled-lists',
-        'fenced-code-blocks',
-        'footnotes',
-        'header-ids',
-        'spoiler',
-        'tag-friendly',
-    ),
-    'link_patterns': link_patterns,
-    'safe_mode': 'escape',
-}
-
-MARKDOWN_DEUX_STYLES = {
-    'default': MARKDOWN_DEUX_DEFAULT_STYLE,
-    'trusted': copy_update(
-        MARKDOWN_DEUX_DEFAULT_STYLE,
-        link_patterns=[],
-        safe_mode=False,
-    ),
-}
 
 # django-meta
 # https://django-meta.readthedocs.io/en/latest/settings.html

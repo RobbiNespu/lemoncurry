@@ -7,11 +7,11 @@ name = "pypi"
 
 [packages]
 
-django = "*"
-django-compressor = "*"
+Django = "*"
+django_compressor = "*"
 gunicorn = "*"
 "psycopg2" = "*"
-pillow = "*"
+Pillow = "*"
 python-memcached = "*"
 django-favicon-plus = "*"
 django-meta = "*"
@@ -21,8 +21,9 @@ django-otp = "*"
 qrcode = "*"
 django-otp-agents = "*"
 python-slugify = "*"
-django-markdown-deux = "*"
 "mf2py" = "*"
+Markdown = "*"
+bleach = "*"
 
 
 [dev-packages]
