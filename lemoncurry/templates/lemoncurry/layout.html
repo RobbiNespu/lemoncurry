@@ -1,7 +1,7 @@
 {% load compress favtags lemoncurry_tags meta static %}<!doctype html>
 <html lang="en" class="{% block html_class %}{% endblock %}">
-	<head{% meta_namespaces %}>{% site_name as site_name %}{% request_uri request as uri %}
-		<base href="{% request_origin request %}" />
+	<head{% meta_namespaces %}>{% site_name as site_name %}{% request_uri request as uri %}{% request_origin request as origin %}
+		<base href="{{ origin }}" />
 		<title class="p-name">{% if title %}{{ title }} ~ {% endif %}{{ site_name }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -37,7 +37,7 @@
 				</div>
 			</nav>
 			{% if request.resolver_match.view_name %}
-			{% nav_crumbs request.resolver_match.view_name title %}
+			{% nav_crumbs request.resolver_match.view_name %}
 			{% endif %}
 		</header>
 

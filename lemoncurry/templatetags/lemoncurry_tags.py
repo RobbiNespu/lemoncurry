@@ -71,8 +71,39 @@ def nav_right(request):
     return {'items': items, 'request': request}
 
 
-@register.inclusion_tag('lemoncurry/tags/breadcrumbs.html')
-def nav_crumbs(route, title):
+@register.inclusion_tag('lemoncurry/tags/breadcrumbs.html', takes_context=True)
+def nav_crumbs(context, route):
     crumbs = breadcrumbs.find(route)
     current = crumbs.pop()
-    return {'crumbs': crumbs, 'current': current, 'title': title}
+
+    item_list_element = [{
+        '@type': 'ListItem',
+        'position': i + 1,
+        'item': {
+            '@id': context['origin'] + reverse(crumb['route']),
+            '@type': 'WebPage',
+            'name': crumb['label']
+        }
+    } for i, crumb in enumerate(crumbs)]
+    item_list_element.append({
+        '@type': 'ListItem',
+        'position': len(item_list_element) + 1,
+        'item': {
+            'id': context['uri'],
+            '@type': 'WebPage',
+            'name': current['label'] or context.get('title'),
+        }
+    })
+
+    breadcrumb_list = {
+        '@context': 'http://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': item_list_element
+    }
+
+    return {
+        'breadcrumb_list': breadcrumb_list,
+        'crumbs': crumbs,
+        'current': current,
+        'title': context['title'],
+    }

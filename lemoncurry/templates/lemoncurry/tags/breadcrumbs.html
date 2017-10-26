@@ -1,4 +1,4 @@
-{% if crumbs %}
+{% load jsonify %}{% if crumbs %}
 <nav class="breadcrumbs" aria-label="breadcrumb" role="navigation">
 	<ol class="breadcrumb">
 		{% for crumb in crumbs %}
@@ -6,5 +6,6 @@
 		{% endfor %}
 		<li class="breadcrumb-item active" aria-current="page">{% firstof current.label title %}</li>
 	</ol>
+	<script type="application/ld+json">{{ breadcrumb_list | jsonify }}</script>
 </nav>
 {% endif %}
