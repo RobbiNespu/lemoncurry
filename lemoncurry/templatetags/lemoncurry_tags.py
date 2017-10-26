@@ -105,5 +105,5 @@ def nav_crumbs(context, route):
         'breadcrumb_list': breadcrumb_list,
         'crumbs': crumbs,
         'current': current,
-        'title': context['title'],
+        'title': context.get('title'),
     }

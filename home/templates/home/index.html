@@ -1,5 +1,5 @@
 {% extends 'lemoncurry/layout.html' %}
-{% load markdown static %}
+{% load jsonify markdown static %}
 {% block html_class %}h-feed{% endblock %}
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
@@ -36,6 +36,7 @@
 			</ul>
 		</div>
 	</article>
+	<script type="application/ld+json">{{ person | jsonify }}</script>
 </aside>
 <ol class="list-unstyled entries">
 	{% for entry in entries %}
