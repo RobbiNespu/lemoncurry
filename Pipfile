@@ -22,6 +22,7 @@ qrcode = "*"
 django-otp-agents = "*"
 python-slugify = "*"
 django-markdown-deux = "*"
+"mf2py" = "*"
 
 
 [dev-packages]

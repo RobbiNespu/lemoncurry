@@ -1,0 +1,24 @@
+{% extends 'lemoncurry/layout.html' %}
+{% block main %}
+<div class="container">
+	<form class="card" method="post" action="{% url 'lemonauth:indie' %}">
+		<h4 class="card-header">
+			<a href="{{ params.client_id }}">{{ params.client_id }}</a>
+		</h4>
+
+		<div class="card-body">
+			<p class="card-text">do you want to confirm your identity, <a href="{{ params.me }}">{{ params.me }}</a>, with this app?</p>
+		</div>
+
+		<div class="card-footer">
+			<p class="card-text">you can't actually auth yet but this button is how you will do it</p>
+			<button class="btn btn-success" type="button">
+				<i class="fa fa-check"></i>
+				approve
+			</button>
+		</div>
+
+		{% csrf_token %}
+	</form>
+</div>
+{% endblock %}
