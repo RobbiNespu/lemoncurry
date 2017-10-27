@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from users.models import User
-from lemoncurry import breadcrumbs
-from lemoncurry.templatetags.lemoncurry_tags import request_uri
+from lemoncurry import breadcrumbs, utils
 
 breadcrumbs.add('home:index', 'home')
 
@@ -9,7 +8,7 @@ breadcrumbs.add('home:index', 'home')
 def index(request):
     query = User.objects.prefetch_related('entries', 'profiles', 'keys')
     user = get_object_or_404(query, pk=1)
-    uri = request_uri(request)
+    uri = utils.uri(request)
     person = {
         '@context': 'http://schema.org',
         '@type': 'Person',

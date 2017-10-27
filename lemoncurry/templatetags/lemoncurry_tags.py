@@ -1,16 +1,13 @@
-import json
-from os.path import join
-from types import SimpleNamespace
 
 from django import template
 from django.conf import settings
 from django.urls import reverse
+from ..utils import load_package_json, origin, uri
 
 from .. import breadcrumbs
 from entries import kinds
 
 register = template.Library()
-cache = SimpleNamespace(package_json=None)
 
 
 class MenuItem:
@@ -22,24 +19,17 @@ class MenuItem:
 
 @register.simple_tag
 def get_package_json():
-    if cache.package_json:
-        return cache.package_json
-    with open(join(settings.BASE_DIR, 'package.json')) as f:
-        cache.package_json = json.load(f)
-    return cache.package_json
+    return load_package_json()
 
 
 @register.simple_tag
 def request_origin(request):
-    return '{scheme}://{host}'.format(
-        scheme=request.scheme,
-        host=request.META['HTTP_HOST'],
-    )
+    return origin(request)
 
 
 @register.simple_tag
 def request_uri(request):
-    return request_origin(request) + request.path
+    return uri(request)
 
 
 @register.simple_tag

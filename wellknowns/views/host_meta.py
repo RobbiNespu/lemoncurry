@@ -1,12 +1,15 @@
 from django.http import HttpResponse
-from django.conf import settings
-from lemoncurry.templatetags.lemoncurry_tags import get_package_json
+from django.urls import reverse
+from lemoncurry.utils import load_package_json, origin
+from urllib.parse import urljoin
 from xrd import XRD, Attribute, Element, Link
 
 
-def add_links(dest):
-    package = get_package_json()
+def add_links(request, dest):
+    base = origin(request)
+    package = load_package_json()
     links = (
+        Link(rel='lrdd', template=urljoin(base, reverse('wellknowns:webfinger') + '?resource={uri}')),
         Link(rel='license', href='https://creativecommons.org/licenses/by-sa/4.0/'),
         Link(rel='code-repository', href=package['repository']),
     )
@@ -17,7 +20,7 @@ def host_meta(request):
     h = XRD()
     h.attributes.append(Attribute('xmlns:hm', 'http://host-meta.net/ns/1.0'))
     h.elements.append(Element('hm:Host', request.META['HTTP_HOST']))
-    add_links(h.links)
+    add_links(request, h.links)
     return h
 
 
