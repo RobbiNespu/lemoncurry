@@ -40,7 +40,7 @@ class Entry(ModelMeta, models.Model):
     updated = models.DateTimeField()
 
     _metadata = {
-        'description': 'excerpt',
+        'description': 'excerpt_if_unused',
         'image': 'image_url',
         'twitter_creator': 'twitter_creator',
         'og_profile_id': 'og_profile_id',
@@ -54,6 +54,11 @@ class Entry(ModelMeta, models.Model):
     def excerpt(self):
         first_line = self.content.split('\n')[0]
         return shorten(first_line, width=100, placeholder='…')
+
+    @property
+    def excerpt_if_unused(self):
+        if self.name:
+            return self.excerpt
 
     @property
     def twitter_creator(self):
