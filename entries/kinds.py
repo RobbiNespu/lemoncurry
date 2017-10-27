@@ -37,7 +37,12 @@ Article = Entry(
     fields=('slug', 'name'),
 )
 
+Photo = Entry(
+    id='photo',
+    icon='fa fa-camera',
+    plural='photos',
+)
 
-all = (Note, Article)
+all = (Note, Article, Photo)
 from_id = {k.id: k for k in all}
 from_plural = {k.plural: k for k in all}

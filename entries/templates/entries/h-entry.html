@@ -1,4 +1,5 @@
 {% load humanize markdown %}<article class="card h-entry">
+	{% if entry.photo %}<img class="card-img-top u-photo" src="{{ entry.photo.url }}" />{% endif %}
 	<div class="card-body">
 		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
 		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content | markdown }}</div>

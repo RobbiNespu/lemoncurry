@@ -26,6 +26,7 @@ class Entry(ModelMeta, models.Model):
     )
 
     name = models.CharField(max_length=100, blank=True)
+    photo = models.ImageField(blank=True)
     content = models.TextField()
 
     author = models.ForeignKey(
@@ -54,7 +55,7 @@ class Entry(ModelMeta, models.Model):
 
     @property
     def image_url(self):
-        return self.author.avatar_url
+        return self.photo.url if self.photo else self.author.avatar_url
 
     def __str__(self):
         return '{kind} {id}: {content}'.format(
