@@ -70,15 +70,18 @@ class Entry(ModelMeta, models.Model):
     def __str__(self):
         return '{0} {1}: {2}'.format(self.kind, self.id, self.title)
 
+    def get_absolute_url(self):
+        return self.url
+
     @property
     def url(self):
         kind = kinds.from_id[self.kind]
-        route = 'entries:{kind}_entry'.format(kind=kind.plural)
+        route = kind.entry
         args = [self.id]
-        if kind.has('slug'):
-            route += '_slug'
+        if kind.slug:
+            route = kind.entry_slug
             args.append(self.slug)
-        return reverse(route, args=args)
+        return reverse('entries:' + route, args=args)
 
     @property
     def slug(self):

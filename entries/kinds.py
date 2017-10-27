@@ -1,14 +1,9 @@
 class Entry:
-    fields = ()
-
-    def has(self, field):
-        return field in self.fields
-
-    def __init__(self, id, plural, icon, fields=()):
+    def __init__(self, id, plural, icon, slug=False):
         self.id = id
         self.plural = plural
         self.icon = icon
-        self.fields = fields
+        self.slug = slug
 
     @property
     def index(self):
@@ -34,7 +29,7 @@ Article = Entry(
     id='article',
     icon='fa fa-file-text',
     plural='articles',
-    fields=('slug', 'name'),
+    slug=True,
 )
 
 Photo = Entry(

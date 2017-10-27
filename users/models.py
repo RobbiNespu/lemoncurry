@@ -26,6 +26,8 @@ class User(ModelMeta, AbstractUser):
     # This is gonna need to change if I ever decide to add multiple-user support ;)
     url = '/'
 
+    def get_absolute_url(self):
+        return self.url
 
     @property
     def avatar_url(self):
