@@ -1,0 +1,3 @@
+[submodule "lemoncurry/static/base16-materialtheme-scheme"]
+	path = lemoncurry/static/base16-materialtheme-scheme
+	url = git://github.com/ntpeters/base16-materialtheme-scheme.git

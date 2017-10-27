@@ -192,7 +192,7 @@ STATICFILES_FINDERS = (
 )
 
 COMPRESS_PRECOMPILERS = (
-    ('text/stylus', os.path.join(BASE_DIR, 'node_modules', '.bin', 'stylus') + ' {infile} -o {outfile}'),
+    ('text/stylus', './node_modules/.bin/stylus {infile} -u ./lemoncurry/static/lemoncurry/css/theme -o {outfile}'),
 )
 
 MEDIA_URL = STATIC_URL + 'media/'
