@@ -5,7 +5,8 @@ from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from lemoncurry import breadcrumbs
+from lemoncurry import breadcrumbs, utils
+from urllib.parse import urljoin
 
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
 
@@ -25,12 +26,12 @@ class IndieView(TemplateView):
                 )
 
         me = params['me']
-        user = '{0}://{1}{2}'.format(
-            request.scheme,
-            request.META['HTTP_HOST'],
-            request.user.url
-        )
-        if me != user:
+        if me[-1] == '/':
+            me = me[:-1]
+
+        origin = utils.origin(request)
+        user = urljoin(origin, request.user.url)
+        if user not in (me, me + '/'):
             return HttpResponseForbidden(
                 'you are logged in but not as {0}'.format(me),
                 content_type='text/plain',
