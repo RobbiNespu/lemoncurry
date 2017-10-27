@@ -43,6 +43,12 @@ body
 			> .breadcrumb
 				background-color transparent
 				border-radius 0
+				flex-wrap nowrap
+				.breadcrumb-item
+					white-space nowrap
+					&.active
+						overflow-x hidden
+						text-overflow ellipsis
 
 
 	> main
