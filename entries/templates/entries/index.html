@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
 {% endblock %}
 {% block main %}
-<ol class="container list-unstyled">
+<ol class="container list-unstyled entries">
 	{% for entry in entries %}
 	<li>
 		{% include 'entries/h-entry.html' %}
