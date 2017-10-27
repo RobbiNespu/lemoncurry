@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from itertools import groupby
 from slugify import slugify
 from textwrap import shorten
 
@@ -40,7 +41,7 @@ class Entry(ModelMeta, models.Model):
     updated = models.DateTimeField()
 
     _metadata = {
-        'description': 'excerpt_if_unused',
+        'description': 'excerpt',
         'image': 'image_url',
         'twitter_creator': 'twitter_creator',
         'og_profile_id': 'og_profile_id',
@@ -48,17 +49,21 @@ class Entry(ModelMeta, models.Model):
 
     @property
     def title(self):
-        return self.name if self.name else self.excerpt
+        if self.name:
+            return self.name
+        return shorten(self.paragraphs[0], width=50, placeholder='…')
 
     @property
     def excerpt(self):
-        first_line = self.content.split('\n')[0]
-        return shorten(first_line, width=100, placeholder='…')
+        try:
+            return self.paragraphs[0 if self.name else 1]
+        except IndexError:
+            return ' '
 
     @property
-    def excerpt_if_unused(self):
-        if self.name:
-            return self.excerpt
+    def paragraphs(self):
+        lines = self.content.splitlines()
+        return ["\n".join(para) for k, para in groupby(lines, key=bool)]
 
     @property
     def twitter_creator(self):
