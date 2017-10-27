@@ -15,9 +15,6 @@ class IndieView(TemplateView):
     required_params = ('me', 'client_id', 'redirect_uri')
 
     @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(IndieView, self).dispatch(*args, **kwargs)
-
     def get(self, request):
         params = request.GET
         for param in self.required_params:
@@ -39,15 +36,23 @@ class IndieView(TemplateView):
                 content_type='text/plain',
             )
 
-        client = mf2py.parse(url=params['client_id'])
-        rels = client['rel-urls'].get(params['redirect_uri'], {}).get('rels', ())
+        client = mf2py.Parser(url=params['client_id'], html_parser='html5lib')
+        rels = (client.to_dict()['rel-urls']
+                .get(params['redirect_uri'], {})
+                .get('rels', ()))
         if 'redirect_uri' not in rels:
             return HttpResponseBadRequest(
                 'your redirect_uri is not published on your client_id page',
                 content_type='text/plain'
             )
 
+        try:
+            app = client.to_dict(filter_by_type='h-x-app')[0]['properties']
+        except IndexError:
+            app = None
+
         return render(request, self.template_name, {
+            'app': app,
             'params': params,
             'title': 'indieauth',
         })

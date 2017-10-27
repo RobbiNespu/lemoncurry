@@ -1,12 +1,18 @@
 {% extends 'lemoncurry/layout.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/stylus" href="{% static 'lemonauth/css/indie.styl' %}" />
+{% endblock %}
+
 {% block main %}
 <div class="container">
 	<form class="card" method="post" action="{% url 'lemonauth:indie' %}">
-		<h4 class="card-header">
+		<h4 class="card-header h-x-app">
+			{% if app %}<img class="u-logo p-name" src="{{ app.logo | first }}" alt="{{ app.name | first }}" />{% endif %}
 			sign in to
-			<a class="h-card code" href="{{ params.client_id }}">
-				{{ params.client_id }}
-			</a>
+			{% if app %}{{ app.name | first }}{% endif %}
+			{% if app %}({% endif %}<a class="u-url code{% if not app %} p-name{% endif %}" href="{{ params.client_id }}">{{ params.client_id }}</a>{% if app %}){% endif %}?
 		</h4>
 
 		<div class="card-body">
