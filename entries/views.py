@@ -16,6 +16,6 @@ def entry(request, id, slug=None):
         return redirect(entry.url, permanent=True)
     return render(request, 'entries/entry.html', {
         'entry': entry,
-        'title': entry.name or entry.content,
+        'title': entry.title,
         'meta': entry.as_meta(request)
     })
