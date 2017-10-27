@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Entry
 
 
@@ -12,6 +12,8 @@ def index(request, kind):
 
 def entry(request, id, slug=None):
     entry = Entry.objects.get(pk=id)
+    if request.path != entry.url:
+        return redirect(entry.url, permanent=True)
     return render(request, 'entries/entry.html', {
         'entry': entry,
         'title': entry.name or entry.content,
