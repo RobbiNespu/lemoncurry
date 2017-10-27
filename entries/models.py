@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from slugify import slugify
+from textwrap import shorten
 
 from meta.models import ModelMeta
 from users.models import Profile
@@ -39,11 +40,20 @@ class Entry(ModelMeta, models.Model):
     updated = models.DateTimeField()
 
     _metadata = {
-        'description': 'content',
+        'description': 'excerpt',
         'image': 'image_url',
         'twitter_creator': 'twitter_creator',
         'og_profile_id': 'og_profile_id',
     }
+
+    @property
+    def title(self):
+        return self.name if self.name else self.excerpt
+
+    @property
+    def excerpt(self):
+        first_line = self.content.split('\n')[0]
+        return shorten(first_line, width=100, placeholder='…')
 
     @property
     def twitter_creator(self):
@@ -58,11 +68,7 @@ class Entry(ModelMeta, models.Model):
         return self.photo.url if self.photo else self.author.avatar_url
 
     def __str__(self):
-        return '{kind} {id}: {content}'.format(
-            kind=self.kind,
-            id=self.id,
-            content=self.content
-        )
+        return '{0} {1}: {2}'.format(self.kind, self.id, self.title)
 
     @property
     def url(self):
