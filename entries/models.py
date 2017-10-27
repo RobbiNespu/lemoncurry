@@ -51,7 +51,7 @@ class Entry(ModelMeta, models.Model):
     def title(self):
         if self.name:
             return self.name
-        return shorten(self.paragraphs[0], width=50, placeholder='…')
+        return shorten(self.paragraphs[0], width=100, placeholder='…')
 
     @property
     def excerpt(self):
