@@ -25,6 +25,7 @@ python-slugify = "*"
 markdown = "*"
 bleach = "*"
 django-debug-toolbar = "*"
+xrd = "*"
 
 
 [dev-packages]
