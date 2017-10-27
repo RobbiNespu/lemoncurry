@@ -63,7 +63,9 @@ class Entry(ModelMeta, models.Model):
     @property
     def paragraphs(self):
         lines = self.content.splitlines()
-        return ["\n".join(para) for k, para in groupby(lines, key=bool)]
+        return [
+            "\n".join(para) for k, para in groupby(lines, key=bool) if k
+        ]
 
     @property
     def twitter_creator(self):
