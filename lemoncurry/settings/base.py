@@ -216,3 +216,7 @@ META_SITE_PROTOCOL = 'https'
 META_SITE_NAME = LEMONCURRY_SITE_NAME
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
+
+# django-push
+# https://django-push.readthedocs.io/en/latest/publisher.html
+PUSH_HUB = 'https://00dani.superfeedr.com/'

@@ -97,3 +97,8 @@ def nav_crumbs(context, route):
         'current': current,
         'title': context.get('title'),
     }
+
+
+@register.simple_tag
+def get_push_hub():
+    return settings.PUSH_HUB

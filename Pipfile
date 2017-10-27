@@ -26,6 +26,7 @@ markdown = "*"
 bleach = "*"
 django-debug-toolbar = "*"
 xrd = "*"
+django-push = "*"
 
 
 [dev-packages]
