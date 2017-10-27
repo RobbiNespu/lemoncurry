@@ -3,22 +3,28 @@
 <div class="container">
 	<form class="card" method="post" action="{% url 'lemonauth:indie' %}">
 		<h4 class="card-header">
-			<a href="{{ params.client_id }}">{{ params.client_id }}</a>
+			sign in to
+			<a class="h-card code" href="{{ params.client_id }}">
+				{{ params.client_id }}
+			</a>
 		</h4>
 
 		<div class="card-body">
-			<p class="card-text">do you want to confirm your identity, <a href="{{ params.me }}">{{ params.me }}</a>, with this app?</p>
+			<p class="card-text">do you want to confirm your identity, <a class="code" href="{{ params.me }}">{{ params.me }}</a>, with this app?</p>
+			<p class="card-text"><small>you will be redirected to <a class="code" href="{{ params.redirect_uri }}">{{ params.redirect_uri }}</a> after authorising this app</small></p>
 		</div>
 
 		<div class="card-footer">
-			<p class="card-text">you can't actually auth yet but this button is how you will do it</p>
-			<button class="btn btn-success" type="button">
+			<button class="btn btn-success" type="submit">
 				<i class="fa fa-check"></i>
 				approve
 			</button>
 		</div>
 
 		{% csrf_token %}
+		{% if params.state %}
+		<input name="state" type="hidden" value="{{ params.state }}" />
+		{% endif %}
 	</form>
 </div>
 {% endblock %}
