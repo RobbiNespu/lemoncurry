@@ -9,6 +9,7 @@
 
 		<link rel="hub" href="{% get_push_hub %}" />
 		<link rel="self" href="{{ uri }}" />
+		<link rel="manifest" href="{% url 'wellknowns:manifest' %}" />
 
 		<meta property="og:url" content="{{ uri }}" />
 		<meta property="og:title" content="{% firstof title site_name %}" />

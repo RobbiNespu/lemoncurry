@@ -27,6 +27,7 @@ bleach = "*"
 django-debug-toolbar = "*"
 xrd = "*"
 django-push = "*"
+pyyaml = "*"
 
 
 [dev-packages]
