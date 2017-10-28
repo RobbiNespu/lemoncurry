@@ -13,10 +13,6 @@ class Entry:
     def entry(self):
         return self.plural + '_entry'
 
-    @property
-    def entry_slug(self):
-        return self.entry + '_slug'
-
 
 Note = Entry(
     id='note',

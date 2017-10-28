@@ -88,12 +88,10 @@ class Entry(ModelMeta, models.Model):
     @property
     def url(self):
         kind = kinds.from_id[self.kind]
-        route = kind.entry
         args = [self.id]
         if kind.slug:
-            route = kind.entry_slug
             args.append(self.slug)
-        return reverse('entries:' + route, args=args)
+        return reverse('entries:' + kind.entry, args=args)
 
     @property
     def slug(self):

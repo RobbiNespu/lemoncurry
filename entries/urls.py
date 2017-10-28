@@ -3,8 +3,8 @@ from . import kinds, views
 from lemoncurry import breadcrumbs as crumbs
 
 
-def to_url(*args):
-    return '^{0}$'.format('/'.join(args))
+def to_pat(*args):
+    return '^{0}$'.format(''.join(args))
 
 
 def prefix(route):
@@ -15,14 +15,12 @@ app_name = 'entries'
 urlpatterns = []
 for k in kinds.all:
     kind = k.plural
-    id = r'(?P<id>\d+)'
-    slug = r'(?P<slug>.+)'
+    id = r'/(?P<id>\d+)'
+    slug = r'(?:/(?P<slug>.+))?'
     urlpatterns += (
-        url(to_url(kind), views.index, name=k.index, kwargs={'kind': k}),
-        url(to_url(kind, id), views.entry, name=k.entry),
-        url(to_url(kind, id, slug), views.entry, name=k.entry_slug),
+        url(to_pat(kind), views.index, name=k.index, kwargs={'kind': k}),
+        url(to_pat(kind, id, slug), views.entry, name=k.entry),
     )
 
     crumbs.add(prefix(k.index), label=k.plural, parent='home:index')
     crumbs.add(prefix(k.entry), parent=prefix(k.index))
-    crumbs.add(prefix(k.entry_slug), parent=prefix(k.index))
