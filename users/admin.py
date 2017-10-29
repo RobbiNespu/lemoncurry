@@ -3,6 +3,10 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Key, Profile, Site, User
 
 
+class SiteAdmin(admin.ModelAdmin):
+    list_display = ('name', 'icon', 'url')
+
+
 class KeyInline(admin.TabularInline):
     model = Key
     extra = 1
@@ -23,5 +27,5 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-admin.site.register(Site)
+admin.site.register(Site, SiteAdmin)
 admin.site.register(User, UserAdmin)

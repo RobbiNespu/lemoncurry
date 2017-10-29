@@ -73,7 +73,7 @@ class Profile(models.Model):
     display_name = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return '{name}@{site}'.format(name=self.username, site=self.site)
+        return self.url
 
     @property
     def name(self):
