@@ -58,18 +58,20 @@ class IndieView(TemplateView):
         rels = (client.to_dict()['rel-urls']
                 .get(params['redirect_uri'], {})
                 .get('rels', ()))
-        if 'redirect_uri' not in rels:
-            return HttpResponseBadRequest(
-                'your redirect_uri is not published on your client_id page',
-                content_type='text/plain'
-            )
+        verified = 'redirect_uri' in rels
 
         try:
             app = client.to_dict(filter_by_type='h-x-app')[0]['properties']
         except IndexError:
             app = None
 
-        return {'app': app, 'me': me, 'params': params, 'title': 'indieauth'}
+        return {
+            'app': app,
+            'me': me,
+            'verified': verified,
+            'params': params,
+            'title': 'indieauth',
+        }
 
     def post(self, request):
         post = request.POST.dict()

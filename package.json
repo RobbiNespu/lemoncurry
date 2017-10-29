@@ -8,6 +8,7 @@
 		"stylus": "^0.54.5"
 	},
 	"dependencies": {
-		"openwebicons": "^1.4.3"
+		"openwebicons": "^1.4.3",
+		"tippy.js": "^1.4.1"
 	}
 }

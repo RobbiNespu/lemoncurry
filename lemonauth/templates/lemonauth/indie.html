@@ -1,5 +1,5 @@
 {% extends 'lemoncurry/layout.html' %}
-{% load static %}
+{% load markdown static %}
 
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'lemonauth/css/indie.styl' %}" />
@@ -13,6 +13,11 @@
 			sign in to
 			{% if app %}{{ app.name | first }}{% endif %}
 			{% if app %}({% endif %}<a class="u-url code{% if not app %} p-name{% endif %}" href="{{ params.client_id }}">{{ params.client_id }}</a>{% if app %}){% endif %}?
+			{% if verified %}
+			<i class="fa fa-check-circle verified-success" data-tooltip data-theme="success" data-html="#verified-success"></i>
+			{% else %}
+			<i class="fa fa-question-circle verified-warning" data-tooltip data-theme="warning" data-html="#verified-warning"></i>
+			{% endif %}
 		</h4>
 
 		<div class="card-body">
@@ -35,4 +40,16 @@
 		<input name="response_type" type="hidden" value="{{ params.response_type }}" />
 	</form>
 </div>
+
+<div id="verified-success" hidden>
+	this client has been <strong>verified</strong> using <code>{{ '<link rel="redirect_uri">' | force_escape }}</code> - they are who they claim to be!
+</div>
+<div id="verified-warning" hidden>
+	this client could <strong>not</strong> be verified using <code>{{ '<link rel="redirect_uri">' | force_escape }}</code> - check the redirect uri carefully yourself!
+</div>
+{% endblock %}
+{% block foot %}
+<script type="text/javascript">
+	tippy('[data-tooltip]', {arrow: true});
+</script>
 {% endblock %}

@@ -11,8 +11,15 @@ module.exports = function() {
 	return function(style) {
 		for (let i = 0; i < 16; i++) {
 			const key = 'base0' + i.toString(16).toUpperCase();
+			const hex = theme[key];
+			const colour = new stylus.nodes.RGBA(
+				parseInt(hex.substr(0, 2), 16),
+				parseInt(hex.substr(2, 2), 16),
+				parseInt(hex.substr(4, 2), 16),
+				1
+			);
 
-			style.define('$' + key, new stylus.nodes.Literal('#' + theme[key]));
+			style.define('$' + key, colour);
 		}
 	};
 };

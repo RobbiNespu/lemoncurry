@@ -108,6 +108,10 @@ path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
 
+popper.js@^1.12.4:
+  version "1.12.6"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.6.tgz#91e12a97b07815258b76915d64044e8ac053d426"
+
 sax@0.5.x:
   version "0.5.8"
   resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
@@ -132,6 +136,12 @@ stylus@^0.54.5:
     mkdirp "0.5.x"
     sax "0.5.x"
     source-map "0.1.x"
+
+tippy.js@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-1.4.1.tgz#a20831a53e40566825c0b3c6ad72afc30e97c6f5"
+  dependencies:
+    popper.js "^1.12.4"
 
 wrappy@1:
   version "1.0.2"
