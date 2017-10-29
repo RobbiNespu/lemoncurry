@@ -29,6 +29,7 @@ xrd = "*"
 django-push = "*"
 pyyaml = "*"
 django-annoying = "*"
+django-shorturls = "*"
 
 
 [dev-packages]

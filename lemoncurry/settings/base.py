@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'favicon',
     'meta',
+    'shorturls',
 
     'lemoncurry',
     'entries',
@@ -208,6 +209,12 @@ SITE_ID = 1
 # django-agent-trust
 # https://pythonhosted.org/django-agent-trust/
 AGENT_COOKIE_SECURE = True
+
+# django-shorturls
+# https://pypi.python.org/pypi/django-shorturls
+SHORTEN_MODELS = {
+    'e': 'entries.entry',
+}
 
 # django-meta
 # https://django-meta.readthedocs.io/en/latest/settings.html
