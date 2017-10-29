@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.humanize',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     'django_agent_trust.middleware.AgentMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -198,22 +200,18 @@ COMPRESS_PRECOMPILERS = (
 MEDIA_URL = STATIC_URL + 'media/'
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 
-
-# Settings specific to lemoncurry
-LEMONCURRY_SITE_NAME = '00dani.me'
+# django-contrib-sites
+# https://docs.djangoproject.com/en/dev/ref/contrib/sites/
+SITE_ID = 1
 
 # django-agent-trust
 # https://pythonhosted.org/django-agent-trust/
 AGENT_COOKIE_SECURE = True
 
-# django-otp
-# https://django-otp-official.readthedocs.io/en/latest/overview.html
-OTP_TOTP_ISSUER = LEMONCURRY_SITE_NAME
-
 # django-meta
 # https://django-meta.readthedocs.io/en/latest/settings.html
 META_SITE_PROTOCOL = 'https'
-META_SITE_NAME = LEMONCURRY_SITE_NAME
+META_USE_SITES = True
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 

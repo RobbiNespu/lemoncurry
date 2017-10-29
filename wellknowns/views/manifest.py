@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
 from favicon.models import FaviconImg
@@ -10,12 +9,11 @@ from textwrap import shorten
 
 def manifest(request):
     base = utils.origin(request)
-    name = settings.LEMONCURRY_SITE_NAME
     start_url = reverse('home:index') + '?utm_source=homescreen'
 
     app = {
-        'name': name,
-        'short_name': shorten(name, width=20, placeholder=''),
+        'name': request.site.name,
+        'short_name': shorten(request.site.name, width=20, placeholder=''),
 
         'display': 'browser',
         'start_url': urljoin(base, start_url),

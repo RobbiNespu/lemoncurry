@@ -1,6 +1,7 @@
 
 from django import template
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.urls import reverse
 from ..utils import load_package_json, origin, uri
 
@@ -34,7 +35,7 @@ def request_uri(request):
 
 @register.simple_tag
 def site_name():
-    return settings.LEMONCURRY_SITE_NAME
+    return Site.objects.get_current().name
 
 
 @register.inclusion_tag('lemoncurry/tags/nav.html')

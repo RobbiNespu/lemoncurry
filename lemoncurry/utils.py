@@ -15,7 +15,7 @@ def load_package_json():
 
 
 def origin(request):
-    return '{0}://{1}'.format(request.scheme, request.META['HTTP_HOST'])
+    return '{0}://{1}'.format(request.scheme, request.site.domain)
 
 
 def uri(request):

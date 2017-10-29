@@ -19,7 +19,7 @@ def add_links(request, dest):
 def host_meta(request):
     h = XRD()
     h.attributes.append(Attribute('xmlns:hm', 'http://host-meta.net/ns/1.0'))
-    h.elements.append(Element('hm:Host', request.META['HTTP_HOST']))
+    h.elements.append(Element('hm:Host', request.site.domain))
     add_links(request, h.links)
     return h
 
