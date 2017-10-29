@@ -1,7 +1,7 @@
 {% extends 'lemoncurry/layout.html' %}
 {% load shorturl static %}
 
-{% block head %}{% revcanonical entry %}{% endblock %}
+{% block head %}<link rel="shortlink" href="{% shorturl entry %}" />{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
