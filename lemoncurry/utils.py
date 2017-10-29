@@ -26,7 +26,8 @@ def uri(request):
 
 
 def choose_type(request, content, reps):
-    type = get_best_match(request.META.get('HTTP_ACCEPT'), reps.keys())
+    accept = request.META.get('HTTP_ACCEPT', '*/*')
+    type = get_best_match(accept, reps.keys())
     if type:
         return reps[type](content)
     return HttpResponse(status=406)
