@@ -3,9 +3,11 @@ import mf2py
 from annoying.decorators import render_to
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from lemoncurry import breadcrumbs, utils
 from urllib.parse import urlencode, urljoin, urlunparse, urlparse
@@ -26,6 +28,7 @@ def canonical(url):
     return urlunparse((scheme, loc, path, params, q, fragment))
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class IndieView(TemplateView):
     template_name = 'lemonauth/indie.html'
     required_params = ('me', 'client_id', 'redirect_uri')
@@ -67,6 +70,25 @@ class IndieView(TemplateView):
             app = None
 
         return {'app': app, 'me': me, 'params': params, 'title': 'indieauth'}
+
+    def post(self, request):
+        post = request.POST.dict()
+        try:
+            code = IndieAuthCode.objects.get(
+                code=post['code'],
+                client_id=post['client_id'],
+                redirect_uri=post['redirect_uri']
+            )
+        except IndieAuthCode.DoesNotExist:
+            return HttpResponseForbidden(
+                'invalid auth code {0}'.format(post['code']),
+                content_type='text/plain'
+            )
+        code.delete()
+        return utils.choose_type(request, {'me': code.me}, {
+            'application/json': JsonResponse,
+            'application/x-www-form-urlencoded': utils.form_encoded_response,
+        })
 
 
 @login_required

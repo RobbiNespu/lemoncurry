@@ -30,6 +30,7 @@ django-push = "*"
 pyyaml = "*"
 django-annoying = "*"
 django-shorturls = "*"
+accept-types = "*"
 
 
 [dev-packages]

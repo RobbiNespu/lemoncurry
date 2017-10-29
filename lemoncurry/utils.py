@@ -1,7 +1,10 @@
 import json
+from accept_types import get_best_match
 from django.conf import settings
+from django.http import HttpResponse
 from os.path import join
 from types import SimpleNamespace
+from urllib.parse import urlencode
 
 cache = SimpleNamespace(package_json=None)
 
@@ -20,3 +23,17 @@ def origin(request):
 
 def uri(request):
     return origin(request) + request.path
+
+
+def choose_type(request, content, reps):
+    type = get_best_match(request.META.get('HTTP_ACCEPT'), reps.keys())
+    if type:
+        return reps[type](content)
+    return HttpResponse(status=406)
+
+
+def form_encoded_response(content):
+    return HttpResponse(
+        urlencode(content),
+        content_type='application/x-www-form-urlencoded'
+    )
