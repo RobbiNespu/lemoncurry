@@ -7,7 +7,7 @@
 
 {% block main %}
 <div class="container">
-	<form class="card" method="post" action="{% url 'lemonauth:indie' %}">
+	<form class="card" method="post" action="{% url 'lemonauth:indie_approve' %}">
 		<h4 class="card-header h-x-app">
 			{% if app %}<img class="u-logo p-name" src="{{ app.logo | first }}" alt="{{ app.name | first }}" />{% endif %}
 			sign in to
@@ -16,7 +16,7 @@
 		</h4>
 
 		<div class="card-body">
-			<p class="card-text">do you want to confirm your identity, <a class="code" href="{{ params.me }}">{{ params.me }}</a>, with this app?</p>
+			<p class="card-text">do you want to confirm your identity, <a class="code" href="{{ me }}">{{ me }}</a>, with this app?</p>
 			<p class="card-text"><small>you will be redirected to <a class="code" href="{{ params.redirect_uri }}">{{ params.redirect_uri }}</a> after authorising this app</small></p>
 		</div>
 
@@ -28,9 +28,11 @@
 		</div>
 
 		{% csrf_token %}
-		{% if params.state %}
-		<input name="state" type="hidden" value="{{ params.state }}" />
-		{% endif %}
+		<input name="me" type="hidden" value="{{ me }}" />
+		<input name="client_id" type="hidden" value="{{ params.client_id }}" />
+		<input name="redirect_uri" type="hidden" value="{{ params.redirect_uri }}" />
+		{% if params.state %}<input name="state" type="hidden" value="{{ params.state }}" />{% endif %}
+		<input name="response_type" type="hidden" value="{{ params.response_type }}" />
 	</form>
 </div>
 {% endblock %}

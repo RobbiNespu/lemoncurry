@@ -1,14 +1,27 @@
 import mf2py
 
+from annoying.decorators import render_to
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.views.decorators.http import require_POST
 from lemoncurry import breadcrumbs, utils
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlunparse, urlparse
 
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
+
+
+def canonical(url):
+    (scheme, loc, path, params, q, fragment) = urlparse(url)
+    if not path:
+        path = '/'
+    if not loc:
+        loc, path = path, ''
+    if not scheme:
+        scheme = 'https'
+    return urlunparse((scheme, loc, path, params, q, fragment))
 
 
 class IndieView(TemplateView):
@@ -16,8 +29,11 @@ class IndieView(TemplateView):
     required_params = ('me', 'client_id', 'redirect_uri')
 
     @method_decorator(login_required)
+    @method_decorator(render_to(template_name))
     def get(self, request):
-        params = request.GET
+        params = request.GET.dict()
+        params.setdefault('response_type', 'id')
+
         for param in self.required_params:
             if param not in params:
                 return HttpResponseBadRequest(
@@ -25,13 +41,9 @@ class IndieView(TemplateView):
                     content_type='text/plain',
                 )
 
-        me = params['me']
-        if me[-1] == '/':
-            me = me[:-1]
-
-        origin = utils.origin(request)
-        user = urljoin(origin, request.user.url)
-        if user not in (me, me + '/'):
+        me = canonical(params['me'])
+        user = urljoin(utils.origin(request), request.user.url)
+        if user != me:
             return HttpResponseForbidden(
                 'you are logged in but not as {0}'.format(me),
                 content_type='text/plain',
@@ -52,8 +64,10 @@ class IndieView(TemplateView):
         except IndexError:
             app = None
 
-        return render(request, self.template_name, {
-            'app': app,
-            'params': params,
-            'title': 'indieauth',
-        })
+        return {'app': app, 'me': me, 'params': params, 'title': 'indieauth'}
+
+
+@login_required
+@require_POST
+def approve(request):
+    return JsonResponse(request.POST)
