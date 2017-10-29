@@ -77,14 +77,14 @@ class IndieView(TemplateView):
         post = request.POST.dict()
         try:
             code = IndieAuthCode.objects.get(
-                code=post['code'],
-                client_id=post['client_id'],
-                redirect_uri=post['redirect_uri']
+                code=post.get('code'),
+                client_id=post.get('client_id'),
+                redirect_uri=post.get('redirect_uri'),
             )
         except IndieAuthCode.DoesNotExist:
             return HttpResponseForbidden(
-                'invalid auth code {0}'.format(post['code']),
-                content_type='text/plain'
+                'invalid parameters',
+                content_type='text/plain',
             )
         code.delete()
         return utils.choose_type(request, {'me': code.me}, {
