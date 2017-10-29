@@ -8,6 +8,7 @@
 		<link rel="canonical" href="{{ uri }}" />
 		{% block head %}{% endblock %}
 
+		<link rel="authorization_endpoint" href="{% url 'lemonauth:indie' %}" />
 		<link rel="hub" href="{% get_push_hub %}" />
 		<link rel="self" href="{{ uri }}" />
  
