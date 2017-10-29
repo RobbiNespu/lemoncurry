@@ -3,12 +3,14 @@ import mf2py
 from annoying.decorators import render_to
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
-from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.decorators.http import require_POST
 from lemoncurry import breadcrumbs, utils
-from urllib.parse import urljoin, urlunparse, urlparse
+from urllib.parse import urlencode, urljoin, urlunparse, urlparse
+
+from ..models import IndieAuthCode
 
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
 
@@ -70,4 +72,10 @@ class IndieView(TemplateView):
 @login_required
 @require_POST
 def approve(request):
-    return JsonResponse(request.POST)
+    post = request.POST.dict()
+    code = IndieAuthCode.objects.create_from_dict(post)
+    code.save()
+    params = {'code': code.code, 'me': code.me}
+    if 'state' in post:
+        params['state'] = post['state']
+    return redirect(code.redirect_uri + '?' + urlencode(params))
