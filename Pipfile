@@ -28,6 +28,7 @@ django-debug-toolbar = "*"
 xrd = "*"
 django-push = "*"
 pyyaml = "*"
+django-annoying = "*"
 
 
 [dev-packages]

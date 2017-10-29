@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'annoying',
     'compressor',
     'debug_toolbar',
     'django_activeurl',
