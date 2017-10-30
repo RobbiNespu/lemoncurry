@@ -3,8 +3,10 @@ from accept_types import get_best_match
 from django.conf import settings
 from django.http import HttpResponse
 from os.path import join
+from shorturls import default_converter as converter
+from shorturls.templatetags.shorturl import ShortURL
 from types import SimpleNamespace
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urljoin
 
 cache = SimpleNamespace(package_json=None)
 
@@ -38,3 +40,11 @@ def form_encoded_response(content):
         urlencode(content),
         content_type='application/x-www-form-urlencoded'
     )
+
+
+def shortlink(obj):
+    prefix = ShortURL(None).get_prefix(obj)
+    tinyid = converter.from_decimal(obj.pk)
+    if hasattr(settings, 'SHORT_BASE_URL') and settings.SHORT_BASE_URL:
+        return urljoin(settings.SHORT_BASE_URL, prefix + tinyid)
+    return '/' + prefix + tinyid
