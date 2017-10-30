@@ -1,0 +1,4 @@
+# vim: set ft=yaml :
+host: 00dani.dev
+port: 443
+cname: dev.00dani.me
