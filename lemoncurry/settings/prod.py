@@ -15,6 +15,8 @@ DATABASES['default'] = {
     'USER': 'lemoncurry',
 }
 
+SHORT_BASE_URL = 'https://nya.as/'
+
 STATIC_ROOT = join(BASE_DIR, '..', 'static')
 MEDIA_ROOT = join(BASE_DIR, '..', 'media')
 STATIC_URL = 'https://cdn.00dani.me/'
