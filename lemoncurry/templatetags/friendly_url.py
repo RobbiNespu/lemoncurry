@@ -1,5 +1,5 @@
 from django import template
-from urllib.parse import urlunparse, urlparse
+from urllib.parse import urlparse
 
 register = template.Library()
 
@@ -7,4 +7,4 @@ register = template.Library()
 @register.filter
 def friendly_url(url):
     (scheme, netloc, path, params, q, fragment) = urlparse(url)
-    return urlunparse(('', netloc, path, '', '', ''))
+    return netloc + path
