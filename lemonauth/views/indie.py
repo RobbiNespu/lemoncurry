@@ -17,6 +17,14 @@ from ..models import IndieAuthCode
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
 
 
+def bad_req(message):
+    return HttpResponseBadRequest(message, content_type='text/plain')
+
+
+def forbid(message):
+    return HttpResponseForbidden(message, content_type='text/plain')
+
+
 def canonical(url):
     (scheme, loc, path, params, q, fragment) = urlparse(url)
     if not path:
@@ -76,17 +84,25 @@ class IndieView(TemplateView):
     def post(self, request):
         post = request.POST.dict()
         try:
-            code = IndieAuthCode.objects.get(
-                code=post.get('code'),
-                client_id=post.get('client_id'),
-                redirect_uri=post.get('redirect_uri'),
-            )
+            code = IndieAuthCode.objects.get(code=post.get('code'))
         except IndieAuthCode.DoesNotExist:
-            return HttpResponseForbidden(
-                'invalid parameters',
-                content_type='text/plain',
-            )
+            return forbid('invalid auth code')
+
+        # We always delete the code immediately to ensure it's only single-use.
+        # If you pass the right code but the wrong other info, bad luck, you
+        # need a new code.
         code.delete()
+
+        # After deleting the code from the DB, we verify the other parameters
+        # of the request.
+        if code.response_type != 'id':
+            return bad_req('this endpoint only supports response_type=id')
+        if post.get('client_id') != code.client_id:
+            return forbid('client id did not match')
+        if post.get('redirect_uri') != code.redirect_uri:
+            return forbid('redirect uri did not match')
+
+        # If we got here, it's valid! Yay!
         return utils.choose_type(request, {'me': code.me}, {
             'application/json': JsonResponse,
             'application/x-www-form-urlencoded': utils.form_encoded_response,
