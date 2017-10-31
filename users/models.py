@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.sites.models import Site as DjangoSite
 from django.utils.functional import cached_property
 from meta.models import ModelMeta
+from urllib.parse import urljoin
 
 
 def avatar_path(instance, name):
@@ -54,6 +56,22 @@ class User(ModelMeta, AbstractUser):
             return '@' + self.profiles.filter(site__name='Twitter').values('username')[0]['username']
         except IndexError:
             return None
+
+    @property
+    def json_ld(self):
+        base = 'https://' + DjangoSite.objects.get_current().domain
+        return {
+            '@context': 'http://schema.org',
+            '@type': 'Person',
+            '@id': urljoin(base, self.url),
+            'url': urljoin(base, self.url),
+            'name': '{0} {1}'.format(self.first_name, self.last_name),
+            'email': self.email,
+            'image': urljoin(base, self.avatar.url),
+            'givenName': self.first_name,
+            'familyName': self.last_name,
+            'sameAs': [profile.url for profile in self.profiles.all()]
+        }
 
     _metadata = {
         'image': 'avatar_url',
