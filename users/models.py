@@ -36,6 +36,10 @@ class User(ModelMeta, AbstractUser):
     # This is gonna need to change if I ever decide to add multiple-user support ;)
     url = '/'
 
+    @property
+    def name(self):
+        return '{0} {1}'.format(self.first_name, self.last_name)
+
     def get_absolute_url(self):
         return self.url
 
@@ -65,7 +69,7 @@ class User(ModelMeta, AbstractUser):
             '@type': 'Person',
             '@id': urljoin(base, self.url),
             'url': urljoin(base, self.url),
-            'name': '{0} {1}'.format(self.first_name, self.last_name),
+            'name': self.name,
             'email': self.email,
             'image': urljoin(base, self.avatar.url),
             'givenName': self.first_name,

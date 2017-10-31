@@ -1,4 +1,4 @@
-{% load friendly_url humanize markdown shortlink %}<article class="card h-entry">
+{% load friendly_url humanize jsonify markdown shortlink %}<article class="card h-entry">
 	{% if entry.photo %}<img class="card-img-top u-photo" src="{{ entry.photo.url }}" />{% endif %}
 	<div class="card-body">
 		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
@@ -32,4 +32,5 @@
 		</a>
 		{% endfor %}
 	</div>
+	<script class="p-json-ld" type="application/ld+json">{{ entry.json_ld | jsonify }}</script>
 </article>

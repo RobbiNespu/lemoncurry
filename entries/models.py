@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
 from itertools import groupby
 from slugify import slugify
 from textwrap import shorten
+from urllib.parse import urljoin
 
 from meta.models import ModelMeta
 from users.models import Profile
@@ -96,6 +98,31 @@ class Entry(ModelMeta, models.Model):
     @property
     def slug(self):
         return slugify(self.name)
+
+    @property
+    def json_ld(self):
+        base = 'https://' + Site.objects.get_current().domain
+        url = urljoin(base, self.url)
+
+        posting = {
+            '@context': 'http://schema.org',
+            '@type': 'BlogPosting',
+            '@id': url,
+            'url': url,
+            'mainEntityOfPage': url,
+            'author': {
+                '@type': 'Person',
+                'url': urljoin(base, self.author.url),
+                'name': self.author.name,
+            },
+            'headline': self.title,
+            'description': self.excerpt,
+            'datePublished': self.published.isoformat(),
+            'dateModified': self.updated.isoformat(),
+        }
+        if self.photo:
+            posting['image'] = (urljoin(base, self.photo.url), )
+        return posting
 
     class Meta:
         verbose_name_plural = 'entries'
