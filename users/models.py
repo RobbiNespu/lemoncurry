@@ -25,7 +25,7 @@ class Site(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('domain',)
 
 
 class User(ModelMeta, AbstractUser):
