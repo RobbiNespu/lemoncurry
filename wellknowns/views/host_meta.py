@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from lemoncurry.utils import load_package_json, origin
 from urllib.parse import urljoin
@@ -7,19 +7,32 @@ from xrd import XRD, Attribute, Element, Link
 
 def add_links(request, dest):
     base = origin(request)
-    package = load_package_json()
+    pkg = load_package_json()
+    webfinger = reverse('wellknowns:webfinger') + '?resource={uri}'
+    license = 'https://creativecommons.org/licenses/by-sa/4.0/'
+
     links = (
-        Link(rel='lrdd', template=urljoin(base, reverse('wellknowns:webfinger') + '?resource={uri}')),
-        Link(rel='license', href='https://creativecommons.org/licenses/by-sa/4.0/'),
-        Link(rel='code-repository', href=package['repository']),
+        Link(
+            href=urljoin(base, reverse('lemonauth:indie')),
+            rel='authorization_endpoint'
+        ),
+        Link(
+            template=urljoin(base, webfinger),
+            type_='application/json', rel='lrdd',
+        ),
+        Link(
+            href=urljoin(base, reverse('wellknowns:manifest')),
+            rel='manifest', type_='application/json',
+        ),
+        Link(href=license, type_='text/html', rel='license'),
+        Link(href=license+'rdf', type_='application/rdf+xml', rel='license'),
+        Link(href=pkg['repository'], type_='text/html', rel='code-repository'),
     )
     dest.extend(links)
 
 
 def host_meta(request):
-    h = XRD()
-    h.attributes.append(Attribute('xmlns:hm', 'http://host-meta.net/ns/1.0'))
-    h.elements.append(Element('hm:Host', request.site.domain))
+    h = XRD(subject='https://' + request.site.domain)
     add_links(request, h.links)
     return h
 
@@ -31,8 +44,20 @@ def host_meta_xml(request):
     )
 
 
+# The XRD package doesn't actually generate correct JSON, so we have to do it
+# ourselves instead.
 def host_meta_json(request):
-    return HttpResponse(
-        host_meta(request).to_json(),
-        content_type='application/json'
-    )
+    meta = host_meta(request)
+    links = []
+    for l in meta.links:
+        link = {
+            'rel': l.rel, 'type': l.type,
+            'href': l.href, 'template': l.template,
+        }
+        for k in list(link.keys()):
+            if not link[k]:
+                del link[k]
+        links.append(link)
+
+    meta = {'links': links, 'subject': meta.subject}
+    return JsonResponse(meta)
