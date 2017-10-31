@@ -11,7 +11,15 @@ def avatar_path(instance, name):
 class Site(models.Model):
     name = models.CharField(max_length=100, unique=True)
     icon = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
+    domain = models.CharField(max_length=100, blank=True)
+    url_template = models.CharField(max_length=100)
+
+    def format(self, username=''):
+        return self.url_template.format(domain=self.domain, username=username)
+
+    @property
+    def url(self):
+        return self.format()
 
     def __str__(self):
         return self.name
@@ -73,7 +81,9 @@ class Profile(models.Model):
     display_name = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return self.url
+        if self.site.domain:
+            return self.name + '@' + self.site.domain
+        return self.name
 
     @property
     def name(self):
@@ -81,7 +91,7 @@ class Profile(models.Model):
 
     @property
     def url(self):
-        return self.site.url.format(username=self.username)
+        return self.site.format(username=self.username)
 
     class Meta:
         ordering = ('site', 'username')

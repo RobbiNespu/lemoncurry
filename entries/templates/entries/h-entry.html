@@ -28,7 +28,7 @@
 		{% for s in entry.syndications.all %}
 		<a class="u-syndication" href="{{ s.url }}">
 			<i class="{{ s.profile.site.icon }}"></i>
-			{{ s.profile.name }}
+			{{ s.profile }}
 		</a>
 		{% endfor %}
 	</div>

@@ -4,7 +4,7 @@ from .models import Key, Profile, Site, User
 
 
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'icon', 'url')
+    list_display = ('name', 'icon', 'domain', 'url_template')
 
 
 class KeyInline(admin.TabularInline):
