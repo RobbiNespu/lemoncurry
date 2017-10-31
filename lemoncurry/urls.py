@@ -41,7 +41,7 @@ urlpatterns = [
     url('^auth/', include('lemonauth.urls')),
     url('^s/', include('shorturls.urls')),
 
-    url(r'^sitemap\.xml$', sitemap.index, maps),
+    url(r'^sitemap\.xml$', sitemap.index, maps, name='sitemap'),
     url(r'^sitemaps/(?P<section>.+)\.xml$', sitemap.sitemap, maps,
         name='django.contrib.sitemaps.views.sitemap'),
 ]
