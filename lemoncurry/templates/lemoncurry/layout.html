@@ -6,6 +6,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="{{ uri }}" />
+		{% if atom %}<link rel="alternate" type="application/atom+xml" href="{% url atom %}" />{% endif %}
+		{% if rss %}<link rel="alternate" type="application/rss+xml" href="{% url rss %}" /> {% endif %}
 		{% block head %}{% endblock %}
 
 		<link rel="authorization_endpoint" href="{{ origin }}{% url 'lemonauth:indie' %}" />

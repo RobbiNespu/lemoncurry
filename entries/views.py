@@ -6,7 +6,12 @@ from .models import Entry
 @render_to('entries/index.html')
 def index(request, kind):
     entries = Entry.objects.filter(kind=kind.id)
-    return {'entries': entries, 'title': kind.plural}
+    return {
+        'entries': entries,
+        'atom': 'entries:' + kind.atom,
+        'rss': 'entries:' + kind.rss,
+        'title': kind.plural,
+    }
 
 
 @render_to('entries/entry.html')

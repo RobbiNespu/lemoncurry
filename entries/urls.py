@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import kinds, views
+from . import feeds, kinds, views
 from lemoncurry import breadcrumbs as crumbs
 
 
@@ -12,13 +12,18 @@ def prefix(route):
 
 
 app_name = 'entries'
-urlpatterns = []
+urlpatterns = [
+    url('^atom$', feeds.AtomAllEntries(), name='atom'),
+    url('^rss$', feeds.RssAllEntries(), name='rss'),
+]
 for k in kinds.all:
     kind = k.plural
     id = r'/(?P<id>\d+)'
     slug = r'(?:/(?P<slug>.+))?'
     urlpatterns += (
         url(to_pat(kind), views.index, name=k.index, kwargs={'kind': k}),
+        url(to_pat(kind, '/atom'), feeds.AtomByKind(k), name=k.atom),
+        url(to_pat(kind, '/rss'), feeds.RssByKind(k), name=k.rss),
         url(to_pat(kind, id, slug), views.entry, name=k.entry),
     )
 

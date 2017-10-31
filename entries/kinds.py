@@ -13,6 +13,14 @@ class Entry:
     def entry(self):
         return self.plural + '_entry'
 
+    @property
+    def atom(self):
+        return self.plural + '_atom'
+
+    @property
+    def rss(self):
+        return self.plural + '_rss'
+
 
 Note = Entry(
     id='note',

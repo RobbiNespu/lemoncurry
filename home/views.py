@@ -17,6 +17,8 @@ def index(request):
     return {
         'user': user,
         'entries': user.entries.all(),
+        'atom': 'entries:atom',
+        'rss': 'entries:rss',
         'meta': user.as_meta(request),
     }
 
