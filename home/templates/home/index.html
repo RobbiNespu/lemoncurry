@@ -35,8 +35,8 @@
 				</li>{% endfor %}
 			</ul>
 		</div>
+		<script class="p-json-ld" type="application/ld+json">{{ person | jsonify }}</script>
 	</article>
-	<script type="application/ld+json">{{ person | jsonify }}</script>
 </aside>
 <ol class="list-unstyled entries">
 	{% for entry in entries %}
