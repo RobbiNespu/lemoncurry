@@ -3,6 +3,7 @@ from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
 from urllib.parse import urljoin
+from lemoncurry.templatetags.markdown import markdown
 from .models import Entry
 
 
@@ -11,7 +12,7 @@ class EntriesFeed(Feed):
         return entry.title
 
     def item_description(self, entry):
-        return entry.content
+        return markdown(entry.content)
 
     def item_author_name(self, entry):
         return entry.author.name
