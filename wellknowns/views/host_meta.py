@@ -24,6 +24,14 @@ def add_links(request, dest):
             href=urljoin(base, reverse('wellknowns:manifest')),
             rel='manifest', type_='application/json',
         ),
+        Link(
+            href=urljoin(base, reverse('entries:atom')),
+            rel='alternate', type_='application/atom+xml',
+        ),
+        Link(
+            href=urljoin(base, reverse('entries:rss')),
+            rel='alternate', type_='application/rss+xml',
+        ),
         Link(href=license, type_='text/html', rel='license'),
         Link(href=license+'rdf', type_='application/rdf+xml', rel='license'),
         Link(href=pkg['repository'], type_='text/html', rel='code-repository'),
