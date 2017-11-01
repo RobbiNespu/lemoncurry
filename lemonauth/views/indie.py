@@ -62,6 +62,22 @@ class IndieView(TemplateView):
                 content_type='text/plain',
             )
 
+        type = params['response_type']
+        if type not in ('id', 'code'):
+            return HttpResponseBadRequest(
+                'unknown response_type: {0}'.format(type),
+                content_type='text/plain'
+            )
+
+        scopes = ()
+        if type == 'code':
+            if 'scope' not in params:
+                return HttpResponseBadRequest(
+                    'scopes required for code type',
+                    content_type='text/plain',
+                )
+            scopes = params['scope'].split(' ')
+
         client = mf2py.Parser(url=params['client_id'], html_parser='html5lib')
         rels = (client.to_dict()['rel-urls']
                 .get(params['redirect_uri'], {})
@@ -78,6 +94,7 @@ class IndieView(TemplateView):
             'me': me,
             'verified': verified,
             'params': params,
+            'scopes': scopes,
             'title': 'indieauth',
         }
 
@@ -112,10 +129,9 @@ class IndieView(TemplateView):
 @login_required
 @require_POST
 def approve(request):
-    post = request.POST.dict()
-    code = IndieAuthCode.objects.create_from_dict(post)
+    code = IndieAuthCode.objects.create_from_qdict(request.POST)
     code.save()
     params = {'code': code.code, 'me': code.me}
-    if 'state' in post:
-        params['state'] = post['state']
+    if 'state' in request.POST:
+        params['state'] = request.POST['state']
     return redirect(code.redirect_uri + '?' + urlencode(params))

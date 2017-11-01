@@ -22,6 +22,18 @@
 
 		<div class="card-body">
 			<p class="card-text">do you want to confirm your identity, <a class="code" href="{{ me }}">{{ me }}</a>, with this app?</p>
+			{% if params.response_type == 'code' %}
+			<p class="card-text">additionally, this app is requesting the following <i>scopes</i> - you can edit the scopes that will be granted to the app, if you wish</p>
+			<div class="custom-controls-stacked card-text">
+			{% for scope in scopes %}
+				<label class="custom-control custom-checkbox">
+					<input name="scope" type="checkbox" class="custom-control-input" checked value="{{ scope }}" />
+					<span class="custom-control-indicator"></span>
+					<span class="custom-control-description">{{ scope }}</span>
+				</label>
+			{% endfor %}
+			</div>
+			{% endif %}
 			<p class="card-text"><small>you will be redirected to <a class="code" href="{{ params.redirect_uri }}">{{ params.redirect_uri }}</a> after authorising this app</small></p>
 		</div>
 

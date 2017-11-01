@@ -3,13 +3,13 @@ from secrets import token_hex
 
 
 class IndieAuthCodeManager(models.Manager):
-    def create_from_dict(self, d):
+    def create_from_qdict(self, d):
         code = self.create(
             me=d['me'],
             client_id=d['client_id'],
             redirect_uri=d['redirect_uri'],
             response_type=d.get('response_type', 'id'),
-            scope=d.get('scope', ''),
+            scope=" ".join(d.getlist('scope')),
         )
         code.code = token_hex(32)
         return code
