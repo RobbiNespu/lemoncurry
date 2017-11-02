@@ -37,6 +37,7 @@ django-annoying = "*"
 django-shorturls = "*"
 accept-types = "*"
 django-analytical = "*"
+django-model-utils = "*"
 
 
 [dev-packages]

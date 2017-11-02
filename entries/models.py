@@ -8,6 +8,7 @@ from textwrap import shorten
 from urllib.parse import urljoin
 
 from meta.models import ModelMeta
+from model_utils.models import TimeStampedModel
 from users.models import Profile
 
 from . import kinds
@@ -20,7 +21,7 @@ class EntryManager(models.Manager):
         return qs.select_related('author').prefetch_related('syndications')
 
 
-class Entry(ModelMeta, models.Model):
+class Entry(ModelMeta, TimeStampedModel):
     objects = EntryManager()
     kind = models.CharField(
         max_length=30,
@@ -39,8 +40,13 @@ class Entry(ModelMeta, models.Model):
         on_delete=models.CASCADE,
     )
 
-    published = models.DateTimeField()
-    updated = models.DateTimeField()
+    @property
+    def published(self):
+        return self.created
+
+    @property
+    def updated(self):
+        return self.modified
 
     _metadata = {
         'description': 'excerpt',
@@ -117,8 +123,8 @@ class Entry(ModelMeta, models.Model):
             },
             'headline': self.title,
             'description': self.excerpt,
-            'datePublished': self.published.isoformat(),
-            'dateModified': self.updated.isoformat(),
+            'datePublished': self.created.isoformat(),
+            'dateModified': self.modified.isoformat(),
         }
         if self.photo:
             posting['image'] = (urljoin(base, self.photo.url), )
@@ -126,7 +132,7 @@ class Entry(ModelMeta, models.Model):
 
     class Meta:
         verbose_name_plural = 'entries'
-        ordering = ['-published']
+        ordering = ['-created']
 
 
 class SyndicationManager(models.Manager):

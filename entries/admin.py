@@ -8,8 +8,8 @@ class SyndicationInline(admin.TabularInline):
 
 
 class EntryAdmin(admin.ModelAdmin):
-    date_hierarchy = 'published'
-    list_display = ('title', 'id', 'kind', 'published')
+    date_hierarchy = 'created'
+    list_display = ('title', 'id', 'kind', 'created')
     list_filter = ('kind',)
     inlines = (
         SyndicationInline,
