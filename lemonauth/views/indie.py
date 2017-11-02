@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 from lemoncurry import breadcrumbs, utils
 from urllib.parse import urlencode, urljoin, urlunparse, urlparse
 
-from ..models import IndieAuthCode
+from .. import tokens
 
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
 
@@ -88,28 +88,23 @@ class IndieView(TemplateView):
     def post(self, request):
         post = request.POST.dict()
         try:
-            code = IndieAuthCode.objects.get(code=post.get('code'))
-        except IndieAuthCode.DoesNotExist:
+            code = tokens.verify_auth_code(post.get('code'))
+        except Exception:
+            # if anything at all goes wrong when decoding the auth code, bail
+            # out immediately.
             return utils.forbid('invalid auth code')
 
-        # We always delete the code immediately to ensure it's only single-use.
-        # If you pass the right code but the wrong other info, bad luck, you
-        # need a new code.
-        code.delete()
-
-        # After deleting the code from the DB, we verify the other parameters
-        # of the request.
-        if code.response_type != 'id':
+        if code['response_type'] != 'id':
             return utils.bad_req(
                 'this endpoint only supports response_type=id'
             )
-        if post.get('client_id') != code.client_id:
+        if post.get('client_id') != code['client_id']:
             return utils.forbid('client id did not match')
-        if post.get('redirect_uri') != code.redirect_uri:
+        if post.get('redirect_uri') != code['redirect_uri']:
             return utils.forbid('redirect uri did not match')
 
         # If we got here, it's valid! Yay!
-        return utils.choose_type(request, {'me': code.me}, {
+        return utils.choose_type(request, {'me': code['me']}, {
             'application/json': JsonResponse,
             'application/x-www-form-urlencoded': utils.form_encoded_response,
         })
@@ -118,9 +113,6 @@ class IndieView(TemplateView):
 @login_required
 @require_POST
 def approve(request):
-    code = IndieAuthCode.objects.create_from_qdict(request.POST)
-    code.save()
-    params = {'code': code.code, 'me': code.me}
-    if 'state' in request.POST:
-        params['state'] = request.POST['state']
-    return redirect(code.redirect_uri + '?' + urlencode(params))
+    post = request.POST
+    params = tokens.gen_auth_code(post)
+    return redirect(post['redirect_uri'] + '?' + urlencode(params))

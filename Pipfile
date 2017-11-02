@@ -38,6 +38,7 @@ django-shorturls = "*"
 accept-types = "*"
 django-analytical = "*"
 django-model-utils = "*"
+pyjwt = "*"
 
 
 [dev-packages]
