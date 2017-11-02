@@ -2,7 +2,6 @@ import mf2py
 
 from annoying.decorators import render_to
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
@@ -15,14 +14,6 @@ from urllib.parse import urlencode, urljoin, urlunparse, urlparse
 from ..models import IndieAuthCode
 
 breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
-
-
-def bad_req(message):
-    return HttpResponseBadRequest(message, content_type='text/plain')
-
-
-def forbid(message):
-    return HttpResponseForbidden(message, content_type='text/plain')
 
 
 def canonical(url):
@@ -49,32 +40,28 @@ class IndieView(TemplateView):
 
         for param in self.required_params:
             if param not in params:
-                return HttpResponseBadRequest(
-                    'parameter {0} is required'.format(param),
-                    content_type='text/plain',
+                return utils.bad_req(
+                    'parameter {0} is required'.format(param)
                 )
 
         me = canonical(params['me'])
         user = urljoin(utils.origin(request), request.user.url)
         if user != me:
-            return HttpResponseForbidden(
-                'you are logged in but not as {0}'.format(me),
-                content_type='text/plain',
+            return utils.forbid(
+                'you are logged in but not as {0}'.format(me)
             )
 
         type = params['response_type']
         if type not in ('id', 'code'):
-            return HttpResponseBadRequest(
-                'unknown response_type: {0}'.format(type),
-                content_type='text/plain'
+            return utils.bad_req(
+                'unknown response_type: {0}'.format(type)
             )
 
         scopes = ()
         if type == 'code':
             if 'scope' not in params:
-                return HttpResponseBadRequest(
-                    'scopes required for code type',
-                    content_type='text/plain',
+                return utils.bad_req(
+                    'scopes required for code type'
                 )
             scopes = params['scope'].split(' ')
 
@@ -103,7 +90,7 @@ class IndieView(TemplateView):
         try:
             code = IndieAuthCode.objects.get(code=post.get('code'))
         except IndieAuthCode.DoesNotExist:
-            return forbid('invalid auth code')
+            return utils.forbid('invalid auth code')
 
         # We always delete the code immediately to ensure it's only single-use.
         # If you pass the right code but the wrong other info, bad luck, you
@@ -113,11 +100,13 @@ class IndieView(TemplateView):
         # After deleting the code from the DB, we verify the other parameters
         # of the request.
         if code.response_type != 'id':
-            return bad_req('this endpoint only supports response_type=id')
+            return utils.bad_req(
+                'this endpoint only supports response_type=id'
+            )
         if post.get('client_id') != code.client_id:
-            return forbid('client id did not match')
+            return utils.forbid('client id did not match')
         if post.get('redirect_uri') != code.redirect_uri:
-            return forbid('redirect uri did not match')
+            return utils.forbid('redirect uri did not match')
 
         # If we got here, it's valid! Yay!
         return utils.choose_type(request, {'me': code.me}, {

@@ -2,6 +2,7 @@ import json
 from accept_types import get_best_match
 from django.conf import settings
 from django.http import HttpResponse
+from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from os.path import join
 from shorturls import default_converter as converter
 from shorturls.templatetags.shorturl import ShortURL
@@ -48,3 +49,11 @@ def shortlink(obj):
     if hasattr(settings, 'SHORT_BASE_URL') and settings.SHORT_BASE_URL:
         return urljoin(settings.SHORT_BASE_URL, prefix + tinyid)
     return '/' + prefix + tinyid
+
+
+def bad_req(message):
+    return HttpResponseBadRequest(message, content_type='text/plain')
+
+
+def forbid(message):
+    return HttpResponseForbidden(message, content_type='text/plain')
