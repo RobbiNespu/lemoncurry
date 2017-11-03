@@ -11,17 +11,18 @@ def gen_auth_code(post):
 
     code = {
         'me': post['me'],
-        'client_id': post['client_id'],
-        'redirect_uri': post['redirect_uri'],
-        'response_type': post.get('response_type', 'id'),
-        'exp': datetime.utcnow() + timedelta(minutes=10),
+        'id': post['client_id'],
+        'uri': post['redirect_uri'],
+        'typ': post.get('response_type', 'id'),
+        'iat': datetime.utcnow(),
+        'exp': datetime.utcnow() + timedelta(seconds=30),
     }
     if 'scope' in post:
-        code['scope'] = ' '.join(post.getlist('scope'))
+        code['sco'] = ' '.join(post.getlist('scope'))
 
-    params['code'] = jwt.encode(code, settings.SECRET_KEY)
+    params['code'] = jwt.encode(code, settings.SECRET_KEY, algorithm='HS256')
     return params
 
 
 def verify_auth_code(c):
-    return jwt.decode(c, settings.SECRET_KEY)
+    return jwt.decode(c, settings.SECRET_KEY, algorithms=('HS256',))

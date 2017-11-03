@@ -73,7 +73,6 @@ class IndieView(TemplateView):
                 .get('rels', ()))
         verified = 'redirect_uri' in rels
 
-
         try:
             app = client.to_dict(filter_by_type='h-x-app')[0]['properties']
         except IndexError:
@@ -98,13 +97,13 @@ class IndieView(TemplateView):
             # out immediately.
             return utils.forbid('invalid auth code')
 
-        if code['response_type'] != 'id':
+        if code['typ'] != 'id':
             return utils.bad_req(
                 'this endpoint only supports response_type=id'
             )
-        if post.get('client_id') != code['client_id']:
+        if code['id'] != post.get('client_id'):
             return utils.forbid('client id did not match')
-        if post.get('redirect_uri') != code['redirect_uri']:
+        if code['uri'] != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
         # If we got here, it's valid! Yay!
