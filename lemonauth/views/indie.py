@@ -109,8 +109,8 @@ class IndieView(TemplateView):
 
         # If we got here, it's valid! Yay!
         return utils.choose_type(request, {'me': code['me']}, {
-            'application/json': JsonResponse,
             'application/x-www-form-urlencoded': utils.form_encoded_response,
+            'application/json': JsonResponse,
         })
 
 
