@@ -107,7 +107,7 @@ class IndieView(TemplateView):
         if code['uri'] != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
-        user = get_user_model().get(pk=code['uid'])
+        user = get_user_model().objects.get(pk=code['uid'])
         me = urljoin(utils.origin(request), user.url)
         # If we got here, it's valid! Yay!
         return utils.choose_type(request, {'me': me}, {
