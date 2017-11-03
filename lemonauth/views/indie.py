@@ -69,7 +69,7 @@ class IndieView(TemplateView):
 
         client = mf2py.Parser(url=params['client_id'], html_parser='html5lib')
         rels = (client.to_dict()['rel-urls']
-                .get(params['redirect_uri'], {})
+                .get(redirect_uri, {})
                 .get('rels', ()))
         verified = 'redirect_uri' in rels
 
@@ -119,4 +119,7 @@ class IndieView(TemplateView):
 def approve(request):
     post = request.POST
     params = tokens.gen_auth_code(post)
-    return redirect(post['redirect_uri'] + '?' + urlencode(params))
+
+    uri = post['redirect_uri']
+    sep = '&' if '?' in uri else '?'
+    return redirect(uri + sep + urlencode(params))
