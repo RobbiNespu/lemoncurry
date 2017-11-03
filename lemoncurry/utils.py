@@ -1,7 +1,7 @@
 import json
 from accept_types import get_best_match
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from os.path import join
 from shorturls import default_converter as converter
@@ -28,19 +28,25 @@ def uri(request):
     return origin(request) + request.path
 
 
-def choose_type(request, content, reps):
-    accept = request.META.get('HTTP_ACCEPT', '*/*')
-    type = get_best_match(accept, reps.keys())
-    if type:
-        return reps[type](content)
-    return HttpResponse(status=406)
-
-
 def form_encoded_response(content):
     return HttpResponse(
         urlencode(content),
         content_type='application/x-www-form-urlencoded'
     )
+
+
+REPS = {
+    'application/x-www-form-urlencoded': form_encoded_response,
+    'application/json': JsonResponse,
+}
+
+
+def choose_type(request, content, reps=REPS):
+    accept = request.META.get('HTTP_ACCEPT', '*/*')
+    type = get_best_match(accept, reps.keys())
+    if type:
+        return reps[type](content)
+    return HttpResponse(status=406)
 
 
 def shortlink(obj):

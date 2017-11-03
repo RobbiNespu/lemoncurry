@@ -7,4 +7,5 @@ urlpatterns = [
     url('^logout$', views.logout, name='logout'),
     url('^indie$', views.IndieView.as_view(), name='indie'),
     url('^indie/approve$', views.indie_approve, name='indie_approve'),
+    url('^token$', views.TokenView.as_view(), name='token'),
 ]

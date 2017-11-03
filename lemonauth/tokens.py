@@ -25,3 +25,13 @@ def gen_auth_code(req):
         code['sco'] = ' '.join(req.POST.getlist('scope'))
 
     return encode(code)
+
+
+def gen_token(code):
+    tok = {
+        'uid': code['uid'],
+        'cid': code['cid'],
+        'sco': code['sco'],
+        'iat': datetime.utcnow(),
+    }
+    return encode(tok).decode('utf-8')
