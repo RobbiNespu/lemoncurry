@@ -12,14 +12,16 @@ def decode(token):
     return jwt.decode(token, settings.SECRET_KEY, algorithms=('HS256',))
 
 
-def gen_auth_code(post):
+def gen_auth_code(req):
+    post = req.POST
     params = {'me': post['me']}
     if 'state' in post:
         params['state'] = post['state']
 
     code = {
         'me': post['me'],
-        'id': post['client_id'],
+        'uid': req.user.id,
+        'cid': post['client_id'],
         'uri': post['redirect_uri'],
         'typ': post.get('response_type', 'id'),
         'iat': datetime.utcnow(),
@@ -29,7 +31,7 @@ def gen_auth_code(post):
         code['sco'] = ' '.join(post.getlist('scope'))
 
     params['code'] = encode(code)
-    return params
+    return (post['redirect_uri'], params)
 
 
 def verify_auth_code(c):

@@ -101,7 +101,7 @@ class IndieView(TemplateView):
             return utils.bad_req(
                 'this endpoint only supports response_type=id'
             )
-        if code['id'] != post.get('client_id'):
+        if code['cid'] != post.get('client_id'):
             return utils.forbid('client id did not match')
         if code['uri'] != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
@@ -116,9 +116,6 @@ class IndieView(TemplateView):
 @login_required
 @require_POST
 def approve(request):
-    post = request.POST
-    params = tokens.gen_auth_code(post)
-
-    uri = post['redirect_uri']
+    uri, params = tokens.gen_auth_code(request)
     sep = '&' if '?' in uri else '?'
     return redirect(uri + sep + urlencode(params))
