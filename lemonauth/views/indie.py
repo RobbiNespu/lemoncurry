@@ -92,7 +92,7 @@ class IndieView(TemplateView):
     def post(self, request):
         post = request.POST.dict()
         try:
-            code = tokens.verify_auth_code(post.get('code'))
+            code = tokens.decode(post.get('code'))
         except Exception:
             # if anything at all goes wrong when decoding the auth code, bail
             # out immediately.

@@ -25,7 +25,3 @@ def gen_auth_code(req):
         code['sco'] = ' '.join(req.POST.getlist('scope'))
 
     return encode(code)
-
-
-def verify_auth_code(c):
-    return decode(c)
