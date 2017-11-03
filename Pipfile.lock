@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2afb7a864b8a0b60e8c0935dab11b91989cb33749272f4a5271dde8b53cafa43"
+            "sha256": "cf182403fb7c87c0f9836e227d4179fb82098b79f3766497a26d10a9c3b2663a"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -184,6 +184,19 @@
             ],
             "version": "==2.0.0"
         },
+        "ecdsa": {
+            "hashes": [
+                "sha256:40d002cf360d0e035cf2cb985e1308d41aaa087cbfc135b2dc2d844296ea546c",
+                "sha256:64cf1ee26d1cde3c73c6d7d107f835fed7c6a2904aef9eac223d57ad800c43fa"
+            ],
+            "version": "==0.13"
+        },
+        "future": {
+            "hashes": [
+                "sha256:e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb"
+            ],
+            "version": "==0.16.0"
+        },
         "gunicorn": {
             "hashes": [
                 "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
@@ -351,12 +364,18 @@
             ],
             "version": "==2.7.3.2"
         },
-        "pyjwt": {
+        "pycrypto": {
             "hashes": [
-                "sha256:a4e5f1441e3ca7b382fd0c0b416777ced1f97c64ef0c33bfa39daf38505cfd2f",
-                "sha256:500be75b17a63f70072416843dc80c8821109030be824f4d14758f114978bae7"
+                "sha256:f2ce1e989b272cfcb677616763e0a2e7ec659effa67a88aa92b3a65528f60a3c"
             ],
-            "version": "==1.5.3"
+            "version": "==2.6.1"
+        },
+        "python-jose": {
+            "hashes": [
+                "sha256:fed56224664af0ebc3947853f1bed23b5609f90c7b02e3dce5ef5757d0301664",
+                "sha256:18e19f200f37a8ee6247921572807cc63ee034abdbf6854df1ae7c1f505cabcc"
+            ],
+            "version": "==1.4.0"
         },
         "python-memcached": {
             "hashes": [

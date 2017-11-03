@@ -1,4 +1,4 @@
-import jwt
+from jose import jwt
 
 from datetime import datetime, timedelta
 from django.conf import settings
@@ -34,4 +34,4 @@ def gen_token(code):
         'sco': code['sco'],
         'iat': datetime.utcnow(),
     }
-    return encode(tok).decode('utf-8')
+    return encode(tok)
