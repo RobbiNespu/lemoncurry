@@ -39,6 +39,7 @@ urlpatterns = [
     url('^.well-known/', include('wellknowns.urls')),
     url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),
+    url('^micropub', include('micropub.urls')),
     url('^s/', include('shorturls.urls')),
 
     url(r'^sitemap\.xml$', sitemap.index, maps, name='sitemap'),

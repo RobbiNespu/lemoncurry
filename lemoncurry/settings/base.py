@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'entries',
     'home',
     'lemonauth',
+    'micropub',
     'users',
     'wellknowns',
 ]
