@@ -12,6 +12,7 @@
 		{% block head %}{% endblock %}
 
 		<link rel="authorization_endpoint" href="{{ origin }}{% url 'lemonauth:indie' %}" />
+		<link rel="token_endpoint" href="{{ origin }}{% url 'lemonauth:token' %}" />
 		<link rel="openid.delegate" href="{{ origin }}" />
 		<link rel="openid.server" href="https://openid.indieauth.com/openid" />
 

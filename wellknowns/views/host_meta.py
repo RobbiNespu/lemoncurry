@@ -17,6 +17,10 @@ def add_links(request, dest):
             rel='authorization_endpoint'
         ),
         Link(
+            href=urljoin(base, reverse('lemonauth:token')),
+            rel='token_endpoint'
+        ),
+        Link(
             template=urljoin(base, webfinger),
             type_='application/json', rel='lrdd',
         ),
