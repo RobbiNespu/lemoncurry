@@ -4,6 +4,14 @@ from datetime import datetime, timedelta
 from django.conf import settings
 
 
+def encode(payload):
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+
+
+def decode(token):
+    return jwt.decode(token, settings.SECRET_KEY, algorithms=('HS256',))
+
+
 def gen_auth_code(post):
     params = {'me': post['me']}
     if 'state' in post:
@@ -20,9 +28,9 @@ def gen_auth_code(post):
     if 'scope' in post:
         code['sco'] = ' '.join(post.getlist('scope'))
 
-    params['code'] = jwt.encode(code, settings.SECRET_KEY, algorithm='HS256')
+    params['code'] = encode(code)
     return params
 
 
 def verify_auth_code(c):
-    return jwt.decode(c, settings.SECRET_KEY, algorithms=('HS256',))
+    return decode(c)
