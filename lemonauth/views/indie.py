@@ -51,6 +51,8 @@ class IndieView(TemplateView):
                 'you are logged in but not as {0}'.format(me)
             )
 
+        redirect_uri = urljoin(params['client_id'], params['redirect_uri'])
+
         type = params['response_type']
         if type not in ('id', 'code'):
             return utils.bad_req(
@@ -71,6 +73,7 @@ class IndieView(TemplateView):
                 .get('rels', ()))
         verified = 'redirect_uri' in rels
 
+
         try:
             app = client.to_dict(filter_by_type='h-x-app')[0]['properties']
         except IndexError:
@@ -79,6 +82,7 @@ class IndieView(TemplateView):
         return {
             'app': app,
             'me': me,
+            'redirect_uri': redirect_uri,
             'verified': verified,
             'params': params,
             'scopes': scopes,

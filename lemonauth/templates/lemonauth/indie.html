@@ -34,7 +34,7 @@
 			{% endfor %}
 			</div>
 			{% endif %}
-			<p class="card-text"><small>you will be redirected to <a class="code" href="{{ params.redirect_uri }}">{{ params.redirect_uri }}</a> after authorising this app</small></p>
+			<p class="card-text"><small>you will be redirected to <a class="code" href="{{ redirect_uri }}">{{ redirect_uri }}</a> after authorising this app</small></p>
 		</div>
 
 		<div class="card-footer">
@@ -47,7 +47,7 @@
 		{% csrf_token %}
 		<input name="me" type="hidden" value="{{ me }}" />
 		<input name="client_id" type="hidden" value="{{ params.client_id }}" />
-		<input name="redirect_uri" type="hidden" value="{{ params.redirect_uri }}" />
+		<input name="redirect_uri" type="hidden" value="{{ redirect_uri }}" />
 		{% if params.state %}<input name="state" type="hidden" value="{{ params.state }}" />{% endif %}
 		<input name="response_type" type="hidden" value="{{ params.response_type }}" />
 	</form>
