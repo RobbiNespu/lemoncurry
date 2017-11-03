@@ -1,6 +1,7 @@
 import mf2py
 
 from annoying.decorators import render_to
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -106,8 +107,10 @@ class IndieView(TemplateView):
         if code['uri'] != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
+        user = get_user_model().get(pk=code['uid'])
+        me = urljoin(utils.origin(request), user.url)
         # If we got here, it's valid! Yay!
-        return utils.choose_type(request, {'me': code['me']}, {
+        return utils.choose_type(request, {'me': me}, {
             'application/x-www-form-urlencoded': utils.form_encoded_response,
             'application/json': JsonResponse,
         })
@@ -116,6 +119,13 @@ class IndieView(TemplateView):
 @login_required
 @require_POST
 def approve(request):
-    uri, params = tokens.gen_auth_code(request)
+    params = {
+        'me': urljoin(utils.origin(request), request.user.url),
+        'code': tokens.gen_auth_code(request),
+    }
+    if 'state' in request.POST:
+        params['state'] = request.POST['state']
+
+    uri = request.POST['redirect_uri']
     sep = '&' if '?' in uri else '?'
     return redirect(uri + sep + urlencode(params))
