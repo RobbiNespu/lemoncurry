@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from django_push.publisher import ping_hub
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from urllib.parse import urljoin
 
+from entries.jobs import ping_hub
 from entries.models import Entry
 from entries.kinds import Article, Note
 from lemoncurry import utils
@@ -43,9 +43,7 @@ def micropub(request):
         reverse('entries:atom'),
         reverse('entries:rss'),
     ))
-    ping_hub(perma)
-    for url in others:
-        ping_hub(url)
+    ping_hub(perma, *others)
 
     res = HttpResponse(status=201)
     res['Location'] = perma

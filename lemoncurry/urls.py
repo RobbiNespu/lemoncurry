@@ -42,6 +42,7 @@ urlpatterns = [
     url('^micropub', include('micropub.urls')),
     url('^s/', include('shorturls.urls')),
 
+    url(r'^django-rq/', include('django_rq.urls')),
     url(r'^sitemap\.xml$', sitemap.index, maps, name='sitemap'),
     url(r'^sitemaps/(?P<section>.+)\.xml$', sitemap.sitemap, maps,
         name='django.contrib.sitemaps.views.sitemap'),

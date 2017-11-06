@@ -12,11 +12,11 @@ python_version = '3.6'
 
 [packages]
 
-Django = "*"
-django_compressor = "*"
+django = "*"
+django-compressor = "*"
 gunicorn = "*"
 "psycopg2" = "*"
-Pillow = "*"
+pillow = "*"
 python-memcached = "*"
 django-favicon-plus = "*"
 django-meta = "*"
@@ -27,18 +27,19 @@ qrcode = "*"
 django-otp-agents = "*"
 python-slugify = "*"
 "mf2py" = "*"
-Markdown = "*"
+markdown = "*"
 bleach = "*"
 django-debug-toolbar = "*"
 xrd = "*"
 django-push = "*"
-PyYAML = "*"
+pyyaml = "*"
 django-annoying = "*"
 django-shorturls = "*"
 accept-types = "*"
 django-analytical = "*"
 django-model-utils = "*"
 python-jose = "*"
+django-rq = "*"
 
 
 [dev-packages]

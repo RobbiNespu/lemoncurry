@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django_agent_trust',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'django_rq',
     'favicon',
     'meta',
     'shorturls',
@@ -228,3 +229,7 @@ META_USE_TWITTER_PROPERTIES = True
 # django-push
 # https://django-push.readthedocs.io/en/latest/publisher.html
 PUSH_HUB = 'https://00dani.superfeedr.com/'
+
+# django-rq
+# https://github.com/ui/django-rq
+RQ_QUEUES = {'default': {'USE_REDIS_CACHE': 'default'}}
