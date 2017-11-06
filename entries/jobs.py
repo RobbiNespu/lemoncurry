@@ -1,8 +1,11 @@
-from django_push import publisher
+import requests
+from django.conf import settings
 from django_rq import job
 
 
 @job
 def ping_hub(*urls):
-    for url in urls:
-        publisher.ping_hub(url)
+    requests.post(settings.PUSH_HUB, data={
+        'hub.mode': 'publish',
+        'hub.url': ','.join(urls),
+    })

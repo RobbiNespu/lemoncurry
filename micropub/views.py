@@ -43,7 +43,7 @@ def micropub(request):
         reverse('entries:atom'),
         reverse('entries:rss'),
     ))
-    ping_hub(perma, *others)
+    ping_hub.delay(perma, *others)
 
     res = HttpResponse(status=201)
     res['Location'] = perma
