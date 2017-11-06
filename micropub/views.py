@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from urllib.parse import urljoin
 
-from entries.jobs import ping_hub
+from entries.jobs import ping_hub, send_mentions
 from entries.models import Entry
 from entries.kinds import Article, Note
 from lemoncurry import utils
@@ -44,6 +44,7 @@ def micropub(request):
         reverse('entries:rss'),
     ))
     ping_hub.delay(perma, *others)
+    send_mentions.delay(perma)
 
     res = HttpResponse(status=201)
     res['Location'] = perma

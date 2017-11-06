@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "47ed3b4022e12ce5fcdf671cdc9e8512a30c925745dd07a2385d951c3f1a4315"
+            "sha256": "028ac3e8ca1afd917bb4d7d3e0b93c5a8b52a2700cb4e67e2e72ffae8594dfab"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -469,6 +469,13 @@
                 "sha256:dd9591aa73500b08b7db24367f8d32c6470021f39d5ab4e50c7c02e4401386f1"
             ],
             "version": "==1.0.12"
+        },
+        "ronkyuu": {
+            "hashes": [
+                "sha256:5aa77b39d301bc174ab99ba8a53954627771cb501651a12103c58f51b32e84bf",
+                "sha256:85b25fef7f5fb0c93afd5377ea35b5ff72b2458f926bafdf10f0c9a1e19cab10"
+            ],
+            "version": "==0.6"
         },
         "rq": {
             "hashes": [
