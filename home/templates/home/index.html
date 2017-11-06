@@ -30,6 +30,11 @@
 				<li>
 					<a class="u-email" rel="me" href="mailto:{{ user.email }}"><i class="fa fa-envelope"></i> {{ user.email }}</a>
 				</li>
+				{% if user.xmpp %}
+				<li>
+					<a class="u-impp" rel="me" href="xmpp:{{ user.xmpp }}"><i class="openwebicons-xmpp"></i> {{ user.xmpp }}</a>
+				</li>
+				{% endif %}
 				{% for profile in user.profiles.all %}<li>
 					<a class="u-url" rel="me" href="{{ profile.url }}"><i class="{{ profile.site.icon }}"></i> {{ profile.name }}</a>
 				</li>{% endfor %}

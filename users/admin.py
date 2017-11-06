@@ -19,7 +19,7 @@ class ProfileInline(admin.TabularInline):
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = BaseUserAdmin.fieldsets + (
-        ('Profile', {'fields': ('avatar', 'note')}),
+        ('Profile', {'fields': ('avatar', 'xmpp', 'note')}),
     )
     inlines = (
         KeyInline,

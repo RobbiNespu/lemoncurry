@@ -33,6 +33,8 @@ class Site(models.Model):
 class User(ModelMeta, AbstractUser):
     avatar = models.ImageField(upload_to=avatar_path)
     note = models.TextField(blank=True)
+    xmpp = models.EmailField(blank=True)
+
     # This is gonna need to change if I ever decide to add multiple-user support ;)
     url = '/'
 
