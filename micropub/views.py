@@ -27,13 +27,15 @@ def micropub(request):
     post = request.POST
     if post.get('h') != 'entry':
         return utils.bad_req('only h=entry supported')
-    entry = Entry(author=user, kind=Note.id)
+    entry = Entry(author=user)
+    kind = Note
     if 'name' in post:
         entry.name = post['name']
-        entry.kind = Article.id
+        kind = Article
     if 'content' in post:
         entry.content = post['content']
 
+    entry.kind = kind.id
     entry.save()
 
     base = utils.origin(request)
@@ -42,6 +44,9 @@ def micropub(request):
         reverse('home:index'),
         reverse('entries:atom'),
         reverse('entries:rss'),
+        reverse('entries:' + kind.index),
+        reverse('entries:' + kind.atom),
+        reverse('entries:' + kind.rss),
     ))
     ping_hub.delay(perma, *others)
     send_mentions.delay(perma)
