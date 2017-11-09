@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from lemoncurry.utils import load_package_json, origin
@@ -13,13 +14,21 @@ def add_links(request, dest):
 
     links = (
         Link(
+            href=urljoin(base, reverse('entries:atom')),
+            rel='alternate', type_='application/atom+xml',
+        ),
+        Link(
+            href=urljoin(base, reverse('entries:rss')),
+            rel='alternate', type_='application/rss+xml',
+        ),
+        Link(
             href=urljoin(base, reverse('lemonauth:indie')),
             rel='authorization_endpoint'
         ),
-        Link(
-            href=urljoin(base, reverse('lemonauth:token')),
-            rel='token_endpoint'
-        ),
+        Link(href=pkg['repository'], type_='text/html', rel='code-repository'),
+        Link(href=settings.PUSH_HUB, rel='hub'),
+        Link(href=license, type_='text/html', rel='license'),
+        Link(href=license+'rdf', type_='application/rdf+xml', rel='license'),
         Link(
             template=urljoin(base, webfinger),
             type_='application/json', rel='lrdd',
@@ -29,16 +38,15 @@ def add_links(request, dest):
             rel='manifest', type_='application/json',
         ),
         Link(
-            href=urljoin(base, reverse('entries:atom')),
-            rel='alternate', type_='application/atom+xml',
+            href=urljoin(base, reverse('micropub:micropub')),
+            rel='micropub'
         ),
         Link(
-            href=urljoin(base, reverse('entries:rss')),
-            rel='alternate', type_='application/rss+xml',
+            href=urljoin(base, reverse('lemonauth:token')),
+            rel='token_endpoint'
         ),
-        Link(href=license, type_='text/html', rel='license'),
-        Link(href=license+'rdf', type_='application/rdf+xml', rel='license'),
-        Link(href=pkg['repository'], type_='text/html', rel='code-repository'),
+        Link(href='https://openid.indieauth.com/openid', rel='openid.server'),
+        Link(href=base, rel='openid.delegate'),
     )
     dest.extend(links)
 
