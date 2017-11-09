@@ -41,6 +41,8 @@ django-model-utils = "*"
 python-jose = "*"
 django-rq = "*"
 ronkyuu = "*"
+cachecontrol = "*"
+hiredis = "*"
 
 
 [dev-packages]

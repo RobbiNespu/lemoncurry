@@ -1,5 +1,3 @@
-import mf2py
-
 from annoying.decorators import render_to
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -9,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from lemoncurry import breadcrumbs, utils
+from lemoncurry import breadcrumbs, requests, utils
 from urllib.parse import urlencode, urljoin, urlunparse, urlparse
 
 from .. import tokens
@@ -68,7 +66,7 @@ class IndieView(TemplateView):
                 )
             scopes = params['scope'].split(' ')
 
-        client = mf2py.Parser(url=params['client_id'], html_parser='html5lib')
+        client = requests.mf2(params['client_id'])
         rels = (client.to_dict()['rel-urls']
                 .get(redirect_uri, {})
                 .get('rels', ()))

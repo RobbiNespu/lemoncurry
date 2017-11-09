@@ -134,6 +134,11 @@ CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
         'LOCATION': '127.0.0.1:6380',
+        'KEY_PREFIX': 'lemoncurry',
+        'OPTIONS': {
+            'DB': 0,
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+        },
     }
 }
 
