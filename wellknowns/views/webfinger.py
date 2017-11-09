@@ -29,15 +29,22 @@ def webfinger(request):
     def link(rel, href, type):
         return {'rel': rel, 'href': urljoin(base, href), 'type': type}
 
+    key_links = tuple(link(
+        rel='pgpkey',
+        href=key.file.url,
+        type='application/pgp-keys',
+    ) for key in user.keys.all())
+
     info = {
         'subject': 'acct:' + user.email,
         'aliases': (
             urljoin(base, user.url),
             'mailto:' + user.email,
+            'xmpp:' + user.xmpp,
         ),
         'links': (
             link(rel=AVATAR, href=user.avatar.url, type='image/png'),
             link(rel=PROFILE_PAGE, href=user.url, type='text/html'),
-        ),
+        ) + key_links,
     }
     return JsonResponse(info, content_type='application/jrd+json')
