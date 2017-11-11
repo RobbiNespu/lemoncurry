@@ -5,6 +5,9 @@
 <link rel="stylesheet" type="text/stylus" href="{% static 'home/css/index.styl' %}" />
 <link rel="stylesheet" type="text/stylus" href="{% static 'entries/css/h-entry.styl' %}" />
 {% endblock %}
+
+{% block head %}{% for key in user.keys.all %}<link rel="pgpkey" href="{{ key.file.url }}" />{% endfor %}{% endblock %}
+
 {% block main %}
 <aside class="author">
 	<article class="h-card card p-author">
