@@ -13,36 +13,44 @@
 	<article class="h-card card p-author">
 		<a class="u-uid u-url" href="{{ uri }}" hidden></a>
 		{% if user.avatar %}<img class="card-img-top u-photo" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }}" />{% endif %}
+
 		<div class="card-body">
 			<h4 class="card-title p-name">
 				<span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
 			</h4>
-			{% for key in user.keys.all %}
-			<h6 class="card-subtitle">
-				<a class="u-key" href="{{ key.file.url }}">
-					<i class="fa fa-key"></i>
-					{{ key.pretty_print }}
-				</a>
-			</h6>
-			{% endfor %}
 			{% if user.note %}<div class="p-note">{{ user.note | markdown }}</div>{% endif %}
 		</div>
 
 		<div class="card-footer">
 			<ul class="profiles">
-				<li>
-					<a class="u-email" rel="me" href="mailto:{{ user.email }}"><i class="fa fa-envelope"></i> {{ user.email }}</a>
+				<li><a class="u-email" rel="me" href="mailto:{{ user.email }}">
+						<i class="fa fa-envelope"></i> {{ user.email }}
+				</a></li>
+				{% if user.xmpp %}<li><a class="u-impp" rel="me" href="xmpp:{{ user.xmpp }}">
+						<i class="openwebicons-xmpp"></i> {{ user.xmpp }}
+				</a></li>{% endif %}
+			</ul>
+		</div>
+
+		<div class="card-footer">
+			<ul class="profiles">
+				{% for key in user.keys.all %}<li>
+					<a class="u-key" href="{{ key.file.url }}">
+						<i class="fa fa-key"></i> {{ key.pretty_print }}
+					</a>
 				</li>
-				{% if user.xmpp %}
-				<li>
-					<a class="u-impp" rel="me" href="xmpp:{{ user.xmpp }}"><i class="openwebicons-xmpp"></i> {{ user.xmpp }}</a>
-				</li>
-				{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div class="card-footer">
+			<ul class="profiles">
 				{% for profile in user.profiles.all %}<li>
 					<a class="u-url" rel="me" href="{{ profile.url }}"><i class="{{ profile.site.icon }}"></i> {{ profile.name }}</a>
 				</li>{% endfor %}
 			</ul>
 		</div>
+
 		<script class="p-json-ld" type="application/ld+json">{{ user.json_ld | jsonify }}</script>
 	</article>
 </aside>

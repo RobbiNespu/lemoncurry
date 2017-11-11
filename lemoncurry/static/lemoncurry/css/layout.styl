@@ -64,6 +64,12 @@ body
 
 .card
 	background-color $base02
+
+	.card-footer
+		background-color $base01
+		&:nth-of-type(odd)
+			background-color $base02
+
 	&.h-card
 		max-width 25rem
 		position sticky
