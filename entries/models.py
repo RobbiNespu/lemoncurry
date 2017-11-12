@@ -34,6 +34,11 @@ class Entry(ModelMeta, TimeStampedModel):
     photo = models.ImageField(blank=True)
     content = models.TextField()
 
+    # The URL of an entry (anywhere on the web) that should become an embedded
+    # h-cite. Can become a u-like-of, u-repost-of, or u-in-reply-to depending
+    # on the post type.
+    cite = models.CharField(max_length=255, blank=True)
+
     author = models.ForeignKey(
         get_user_model(),
         related_name='entries',

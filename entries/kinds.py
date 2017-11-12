@@ -42,6 +42,24 @@ Photo = Entry(
     plural='photos',
 )
 
-all = (Note, Article, Photo)
+Reply = Entry(
+    id='reply',
+    icon='fa fa-comment',
+    plural='replies',
+)
+
+Like = Entry(
+    id='like',
+    icon='fa fa-heart',
+    plural='likes',
+)
+
+Repost = Entry(
+    id='repost',
+    icon='fa fa-retweet',
+    plural='reposts',
+)
+
+all = (Note, Article, Photo, Reply, Like, Repost)
 from_id = {k.id: k for k in all}
 from_plural = {k.plural: k for k in all}
