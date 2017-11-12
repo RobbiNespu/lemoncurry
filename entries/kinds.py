@@ -64,6 +64,6 @@ Repost = Entry(
 )
 
 all = (Note, Article, Photo, Reply, Like, Repost)
-on_home = (k.id for k in all if k.on_home)
+on_home = {k.id for k in all if k.on_home}
 from_id = {k.id: k for k in all}
 from_plural = {k.plural: k for k in all}
