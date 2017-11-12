@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from users.models import User
-from lemoncurry import breadcrumbs, utils
 from urllib.parse import urljoin
+
+from entries import kinds
+from lemoncurry import breadcrumbs, utils
 
 breadcrumbs.add('home:index', 'home')
 
@@ -13,10 +15,11 @@ breadcrumbs.add('home:index', 'home')
 def index(request):
     query = User.objects.prefetch_related('entries', 'profiles', 'keys')
     user = get_object_or_404(query, pk=1)
+    entries = user.entries.filter(kind__in=kinds.on_home)
 
     return {
         'user': user,
-        'entries': user.entries.all(),
+        'entries': entries,
         'atom': 'entries:atom',
         'rss': 'entries:rss',
         'meta': user.as_meta(request),
