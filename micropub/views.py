@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 
 from entries.jobs import ping_hub, send_mentions
 from entries.models import Entry
-from entries.kinds import Article, Note
+from entries.kinds import Article, Note, Reply, Like, Repost
 from lemoncurry import utils
 from lemonauth import tokens
 
@@ -35,6 +35,15 @@ class MicropubView(View):
             kind = Article
         if 'content' in post:
             entry.content = post['content']
+        if 'in-reply-to' in post:
+            entry.cite = post['in-reply-to']
+            kind = Reply
+        if 'like-of' in post:
+            entry.cite = post['like-of']
+            kind = Like
+        if 'repost-of' in post:
+            entry.cite = post['repost-of']
+            kind = Repost
 
         entry.kind = kind.id
         entry.save()
