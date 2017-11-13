@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
 from urllib.parse import urljoin
 from lemoncurry.templatetags.markdown import markdown
+from .kinds import on_home
 from .models import Entry
 
 
@@ -59,7 +60,7 @@ class AtomByKind(RssByKind):
     subtitle = RssByKind.description
 
 
-class RssAllEntries(EntriesFeed):
+class RssHomeEntries(EntriesFeed):
     def title(self):
         return Site.objects.get_current().name
 
@@ -72,9 +73,9 @@ class RssAllEntries(EntriesFeed):
         )
 
     def items(self):
-        return Entry.objects.all()
+        return Entry.objects.filter(kind__in=on_home)
 
 
-class AtomAllEntries(RssAllEntries):
+class AtomHomeEntries(RssHomeEntries):
     feed_type = Atom1Feed
-    subtitle = RssAllEntries.description
+    subtitle = RssHomeEntries.description

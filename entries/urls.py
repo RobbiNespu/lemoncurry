@@ -13,8 +13,8 @@ def prefix(route):
 
 app_name = 'entries'
 urlpatterns = [
-    url('^atom$', feeds.AtomAllEntries(), name='atom'),
-    url('^rss$', feeds.RssAllEntries(), name='rss'),
+    url('^atom$', feeds.AtomHomeEntries(), name='atom'),
+    url('^rss$', feeds.RssHomeEntries(), name='rss'),
 ]
 for k in kinds.all:
     kind = k.plural
