@@ -1,10 +1,11 @@
 {% load analytical compress favtags lemoncurry_tags meta static theme_colour %}<!doctype html>
-<html lang="en" class="{% block html_class %}{% endblock %}">
+<html dir="ltr" lang="en" class="{% block html_class %}{% endblock %}">
 	<head{% meta_namespaces %}>{% site_name as site_name %}{% request_uri request as uri %}{% request_origin request as origin %}
 		{% analytical_head_top %}
 		<base href="{{ origin }}" />
 		<title class="p-name">{% if title %}{{ title }} ~ {% endif %}{{ site_name }}</title>
 		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="{{ uri }}" />
 		{% if atom %}<link rel="alternate" type="application/atom+xml" href="{% url atom %}" />{% endif %}
