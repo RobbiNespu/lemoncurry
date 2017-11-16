@@ -25,6 +25,10 @@ class DjangoCache(BaseCache):
         else:
             django_cache.set(key, value)
 
+    def delete(self, url):
+        key = self.key(url)
+        django_cache.delete(key)
+
 
 req = CacheControl(
     requests.Session(),

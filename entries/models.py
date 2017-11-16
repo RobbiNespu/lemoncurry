@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
 from itertools import groupby
+from mf2util import interpret
 from slugify import slugify
 from textwrap import shorten
 from urllib.parse import urljoin
@@ -12,6 +13,7 @@ from model_utils.models import TimeStampedModel
 from users.models import Profile
 
 from . import kinds
+from lemoncurry import requests
 ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
@@ -34,16 +36,24 @@ class Entry(ModelMeta, TimeStampedModel):
     photo = models.ImageField(blank=True)
     content = models.TextField()
 
-    # The URL of an entry (anywhere on the web) that should become an embedded
-    # h-cite. Can become a u-like-of, u-repost-of, or u-in-reply-to depending
-    # on the post type.
-    cite = models.CharField(max_length=255, blank=True)
+    in_reply_to = models.CharField(max_length=255, blank=True)
+    like_of = models.CharField(max_length=255, blank=True)
+    repost_of = models.CharField(max_length=255, blank=True)
 
     author = models.ForeignKey(
         get_user_model(),
         related_name='entries',
         on_delete=models.CASCADE,
     )
+
+    @property
+    def reply_context(self):
+        if not self.in_reply_to:
+            return None
+        return interpret(
+            requests.mf2(self.in_reply_to).to_dict(),
+            self.in_reply_to
+        )
 
     @property
     def published(self):

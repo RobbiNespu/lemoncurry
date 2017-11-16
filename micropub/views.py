@@ -36,13 +36,13 @@ class MicropubView(View):
         if 'content' in post:
             entry.content = post['content']
         if 'in-reply-to' in post:
-            entry.cite = post['in-reply-to']
+            entry.in_reply_to = post['in-reply-to']
             kind = Reply
         if 'like-of' in post:
-            entry.cite = post['like-of']
+            entry.like_of = post['like-of']
             kind = Like
         if 'repost-of' in post:
-            entry.cite = post['repost-of']
+            entry.repost_of = post['repost-of']
             kind = Repost
 
         entry.kind = kind.id

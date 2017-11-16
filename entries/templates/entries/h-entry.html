@@ -1,5 +1,18 @@
-{% load friendly_url humanize jsonify markdown shortlink %}<article class="card h-entry">
+{% load bleach friendly_url humanize jsonify markdown shortlink %}<article class="card h-entry">
 	{% if entry.photo %}<img class="card-img-top u-photo" src="{{ entry.photo.url }}" />{% endif %}
+
+	{% if entry.in_reply_to %}{% with reply=entry.reply_context %}
+	<article class="card-header media u-in-reply-to h-cite">
+		<a class="align-self-center p-author h-card" href="{{ reply.author.url }}">
+			<img class="mr-3 rounded" width="100" src="{{ reply.author.photo }}"
+					 alt="{{ reply.author.name }}" title="{{ reply.author.name }}" />
+		</a>
+		<div class="media-body">
+			{% if reply.name %}<h4 class="p-name">{{ reply.name }}</h4>{% endif %}
+			<div class="e-content{% if not reply.name %} p-name{% endif %}">{{ reply.content | bleach }}</div>
+		</div>
+	</article>{% endwith %}{% endif %}
+
 	<div class="card-body">
 		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
 		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content | markdown }}</div>

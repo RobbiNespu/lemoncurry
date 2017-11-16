@@ -43,6 +43,7 @@ django-rq = "*"
 ronkyuu = "*"
 cachecontrol = "*"
 hiredis = "*"
+"mf2util" = "*"
 
 
 [dev-packages]
