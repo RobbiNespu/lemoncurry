@@ -15,7 +15,10 @@ app_name = 'entries'
 urlpatterns = [
     url('^atom$', feeds.AtomHomeEntries(), name='atom'),
     url('^rss$', feeds.RssHomeEntries(), name='rss'),
+    url('^tags/(?P<slug>.+)$', views.tagged, name='tagged'),
 ]
+crumbs.add(prefix('tagged'), parent='home:index')
+
 for k in kinds.all:
     kind = k.plural
     id = r'/(?P<id>\d+)'

@@ -1,6 +1,6 @@
 from annoying.decorators import render_to
-from django.shortcuts import redirect
-from .models import Entry
+from django.shortcuts import get_object_or_404, redirect
+from .models import Entry, Tag
 
 
 @render_to('entries/index.html')
@@ -11,6 +11,15 @@ def index(request, kind):
         'atom': 'entries:' + kind.atom,
         'rss': 'entries:' + kind.rss,
         'title': kind.plural,
+    }
+
+
+@render_to('entries/index.html')
+def tagged(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    return {
+        'entries': tag.entries.all(),
+        'title': '#' + tag.name,
     }
 
 

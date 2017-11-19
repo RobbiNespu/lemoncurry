@@ -17,6 +17,25 @@ from lemoncurry import requests
 ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
+class TagManager(models.Manager):
+    def from_name(self, name):
+        tag, created = self.get_or_create(name=name, slug=slugify(name))
+        return tag
+
+
+class Tag(models.Model):
+    objects = TagManager()
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.CharField(max_length=255, unique=True)
+
+    @property
+    def url(self):
+        return reverse('entries:tagged', args=(self.slug,))
+
+    class Meta:
+        ordering = ('name',)
+
+
 class EntryManager(models.Manager):
     def get_queryset(self):
         qs = super(EntryManager, self).get_queryset()
@@ -35,6 +54,8 @@ class Entry(ModelMeta, TimeStampedModel):
     name = models.CharField(max_length=100, blank=True)
     photo = models.ImageField(blank=True)
     content = models.TextField()
+
+    tags = models.ManyToManyField(Tag, related_name='entries')
 
     in_reply_to = models.CharField(max_length=255, blank=True)
     like_of = models.CharField(max_length=255, blank=True)

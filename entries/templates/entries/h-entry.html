@@ -17,6 +17,7 @@
 		{% if entry.name %}<h4 class="card-title p-name">{{ entry.name }}</h4>{% endif %}
 		<div class="e-content{% if not entry.name %} p-name{% endif %}">{{ entry.content | markdown }}</div>
 	</div>
+
 	<div class="card-footer">
 		<a class="p-author h-card" href="{{ entry.author.url }}">
 			<img class="u-photo" src="{{ entry.author.avatar.url }}" />
@@ -38,6 +39,21 @@
 			{{ entry.updated | naturaltime }}
 		</time>
 		{% endif %}
+	</div>
+
+	{% if entry.tags.exists %}
+	<div class="card-footer">
+		{% for t in entry.tags.all %}
+		<a class="p-category" href="{{ t.url }}">
+			<i class="fa fa-hashtag"></i>
+			{{ t.name }}
+		</a>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if entry.syndications.exists %}
+	<div class="card-footer">
 		{% for s in entry.syndications.all %}
 		<a class="u-syndication" href="{{ s.url }}">
 			<i class="{{ s.profile.site.icon }}"></i>
@@ -45,5 +61,7 @@
 		</a>
 		{% endfor %}
 	</div>
+	{% endif %}
+
 	<script class="p-json-ld" type="application/ld+json">{{ entry.json_ld | jsonify }}</script>
 </article>
