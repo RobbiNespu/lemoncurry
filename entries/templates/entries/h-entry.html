@@ -29,15 +29,15 @@
 				{{ entry.published | naturaltime }}
 			</time>
 		</a>
-		{% shortlink entry as short %}<a class="u-url" href="{{ short }}">
-			<i class="fa fa-link"></i>
-			{{ short | friendly_url }}
-		</a>
 		{% if entry.updated != entry.published %}
 		<time class="dt-updated" datetime="{{ entry.updated.isoformat }}">
 			<i class="fa fa-pencil"></i>
 			{{ entry.updated | naturaltime }}
 		</time>
+		{% shortlink entry as short %}<a class="u-url" href="{{ short }}">
+			<i class="fa fa-link"></i>
+			{{ short | friendly_url }}
+		</a>
 		{% endif %}
 	</div>
 
