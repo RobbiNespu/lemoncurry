@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Entry, Syndication
+from .models import Cat, Entry, Syndication
 
 
 class SyndicationInline(admin.TabularInline):
@@ -16,4 +16,5 @@ class EntryAdmin(admin.ModelAdmin):
     )
 
 
+admin.site.register(Cat)
 admin.site.register(Entry, EntryAdmin)
