@@ -57,14 +57,14 @@ class MicropubView(View):
 
         base = utils.origin(request)
         perma = urljoin(base, entry.url)
-        others = (urljoin(base, url) for url in (
+        others = [urljoin(base, url) for url in (
             reverse('home:index'),
             reverse('entries:atom'),
             reverse('entries:rss'),
             reverse('entries:' + kind.index),
             reverse('entries:' + kind.atom),
             reverse('entries:' + kind.rss),
-        ))
+        )] + [urljoin(base, cat.url) for cat in cats]
         ping_hub.delay(perma, *others)
         send_mentions.delay(perma)
 
