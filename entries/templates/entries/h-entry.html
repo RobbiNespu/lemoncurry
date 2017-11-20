@@ -41,12 +41,12 @@
 		{% endif %}
 	</div>
 
-	{% if entry.tags.exists %}
+	{% if entry.cats.exists %}
 	<div class="card-footer">
-		{% for t in entry.tags.all %}
-		<a class="p-category" href="{{ t.url }}">
+		{% for c in entry.cats.all %}
+		<a class="p-category" href="{{ c.url }}">
 			<i class="fa fa-hashtag"></i>
-			{{ t.name }}
+			{{ c.name }}
 		</a>
 		{% endfor %}
 	</div>

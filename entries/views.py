@@ -1,6 +1,6 @@
 from annoying.decorators import render_to
 from django.shortcuts import get_object_or_404, redirect
-from .models import Entry, Tag
+from .models import Entry, Cat
 
 
 @render_to('entries/index.html')
@@ -15,11 +15,11 @@ def index(request, kind):
 
 
 @render_to('entries/index.html')
-def tagged(request, slug):
-    tag = get_object_or_404(Tag, slug=slug)
+def cat(request, slug):
+    cat = get_object_or_404(Cat, slug=slug)
     return {
-        'entries': tag.entries.all(),
-        'title': '#' + tag.name,
+        'entries': cat.entries.all(),
+        'title': '#' + cat.name,
     }
 
 

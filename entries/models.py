@@ -17,20 +17,20 @@ from lemoncurry import requests
 ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
-class TagManager(models.Manager):
+class CatManager(models.Manager):
     def from_name(self, name):
-        tag, created = self.get_or_create(name=name, slug=slugify(name))
-        return tag
+        cat, created = self.get_or_create(name=name, slug=slugify(name))
+        return cat
 
 
-class Tag(models.Model):
-    objects = TagManager()
+class Cat(models.Model):
+    objects = CatManager()
     name = models.CharField(max_length=255, unique=True)
     slug = models.CharField(max_length=255, unique=True)
 
     @property
     def url(self):
-        return reverse('entries:tagged', args=(self.slug,))
+        return reverse('entries:cat', args=(self.slug,))
 
     class Meta:
         ordering = ('name',)
@@ -55,7 +55,7 @@ class Entry(ModelMeta, TimeStampedModel):
     photo = models.ImageField(blank=True)
     content = models.TextField()
 
-    tags = models.ManyToManyField(Tag, related_name='entries')
+    cats = models.ManyToManyField(Cat, related_name='entries')
 
     in_reply_to = models.CharField(max_length=255, blank=True)
     like_of = models.CharField(max_length=255, blank=True)
