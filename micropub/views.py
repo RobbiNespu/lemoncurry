@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from urllib.parse import urljoin
 
 from entries.jobs import ping_hub, send_mentions
-from entries.models import Entry
+from entries.models import Cat, Entry
 from entries.kinds import Article, Note, Reply, Like, Repost
 from lemoncurry import utils
 from lemonauth import tokens
@@ -45,7 +45,14 @@ class MicropubView(View):
             entry.repost_of = post['repost-of']
             kind = Repost
 
+        cats = [
+            Cat.objects.from_name(c) for c in
+            post.getlist('category') + post.getlist('category[]')
+        ]
+
         entry.kind = kind.id
+        entry.save()
+        entry.cats = cats
         entry.save()
 
         base = utils.origin(request)
