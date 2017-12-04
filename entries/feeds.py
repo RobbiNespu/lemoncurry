@@ -31,6 +31,9 @@ class EntriesFeed(Feed):
     def item_updatedate(self, entry):
         return entry.updated
 
+    def item_categories(self, entry):
+        return (cat.name for cat in entry.cats.all())
+
 
 class RssByKind(EntriesFeed):
     def __init__(self, kind):
