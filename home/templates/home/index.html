@@ -24,7 +24,7 @@
 		<div class="card-footer">
 			<ul class="profiles">
 				<li><a class="u-email" rel="me" href="mailto:{{ user.email }}">
-						<i class="fa fa-envelope"></i> {{ user.email }}
+						<i class="fas fa-envelope"></i> {{ user.email }}
 				</a></li>
 				{% if user.xmpp %}<li><a class="u-impp" rel="me" href="xmpp:{{ user.xmpp }}">
 						<i class="openwebicons-xmpp"></i> {{ user.xmpp }}
@@ -36,7 +36,7 @@
 			<ul class="profiles">
 				{% for key in user.keys.all %}<li>
 					<a class="u-key" href="{{ key.file.url }}">
-						<i class="fa fa-key"></i> {{ key.pretty_print }}
+						<i class="fas fa-key"></i> {{ key.pretty_print }}
 					</a>
 				</li>
 				{% endfor %}

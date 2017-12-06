@@ -14,9 +14,9 @@
 			{% if app %}{{ app.name | first }}{% endif %}
 			{% if app %}({% endif %}<a class="u-url code{% if not app %} p-name{% endif %}" href="{{ params.client_id }}">{{ params.client_id }}</a>{% if app %}){% endif %}?
 			{% if verified %}
-			<i class="fa fa-check-circle verified-success" data-tooltip data-theme="success" data-html="#verified-success"></i>
+			<i class="fas fa-check-circle verified-success" data-tooltip data-theme="success" data-html="#verified-success"></i>
 			{% else %}
-			<i class="fa fa-question-circle verified-warning" data-tooltip data-theme="warning" data-html="#verified-warning"></i>
+			<i class="fas fa-question-circle verified-warning" data-tooltip data-theme="warning" data-html="#verified-warning"></i>
 			{% endif %}
 		</h4>
 
@@ -39,7 +39,7 @@
 
 		<div class="card-footer">
 			<button class="btn btn-success" type="submit">
-				<i class="fa fa-check"></i>
+				<i class="fas fa-check"></i>
 				approve
 			</button>
 		</div>

@@ -25,17 +25,17 @@
 		</a>
 		<a class="u-uid u-url" href="{{ entry.url }}">
 			<time class="dt-published" datetime="{{ entry.published.isoformat }}">
-				<i class="fa fa-calendar"></i>
+				<i class="fas fa-calendar"></i>
 				{{ entry.published | naturaltime }}
 			</time>
 		</a>
 		{% if entry.updated != entry.published %}
 		<time class="dt-updated" datetime="{{ entry.updated.isoformat }}">
-			<i class="fa fa-pencil"></i>
+			<i class="fas fa-pencil-alt"></i>
 			{{ entry.updated | naturaltime }}
 		</time>
 		{% shortlink entry as short %}<a class="u-url" href="{{ short }}">
-			<i class="fa fa-link"></i>
+			<i class="fas fa-link"></i>
 			{{ short | friendly_url }}
 		</a>
 		{% endif %}
@@ -45,7 +45,7 @@
 	<div class="card-footer">
 		{% for c in entry.cats.all %}
 		<a class="p-category" href="{{ c.url }}">
-			<i class="fa fa-paw"></i>
+			<i class="fas fa-paw"></i>
 			{{ c.name }}
 		</a>
 		{% endfor %}

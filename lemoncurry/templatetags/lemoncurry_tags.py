@@ -52,12 +52,12 @@ def nav_left(request):
 def nav_right(request):
     if request.user.is_authenticated():
         items = (
-            MenuItem(label='admin', icon='fa fa-gear', url='admin:index'),
-            MenuItem(label='log out', icon='fa fa-sign-out', url='lemonauth:logout'),
+            MenuItem(label='admin', icon='fas fa-cog', url='admin:index'),
+            MenuItem(label='log out', icon='fas fa-sign-out-alt', url='lemonauth:logout'),
         )
     else:
         items = (
-            MenuItem(label='log in', icon='fa fa-sign-in', url='lemonauth:login'),
+            MenuItem(label='log in', icon='fas fa-sign-in-alt', url='lemonauth:login'),
         )
     return {'items': items, 'request': request}
 

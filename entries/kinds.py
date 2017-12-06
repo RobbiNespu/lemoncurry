@@ -25,41 +25,41 @@ class Entry:
 
 Note = Entry(
     id='note',
-    icon='fa fa-paper-plane',
+    icon='fas fa-paper-plane',
     plural='notes',
 )
 
 
 Article = Entry(
     id='article',
-    icon='fa fa-file-text',
+    icon='fas fa-file-alt',
     plural='articles',
     slug=True,
 )
 
 Photo = Entry(
     id='photo',
-    icon='fa fa-camera',
+    icon='fas fa-camera',
     plural='photos',
 )
 
 Reply = Entry(
     id='reply',
-    icon='fa fa-comment',
+    icon='fas fa-comment',
     plural='replies',
     on_home=False,
 )
 
 Like = Entry(
     id='like',
-    icon='fa fa-heart',
+    icon='fas fa-heart',
     plural='likes',
     on_home=False,
 )
 
 Repost = Entry(
     id='repost',
-    icon='fa fa-retweet',
+    icon='fas fa-retweet',
     plural='reposts',
 )
 
