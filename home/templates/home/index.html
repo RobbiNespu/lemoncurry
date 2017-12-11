@@ -46,7 +46,7 @@
 		<div class="card-footer">
 			<ul class="profiles">
 				{% for profile in user.profiles.all %}<li>
-					<a class="u-url" rel="me" href="{{ profile.url }}" title="{{ profile }}"><i class="{{ profile.site.icon }}"></i> <span class="sr-only">{{ profile }}</span></a>
+					<a class="u-url" rel="me" href="{{ profile.url }}" title="{{ profile }}"><i class="{{ profile.site.icon }}"></i><span class="sr-only">{{ profile }}</span></a>
 				</li>{% endfor %}
 			</ul>
 		</div>
