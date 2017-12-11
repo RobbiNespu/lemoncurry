@@ -13,7 +13,7 @@ from model_utils.models import TimeStampedModel
 from users.models import Profile
 
 from . import kinds
-from lemoncurry import requests
+from lemoncurry import requests, utils
 ENTRY_KINDS = [(k.id, k.id) for k in kinds.all]
 
 
@@ -98,12 +98,12 @@ class Entry(ModelMeta, TimeStampedModel):
     def title(self):
         if self.name:
             return self.name
-        return shorten(self.paragraphs[0], width=100, placeholder='…')
+        return shorten(utils.to_plain(self.paragraphs[0]), width=100, placeholder='…')
 
     @property
     def excerpt(self):
         try:
-            return self.paragraphs[0 if self.name else 1]
+            return utils.to_plain(self.paragraphs[0 if self.name else 1])
         except IndexError:
             return ' '
 

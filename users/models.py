@@ -4,6 +4,7 @@ from django.contrib.sites.models import Site as DjangoSite
 from django.utils.functional import cached_property
 from meta.models import ModelMeta
 from urllib.parse import urljoin
+from lemoncurry import utils
 
 
 def avatar_path(instance, name):
@@ -46,6 +47,10 @@ class User(ModelMeta, AbstractUser):
         return self.url
 
     @property
+    def description(self):
+        return utils.to_plain(self.note)
+
+    @property
     def avatar_url(self):
         return self.avatar.url
 
@@ -81,7 +86,7 @@ class User(ModelMeta, AbstractUser):
 
     _metadata = {
         'image': 'avatar_url',
-        'description': 'note',
+        'description': 'description',
         'og_type': 'profile',
         'og_profile_id': 'facebook_id',
         'twitter_creator': 'twitter_username',

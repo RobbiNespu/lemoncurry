@@ -1,13 +1,17 @@
+import html
 import json
 from accept_types import get_best_match
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
+from django.utils.html import strip_tags
 from os.path import join
 from shorturls import default_converter as converter
 from shorturls.templatetags.shorturl import ShortURL
 from types import SimpleNamespace
 from urllib.parse import urlencode, urljoin
+
+from .templatetags.markdown import markdown
 
 cache = SimpleNamespace(package_json=None)
 
@@ -63,3 +67,7 @@ def bad_req(message):
 
 def forbid(message):
     return HttpResponseForbidden(message, content_type='text/plain')
+
+
+def to_plain(md):
+    return html.unescape(strip_tags(markdown(md)))
