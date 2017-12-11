@@ -11,8 +11,9 @@
 {% block main %}
 <aside class="author">
 	<article class="h-card card p-author">
-		<a class="u-uid u-url" href="{{ uri }}" hidden></a>
+		<a class="u-uid u-url" href="{{ uri }}">
 		{% if user.avatar %}<img class="card-img-top u-photo" src="{{ user.avatar.url }}" alt="{{ user.first_name }} {{ user.last_name }}" />{% endif %}
+		</a>
 
 		<div class="card-body">
 			<h4 class="card-title p-name">
