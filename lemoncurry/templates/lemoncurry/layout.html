@@ -10,7 +10,6 @@
 		<link rel="canonical" href="{{ uri }}" />
 		{% if atom %}<link rel="alternate" type="application/atom+xml" href="{% url atom %}" />{% endif %}
 		{% if rss %}<link rel="alternate" type="application/rss+xml" href="{% url rss %}" /> {% endif %}
-		{% if next %}<link rel="next" href="{{ next }}" />{% endif %}
 		{% block head %}{% endblock %}
 
 		<link rel="authorization_endpoint" href="{{ origin }}{% url 'lemonauth:indie' %}" />

@@ -11,14 +11,14 @@ def prefix(route):
     return app_name + ':' + route
 
 
-before = '(?:/before/(?P<before>\d+))?'
+page = '(?:/page/(?P<page>\d+))?'
 slug = r'/(?P<slug>[^/]+)'
 
 app_name = 'entries'
 urlpatterns = [
     url('^atom$', feeds.AtomHomeEntries(), name='atom'),
     url('^rss$', feeds.RssHomeEntries(), name='rss'),
-    url(to_pat('cats', slug, before), views.cat, name='cat'),
+    url(to_pat('cats', slug, page), views.cat, name='cat'),
 ]
 crumbs.add(prefix('cat'), parent='home:index')
 
@@ -28,7 +28,7 @@ for k in kinds.all:
     kind = k.plural
     id = r'/(?P<id>\d+)'
     urlpatterns += (
-        url(to_pat(kind, before), views.index, name=k.index, kwargs={'kind': k}),
+        url(to_pat(kind, page), views.index, name=k.index, kwargs={'kind': k}),
         url(to_pat(kind, '/atom'), feeds.AtomByKind(k), name=k.atom),
         url(to_pat(kind, '/rss'), feeds.RssByKind(k), name=k.rss),
         url(to_pat(kind, id, slug), views.entry, name=k.entry),

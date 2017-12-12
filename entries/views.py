@@ -1,24 +1,21 @@
 from annoying.decorators import render_to
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
 from .models import Entry, Cat
 
 
 @render_to('entries/index.html')
-def index(request, kind, before=None):
-    entries = Entry.objects.filter(kind=kind.id)
-    if before:
-        entries = entries.filter(id__lt=before)
-    entries = entries[:10]
+def index(request, kind, page):
+    paginator = Paginator(Entry.objects.filter(kind=kind.id), 10)
 
-    next = None
-    if entries:
-        last = entries.last().id
-        next = reverse('entries:' + kind.index, kwargs={'before': last})
+    # If we explicitly got /page/1 in the URL then redirect to the version with
+    # no page suffix.
+    if page == '1':
+        return redirect('entries:' + kind.index, permanent=True)
+    entries = paginator.page(page or 1)
 
     return {
         'entries': entries,
-        'next': next,
         'atom': 'entries:' + kind.atom,
         'rss': 'entries:' + kind.rss,
         'title': kind.plural,
@@ -26,22 +23,15 @@ def index(request, kind, before=None):
 
 
 @render_to('entries/index.html')
-def cat(request, slug, before=None):
+def cat(request, slug, page):
     cat = get_object_or_404(Cat, slug=slug)
-    entries = cat.entries.all()
-    if before:
-        entries = entries.filter(id__lt=before)
-    entries = entries[:10]
+    paginator = Paginator(cat.entries.all(), 10)
+    if page == '1':
+        return redirect('entries:cat', permanent=True, slug=slug)
+    entries = paginator.page(page or 1)
 
-    next = None
-    if entries:
-        next = reverse('entries:cat', kwargs={
-            'slug': slug,
-            'before': entries.last().id
-        })
     return {
         'entries': entries,
-        'next': next,
         'title': '#' + cat.name,
     }
 
