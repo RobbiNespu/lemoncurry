@@ -12,14 +12,22 @@ breadcrumbs.add('home:index', 'home')
 
 
 @render_to('home/index.html')
-def index(request):
+def index(request, before=None):
     query = User.objects.prefetch_related('entries', 'profiles', 'keys')
     user = get_object_or_404(query, pk=1)
     entries = user.entries.filter(kind__in=kinds.on_home)
+    if before:
+        entries = entries.filter(id__lt=before)
+    entries = entries[:10]
+
+    next = None
+    if entries:
+        next = reverse('home:index', kwargs={'before': entries.last().id})
 
     return {
         'user': user,
         'entries': entries,
+        'next': next,
         'atom': 'entries:atom',
         'rss': 'entries:rss',
         'meta': user.as_meta(request),
