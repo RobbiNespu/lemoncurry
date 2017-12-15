@@ -1,3 +1,8 @@
+$sm =  576px
+$md =  768px
+$lg =  992px
+$xl = 1200px
+
 html
 	background-color $base00
 
@@ -60,13 +65,36 @@ body
 	> footer
 		display flex
 		justify-content space-evenly
+		align-items center
 		margin 1rem
 		margin-top 0
 		text-align center
-		> p
-			margin-right 1rem
+		> p, nav
+			margin 0 .5rem
 			&:last-child
-				margin-right 0
+				margin 0
+
+		flex-wrap wrap
+		> nav
+			order -1
+			margin-bottom 1rem
+			width 100%
+		@media (min-width $md)
+			flex-wrap nowrap
+			> nav
+				order 0
+				margin-bottom 0
+				width unset
+
+ul.pagination
+	margin 0
+	justify-content center
+	li.page-item
+		a.page-link
+			@extends a
+		.page-link
+			background-color $base02
+			border 1px solid rgba(0,0,0,.125)
 
 .card
 	background-color $base02

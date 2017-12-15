@@ -24,6 +24,24 @@ def index(request, page):
         return redirect('home:index', permanent=True)
     entries = paginator.page(page or 1)
 
+    class Page:
+        def __init__(self, i):
+            self.i = i
+
+        @property
+        def url(self):
+            return reverse('home:index', kwargs={'page': self.i})
+
+        @property
+        def current(self):
+            return self.i == entries.number
+
+    entries.pages = tuple(Page(i) for i in paginator.page_range)
+    if entries.has_previous():
+        entries.prev = Page(entries.previous_page_number())
+    if entries.has_next():
+        entries.next = Page(entries.next_page_number())
+
     return {
         'user': user,
         'entries': entries,

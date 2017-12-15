@@ -66,6 +66,39 @@
 
 		<footer>
 			<p>all content licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">cc by-sa 4.0</a></p>
+
+			<nav>
+				<ul class="pagination">
+					{% if entries.prev %}
+					<li class="page-item">
+						<a class="page-link" rel="prev" href="{{ entries.prev.url }}">
+							<i class="fas fa-step-backward"></i><span class="sr-only">previous page</span>
+						</a>
+					</li>
+					{% endif %}
+
+					{% for page in entries.pages %}
+					{% if page.current %}
+					<li class="page-item active">
+						<span class="page-link">{{ page.i }} <span class="sr-only">(current page)</span></span>
+					</li>
+					{% else %}
+					<li class="page-item">
+						<a class="page-link" href="{{ page.url }}">{{ page.i }}</a>
+					</li>
+					{% endif %}
+					{% endfor %}
+
+					{% if entries.next %}
+					<li class="page-item">
+						<a class="page-link" rel="next" href="{{ entries.next.url }}">
+							<i class="fas fa-step-forward"></i><span class="sr-only">next page</span>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
+
 			{% get_package_json as package %}
 			<p>powered by <a rel="code-repository" href="{{ package.repository }}/tree/v{{ package.version }}">{{ package.name }} {{ package.version }}</a></p>
 		</footer>
