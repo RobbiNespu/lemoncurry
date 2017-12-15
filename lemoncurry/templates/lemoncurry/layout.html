@@ -67,6 +67,7 @@
 		<footer>
 			<p>all content licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">cc by-sa 4.0</a></p>
 
+			{% if entries.has_other_pages %}
 			<nav>
 				<ul class="pagination">
 					{% if entries.prev %}
@@ -98,6 +99,7 @@
 					{% endif %}
 				</ul>
 			</nav>
+			{% endif %}
 
 			{% get_package_json as package %}
 			<p>powered by <a rel="code-repository" href="{{ package.repository }}/tree/v{{ package.version }}">{{ package.name }} {{ package.version }}</a></p>
