@@ -1,18 +1,20 @@
 from annoying.decorators import render_to
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from .models import Entry, Cat
+from .pagination import paginate
 
 
 @render_to('entries/index.html')
 def index(request, kind, page):
-    paginator = Paginator(Entry.objects.filter(kind=kind.id), 10)
+    def url(page):
+        kwargs = {'page': page} if page > 1 else {}
+        return reverse('entries:' + kind.index, kwargs=kwargs)
 
-    # If we explicitly got /page/1 in the URL then redirect to the version with
-    # no page suffix.
-    if page == '1':
-        return redirect('entries:' + kind.index, permanent=True)
-    entries = paginator.page(page or 1)
+    entries = Entry.objects.filter(kind=kind.id)
+    entries = paginate(queryset=entries, reverse=url, page=page)
+    if hasattr(entries, 'content'):
+        return entries
 
     return {
         'entries': entries,
@@ -24,11 +26,17 @@ def index(request, kind, page):
 
 @render_to('entries/index.html')
 def cat(request, slug, page):
+    def url(page):
+        kwargs = {'slug': slug}
+        if page > 1:
+            kwargs['page'] = page
+        return reverse('entries:cat', kwargs=kwargs)
+
     cat = get_object_or_404(Cat, slug=slug)
-    paginator = Paginator(cat.entries.all(), 10)
-    if page == '1':
-        return redirect('entries:cat', permanent=True, slug=slug)
-    entries = paginator.page(page or 1)
+    entries = cat.entries.all()
+    entries = paginate(queryset=entries, reverse=url, page=page)
+    if hasattr(entries, 'content'):
+        return entries
 
     return {
         'entries': entries,

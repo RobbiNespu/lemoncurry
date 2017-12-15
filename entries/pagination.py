@@ -20,7 +20,7 @@ def paginate(queryset, reverse, page):
     if page == '1':
         return redirect(Page(1).url)
 
-    paginator = Paginator(queryset, 10)
+    paginator = Paginator(queryset, 2)
     entries = paginator.page(page or 1)
 
     entries.pages = tuple(Page(i) for i in paginator.page_range)
