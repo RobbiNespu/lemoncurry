@@ -12,7 +12,7 @@ from urllib.parse import urlencode, urljoin, urlunparse, urlparse
 
 from .. import tokens
 
-breadcrumbs.add('lemonauth:indie', label='indieauth', parent='home:index')
+breadcrumbs.add('lemonauth:indie', parent='home:index')
 
 
 def canonical(url):
@@ -84,7 +84,7 @@ class IndieView(TemplateView):
             'verified': verified,
             'params': params,
             'scopes': scopes,
-            'title': 'indieauth',
+            'title': 'indieauth from {client_id}'.format(**params),
         }
 
     def post(self, request):
