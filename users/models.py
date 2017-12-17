@@ -47,6 +47,11 @@ class User(ModelMeta, AbstractUser):
         return self.url
 
     @property
+    def full_url(self):
+        base = 'https://' + DjangoSite.objects.get_current().domain
+        return urljoin(base, self.url)
+
+    @property
     def description(self):
         return utils.to_plain(self.note)
 
@@ -74,8 +79,8 @@ class User(ModelMeta, AbstractUser):
         return {
             '@context': 'http://schema.org',
             '@type': 'Person',
-            '@id': urljoin(base, self.url),
-            'url': urljoin(base, self.url),
+            '@id': self.full_url,
+            'url': self.full_url,
             'name': self.name,
             'email': self.email,
             'image': urljoin(base, self.avatar.url),

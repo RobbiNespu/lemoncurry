@@ -11,22 +11,13 @@ from lemoncurry import utils
 @method_decorator(csrf_exempt, name='dispatch')
 class TokenView(View):
     def get(self, req):
-        token = req.META.get('HTTP_AUTHORIZATION', '').split(' ')
-        if not token:
-            return utils.bad_req('missing Authorization header')
-        if token[0] != 'Bearer':
-            return utils.bad_req('only Bearer auth is supported')
-        try:
-            token = tokens.decode(token[1])
-        except Exception:
-            return utils.forbid('invalid token')
-
-        user = get_user_model().objects.get(pk=token['uid'])
-        me = urljoin(utils.origin(req), user.url)
+        token = tokens.auth(req)
+        if hasattr(token, 'content'):
+            return token
         res = {
-            'me': me,
-            'client_id': token['cid'],
-            'scope': token['sco'],
+            'me': token.me,
+            'client_id': token.client,
+            'scope': token.scope,
         }
         return utils.choose_type(req, res)
 

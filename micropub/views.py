@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -16,19 +15,14 @@ from lemonauth import tokens
 @method_decorator(csrf_exempt, name='dispatch')
 class MicropubView(View):
     def post(self, request):
-        auth = request.META.get('HTTP_AUTHORIZATION', '').split(' ')
-        if auth[0] != 'Bearer':
-            return utils.bad_req('only Bearer auth supported')
-        try:
-            token = tokens.decode(auth[1])
-        except Exception:
-            return utils.forbid('invalid token')
-        user = get_user_model().objects.get(pk=token['uid'])
+        token = tokens.auth(request)
+        if hasattr(token, 'content'):
+            return token
 
         post = request.POST
         if post.get('h') != 'entry':
             return utils.bad_req('only h=entry supported')
-        entry = Entry(author=user)
+        entry = Entry(author=token.user)
         kind = Note
         if 'name' in post:
             entry.name = post['name']
