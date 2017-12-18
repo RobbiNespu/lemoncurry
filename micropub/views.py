@@ -12,6 +12,22 @@ from lemoncurry import utils
 from lemonauth import tokens
 
 
+def form_to_mf2(post):
+    properties = {}
+    for key in post.keys():
+        if key.endswith('[]'):
+            key = key[:-2]
+        if key == 'access_token':
+            continue
+        properties[key] = post.getlist(key) + post.getlist(key + '[]')
+
+    type = []
+    if 'h' in properties:
+        type = ['h-' + p for p in properties['h']]
+        del properties['h']
+    return {'type': type, 'properties': properties}
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class MicropubView(View):
     def post(self, request):
