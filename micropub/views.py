@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -12,8 +13,9 @@ from lemoncurry import utils
 from lemonauth import tokens
 
 
-def form_to_mf2(post):
+def form_to_mf2(request):
     properties = {}
+    post = request.POST
     for key in post.keys():
         if key.endswith('[]'):
             key = key[:-2]
@@ -35,30 +37,42 @@ class MicropubView(View):
         if hasattr(token, 'content'):
             return token
 
-        post = request.POST
-        if post.get('h') != 'entry':
-            return utils.bad_req('only h=entry supported')
+        normalise = {
+            'application/json': json.load,
+            'application/x-www-form-urlencoded': form_to_mf2,
+        }
+        if request.content_type not in normalise:
+            return HttpResponse(
+                'unsupported request type {0}'.format(request.content_type),
+                content_type='text/plain',
+                status=415,
+            )
+        body = normalise[request.content_type](request)
+        print(body)
+        if 'type' not in body:
+            return utils.bad_req('mf2 object type required')
+        if body['type'] != ['h-entry']:
+            return utils.bad_req('only h-entry supported')
+
         entry = Entry(author=token.user)
+        props = body.get('properties', {})
         kind = Note
-        if 'name' in post:
-            entry.name = post['name']
+        if 'name' in props:
+            entry.name = '\n'.join(props['name'])
             kind = Article
-        if 'content' in post:
-            entry.content = post['content']
-        if 'in-reply-to' in post:
-            entry.in_reply_to = post['in-reply-to']
+        if 'content' in props:
+            entry.content = '\n'.join(props['content'])
+        if 'in-reply-to' in props:
+            entry.in_reply_to = props['in-reply-to']
             kind = Reply
-        if 'like-of' in post:
-            entry.like_of = post['like-of']
+        if 'like-of' in props:
+            entry.like_of = props['like-of']
             kind = Like
-        if 'repost-of' in post:
-            entry.repost_of = post['repost-of']
+        if 'repost-of' in props:
+            entry.repost_of = props['repost-of']
             kind = Repost
 
-        cats = [
-            Cat.objects.from_name(c) for c in
-            post.getlist('category') + post.getlist('category[]')
-        ]
+        cats = [Cat.objects.from_name(c) for c in props.get('category', [])]
 
         entry.kind = kind.id
         entry.save()
