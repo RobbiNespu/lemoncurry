@@ -48,7 +48,6 @@ class MicropubView(View):
                 status=415,
             )
         body = normalise[request.content_type](request)
-        print(body)
         if 'type' not in body:
             return utils.bad_req('mf2 object type required')
         if body['type'] != ['h-entry']:
