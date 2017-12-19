@@ -6,8 +6,11 @@ from ronkyuu import webmention
 
 @job
 def ping_hub(*urls):
-    data = [('hub.mode', 'publish')] + [('hub.url[]', url) for url in urls]
-    requests.post(settings.PUSH_HUB, data=data)
+    for url in urls:
+        requests.post(settings.PUSH_HUB, data={
+            'hub.mode': 'publish',
+            'hub.url': url,
+        })
 
 
 @job
