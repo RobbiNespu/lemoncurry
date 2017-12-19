@@ -60,7 +60,10 @@ class MicropubView(View):
             entry.name = '\n'.join(props['name'])
             kind = Article
         if 'content' in props:
-            entry.content = '\n'.join(props['content'])
+            entry.content = '\n'.join(
+                c if isinstance(c, str) else c['html']
+                for c in props['content']
+            )
         if 'in-reply-to' in props:
             entry.in_reply_to = props['in-reply-to']
             kind = Reply
