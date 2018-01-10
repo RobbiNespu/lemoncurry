@@ -44,6 +44,7 @@ ronkyuu = "*"
 cachecontrol = "*"
 hiredis = "*"
 "mf2util" = "*"
+django-cors-headers = "*"
 
 
 [dev-packages]

@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'analytical',
     'annoying',
     'compressor',
+    'corsheaders',
     'debug_toolbar',
     'django_activeurl',
     'django_agent_trust',
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -217,6 +219,9 @@ SITE_ID = 1
 # django-agent-trust
 # https://pythonhosted.org/django-agent-trust/
 AGENT_COOKIE_SECURE = True
+
+# django-cors-headers
+CORS_ORIGIN_ALLOW_ALL = True
 
 # django-shorturls
 # https://pypi.python.org/pypi/django-shorturls
