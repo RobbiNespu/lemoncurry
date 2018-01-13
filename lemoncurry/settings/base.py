@@ -223,6 +223,12 @@ AGENT_COOKIE_SECURE = True
 # django-cors-headers
 CORS_ORIGIN_ALLOW_ALL = True
 
+# django-debug-toolbar
+# https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'lemoncurry.debug.show_toolbar',
+}
+
 # django-shorturls
 # https://pypi.python.org/pypi/django-shorturls
 SHORTEN_MODELS = {

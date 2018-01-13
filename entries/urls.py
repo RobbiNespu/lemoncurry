@@ -31,6 +31,7 @@ for k in kinds.all:
         url(to_pat(kind, page), views.index, name=k.index, kwargs={'kind': k}),
         url(to_pat(kind, '/atom'), feeds.AtomByKind(k), name=k.atom),
         url(to_pat(kind, '/rss'), feeds.RssByKind(k), name=k.rss),
+        url(to_pat(kind, id, slug, '/amp'), views.entry_amp, name=k.entry_amp),
         url(to_pat(kind, id, slug), views.entry, name=k.entry),
     )
 

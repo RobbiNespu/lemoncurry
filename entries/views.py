@@ -54,3 +54,11 @@ def entry(request, id, slug=None):
         'title': entry.title,
         'meta': entry.as_meta(request)
     }
+
+
+@render_to('entries/entry_amp.html')
+def entry_amp(request, id, slug=None):
+    entry = Entry.objects.get(pk=id)
+    if request.path != entry.amp_url:
+        return redirect(entry.amp_url, permanent=True)
+    return {'entry': entry}

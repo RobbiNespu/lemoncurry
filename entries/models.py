@@ -141,6 +141,14 @@ class Entry(ModelMeta, TimeStampedModel):
         return reverse('entries:' + kind.entry, args=args)
 
     @property
+    def amp_url(self):
+        kind = kinds.from_id[self.kind]
+        args = [self.id]
+        if kind.slug:
+            args.append(self.slug)
+        return reverse('entries:' + kind.entry_amp, args=args)
+
+    @property
     def slug(self):
         return slugify(self.name)
 

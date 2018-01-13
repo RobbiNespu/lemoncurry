@@ -15,6 +15,10 @@ class Entry:
         return self.plural + '_entry'
 
     @property
+    def entry_amp(self):
+        return self.entry + '_amp'
+
+    @property
     def atom(self):
         return self.plural + '_atom'
 
