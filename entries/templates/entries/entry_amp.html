@@ -4,6 +4,7 @@
 		<meta charset="utf-8" />
 		<title>{{ entry.title }} ~ {% site_name %}</title>
 		<link rel="canonical" href="{% absolute_url entry.url %}">
+		{% shortlink entry as short %}<link rel="shortlink" href="{% absolute_url short %}" />
 		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 		<script class="p-json-ld" type="application/ld+json">
 			{{ entry.json_ld | jsonify }}
@@ -131,7 +132,7 @@
 						amp
 					</a>
 
-					{% shortlink entry as short %}<a class="u-url" href="{% absolute_url short %}">
+					<a class="u-url" href="{% absolute_url short %}">
 						🔗
 						{{ short | friendly_url }}
 					</a>
