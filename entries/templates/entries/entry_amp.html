@@ -1,9 +1,9 @@
-{% load favtags jsonify lemoncurry_tags markdown theme_colour %}<!doctype html>
+{% load absolute_url favtags friendly_url humanize jsonify lemoncurry_tags markdown shortlink theme_colour %}<!doctype html>
 <html ⚡ lang="en" class="h-entry">
 	<head>
 		<meta charset="utf-8" />
 		<title>{{ entry.title }} ~ {% site_name %}</title>
-		<link rel="canonical" href="{{ entry.url }}">
+		<link rel="canonical" href="{% absolute_url entry.url %}">
 		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 		<script class="p-json-ld" type="application/ld+json">
 			{{ entry.json_ld | jsonify }}
@@ -45,7 +45,6 @@
 				margin: 0;
 				padding-bottom: .3125rem;
 				padding-top: .3125rem;
-				text-decoration: none;
 			}
 			body > main {
 				display: flex;
@@ -59,12 +58,28 @@
 				border: 1px solid rgba(0,0,0,.125);
 				border-radius: .25rem;
 				padding: 1.25rem;
+				width: 90%;
 			}
 			body > main > article > h4 {
 				font-size: 1.5rem;
 				font-weight: 500;
 				margin: 0;
 				margin-bottom: .75rem;
+			}
+			body > main > article > aside {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+			}
+			a {
+				text-decoration: none;
+				color: {% theme_colour 13 %};
+			}
+			a:hover {
+				color: {% theme_colour 12 %};
+			}
+			amp-img {
+				vertical-align: baseline;
 			}
 		</style>
 		<script async src="https://cdn.ampproject.org/v0.js"></script>
@@ -76,6 +91,11 @@
 
 		<main>
 			<article>
+				{% if entry.photo %}
+				<amp-img class="u-photo" src="{{ entry.photo.url }}" height="{{ entry.photo.height }}" width="{{ entry.photo.width }}" layout="responsive">
+					<span class="value" hidden>{% absolute_url entry.photo.url %}</span>
+				</amp-img>
+				{% endif %}
 				{% if entry.name %}
 				<h4 class="p-name">{{ entry.name }}</h4>
 				{% endif %}
@@ -83,6 +103,53 @@
 				<main class="e-content{% if not entry.name %} p-name{% endif %}">
 					{{ entry.content | markdown }}
 				</main>
+
+				<aside>
+					<a class="p-author h-card" href="{% absolute_url entry.author.url %}">
+						<amp-img class="u-photo" src="{{ entry.author.avatar.url }}" height="16" width="16" layout="fixed">
+							<span class="value" hidden>{% absolute_url entry.author.avatar.url %}</span>
+						</amp-img>
+						<span class="p-name">{{ entry.author.name }}</span>
+					</a>
+
+					<a class="u-uid u-url" href="{% absolute_url entry.url %}">
+						<time class="dt-published" datetime="{{ entry.published.isoformat }}">
+							📅
+							{{ entry.published | naturaltime }}
+						</time>
+					</a>
+
+					{% if entry.published != entry.updated %}
+						<time class="dt-updated" datetime="{{ entry.updated.isoformat }}">
+							✏️
+							{{ entry.updated | naturaltime }}
+						</time>
+					{% endif %}
+
+					<a class="u-url" href="{% absolute_url entry.amp_url %}">
+						⚡️
+						amp
+					</a>
+
+					{% shortlink entry as short %}<a class="u-url" href="{% absolute_url short %}">
+						🔗
+						{{ short | friendly_url }}
+					</a>
+
+					{% for c in entry.cats.all %}
+					<a class="p-category" href="{% absolute_url c.url %}">
+						🐾
+						<span class="value">{{ c.name }}</span>
+					</a>
+					{% endfor %}
+
+				{% for s in entry.syndications.all %}
+				<a class="u-syndication" href="{% absolute_url s.url %}">
+					🗞
+					{{ s.profile }}
+				</a>
+				{% endfor %}
+				</aside>
 			</article>
 		</main>
 	</body>
