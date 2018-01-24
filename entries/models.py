@@ -42,7 +42,7 @@ class Cat(models.Model):
 class EntryManager(models.Manager):
     def get_queryset(self):
         qs = super(EntryManager, self).get_queryset()
-        return qs.select_related('author').prefetch_related('syndications')
+        return qs.select_related('author').prefetch_related('cats', 'syndications')
 
 
 class Entry(ModelMeta, TimeStampedModel):

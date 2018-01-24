@@ -16,11 +16,14 @@ def index(request, page):
     def url(page):
         kwargs = {'page': page} if page != 1 else {}
         return reverse('home:index', kwargs=kwargs)
-    query = User.objects.prefetch_related('entries', 'profiles', 'keys')
-    user = get_object_or_404(query, pk=1)
-    entries = user.entries.filter(kind__in=kinds.on_home)
 
+    user = request.user
+    if not user:
+        user = get_object_or_404(User, pk=1)
+
+    entries = user.entries.filter(kind__in=kinds.on_home)
     entries = pagination.paginate(queryset=entries, reverse=url, page=page)
+
     # If we got a valid HTTP response, just return it without rendering.
     if hasattr(entries, 'content'):
         return entries

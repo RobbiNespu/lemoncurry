@@ -31,7 +31,14 @@ class Site(models.Model):
         ordering = ('name',)
 
 
+class UserManager(models.Manager):
+    def get_queryset(self):
+        return super(UserManager, self).get_queryset().prefetch_related('keys', 'profiles')
+
+
 class User(ModelMeta, AbstractUser):
+    objects = UserManager()
+
     avatar = models.ImageField(upload_to=avatar_path)
     note = models.TextField(blank=True)
     xmpp = models.EmailField(blank=True)
@@ -61,17 +68,17 @@ class User(ModelMeta, AbstractUser):
 
     @cached_property
     def facebook_id(self):
-        try:
-            return self.profiles.filter(site__name='Facebook').values('username')[0]['username']
-        except IndexError:
-            return None
+        for p in self.profiles.all():
+            if p.site.name == 'Facebook':
+                return p.username
+        return None
 
     @cached_property
     def twitter_username(self):
-        try:
-            return '@' + self.profiles.filter(site__name='Twitter').values('username')[0]['username']
-        except IndexError:
-            return None
+        for p in self.profiles.all():
+            if p.site.name == 'Twitter':
+                return '@' + p.username
+        return None
 
     @property
     def json_ld(self):
