@@ -3,23 +3,18 @@ from jose import jwt
 from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from django.http import HttpResponse
+
+from micropub.views import error
 
 
 def auth(request):
     if 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META.get('HTTP_AUTHORIZATION').split(' ')
         if auth[0] != 'Bearer':
-            return HttpResponse(
-                'authorisation with {0} not supported'.format(auth[0]),
-                content_type='text/plain',
-                status=400
-            )
+            return error.bad_req('auth type {0} not supported'.format(auth[0]))
         if len(auth) != 2:
-            return HttpResponse(
-                'invalid Bearer auth format, must be Bearer <token>',
-                content_type='text/plain',
-                status=400
+            return error.bad_req(
+                'invalid Bearer auth format, must be Bearer <token>'
             )
         token = auth[1]
     elif 'access_token' in request.POST:
@@ -27,20 +22,12 @@ def auth(request):
     elif 'access_token' in request.GET:
         token = request.GET.get('access_token')
     else:
-        return HttpResponse(
-            'authorisation required',
-            content_type='text/plain',
-            status=401
-        )
+        return error.unauthorized()
 
     try:
         token = decode(token)
     except Exception as e:
-        return HttpResponse(
-            'invalid micropub token',
-            content_type='text/plain',
-            status=403,
-        )
+        return error.forbidden()
 
     return MicropubToken(token)
 
