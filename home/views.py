@@ -18,7 +18,7 @@ def index(request, page):
         return reverse('home:index', kwargs=kwargs)
 
     user = request.user
-    if not user:
+    if not hasattr(user, 'entries'):
         user = get_object_or_404(User, pk=1)
 
     entries = user.entries.filter(kind__in=kinds.on_home)
