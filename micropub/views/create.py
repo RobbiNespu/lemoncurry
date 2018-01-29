@@ -33,6 +33,8 @@ def create(request):
         'application/json': json.load,
         'application/x-www-form-urlencoded': form_to_mf2,
     }
+    if 'create' not in request.token:
+        return error.bad_scope('create')
     if request.content_type not in normalise:
         return error.unsupported_type(request.content_type)
     body = normalise[request.content_type](request)
