@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager as DjangoUserManager
 from django.contrib.sites.models import Site as DjangoSite
 from django.utils.functional import cached_property
 from meta.models import ModelMeta
@@ -31,7 +31,7 @@ class Site(models.Model):
         ordering = ('name',)
 
 
-class UserManager(models.Manager):
+class UserManager(DjangoUserManager):
     def get_queryset(self):
         return super(UserManager, self).get_queryset().prefetch_related('keys', 'profiles')
 
