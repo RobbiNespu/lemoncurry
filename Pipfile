@@ -45,6 +45,7 @@ cachecontrol = "*"
 hiredis = "*"
 "mf2util" = "*"
 django-cors-headers = "*"
+pytest-django = "*"
 
 
 [dev-packages]
