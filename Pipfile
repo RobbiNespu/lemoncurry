@@ -46,6 +46,7 @@ hiredis = "*"
 "mf2util" = "*"
 django-cors-headers = "*"
 pytest-django = "*"
+"argon2-cffi" = "*"
 
 
 [dev-packages]
