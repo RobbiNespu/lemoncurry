@@ -7,7 +7,6 @@ install:
   script:
     - pip install pipenv
     - pipenv install
-    - pipenv run ./manage.py collectstatic --no-input
 
 pytest:
   stage: test
