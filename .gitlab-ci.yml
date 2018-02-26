@@ -2,13 +2,8 @@ image: python:3.6
 variables:
   GIT_SUBMODULE_STRATEGY: normal
 
-install:
-  stage: build
+test:
   script:
     - pip install pipenv
     - pipenv install
-
-pytest:
-  stage: test
-  script:
     - pipenv run pytest
