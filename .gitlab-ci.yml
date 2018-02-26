@@ -1,5 +1,15 @@
-image: vaultvulp/pipenv-alpine
-test:
+image: python:3.6
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+
+install:
+  stage: build
   script:
+    - pip install pipenv
     - pipenv install
+    - pipenv run ./manage.py collectstatic --no-input
+
+pytest:
+  stage: test
+  script:
     - pipenv run pytest
