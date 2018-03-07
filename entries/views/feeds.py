@@ -4,8 +4,8 @@ from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
 from urllib.parse import urljoin
 from lemoncurry.templatetags.markdown import markdown
-from .kinds import on_home
-from .models import Entry
+from ..kinds import on_home
+from ..models import Entry
 
 
 class EntriesFeed(Feed):
