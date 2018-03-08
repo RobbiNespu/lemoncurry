@@ -39,7 +39,6 @@ def add(route, label=None, parent=None):
 
 
 def find(match):
-    print(breadcrumbs)
     crumbs = []
     route = match.view_name
     while route:
