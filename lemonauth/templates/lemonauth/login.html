@@ -31,12 +31,9 @@
 			{% form_field form.password %}
 			{% form_field form.otp_token %}
 
-			<div class="form-group">
-				<label class="custom-control custom-checkbox">
-					<input name="{{ form.otp_agent_trust.name }}" class="custom-control-input" type="checkbox" />
-					<span class="custom-control-indicator"></span>
-					<span class="custom-control-description">remember this browser (don't tick this on a public computer!)</span>
-				</label>
+			<div class="custom-control custom-checkbox">
+				<input id="otp-trust-agent" name="{{ form.otp_trust_agent.name }}" class="custom-control-input" type="checkbox" />
+				<label for="otp-trust-agent" class="custom-control-label">remember this browser (don't tick this on a public computer!)</label>
 			</div>
 		</div>
 
