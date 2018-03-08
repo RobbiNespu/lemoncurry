@@ -31,8 +31,8 @@ def index(request, page):
     return {
         'user': user,
         'entries': entries,
-        'atom': 'entries:atom',
-        'rss': 'entries:rss',
+        'atom': reverse('entries:atom'),
+        'rss': reverse('entries:rss'),
         'meta': user.as_meta(request),
     }
 

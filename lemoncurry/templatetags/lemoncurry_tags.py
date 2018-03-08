@@ -15,7 +15,9 @@ class MenuItem:
     def __init__(self, label, icon, url):
         self.label = label
         self.icon = icon
-        self.url = reverse(url)
+        if isinstance(url, str):
+            url = (url, ())
+        self.url = reverse(url[0], args=url[1])
 
 
 @register.simple_tag
@@ -43,7 +45,7 @@ def nav_left(request):
     items = (MenuItem(
         label=k.plural,
         icon=k.icon,
-        url='entries:'+k.plural+'_index'
+        url=('entries:index', (k.plural,))
     ) for k in kinds.all)
     return {'items': items, 'request': request}
 
@@ -71,9 +73,9 @@ def nav_crumbs(context, route):
         '@type': 'ListItem',
         'position': i + 1,
         'item': {
-            '@id': context['origin'] + reverse(crumb['route']),
+            '@id': context['origin'] + crumb.url,
             '@type': 'WebPage',
-            'name': crumb['label']
+            'name': crumb.label
         }
     } for i, crumb in enumerate(crumbs)]
     item_list_element.append({
@@ -82,7 +84,7 @@ def nav_crumbs(context, route):
         'item': {
             'id': context['uri'],
             '@type': 'WebPage',
-            'name': current['label'] or context.get('title'),
+            'name': current.label or context.get('title'),
         }
     })
 

@@ -4,7 +4,7 @@ from ..models import Entry
 
 
 @render_to('entries/entry.html')
-def entry(request, id, slug=None):
+def entry(request, kind, id, slug=None):
     entry = Entry.objects.get(pk=id)
     if request.path != entry.url:
         return redirect(entry.url, permanent=True)
@@ -16,7 +16,7 @@ def entry(request, id, slug=None):
 
 
 @render_to('entries/entry_amp.html')
-def entry_amp(request, id, slug=None):
+def entry_amp(request, kind, id, slug=None):
     entry = Entry.objects.get(pk=id)
     if request.path != entry.amp_url:
         return redirect(entry.amp_url, permanent=True)

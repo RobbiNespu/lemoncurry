@@ -1,3 +1,6 @@
+from django.urls import reverse
+
+
 class Entry:
     def __init__(self, id, plural, icon, on_home=True, slug=False):
         self.id = id
@@ -8,7 +11,13 @@ class Entry:
 
     @property
     def index(self):
-        return self.plural + '_index'
+        return self.index_page()
+
+    def index_page(self, page=0):
+        kwargs = {'kind': self.plural}
+        if page > 1:
+            kwargs['page'] = page
+        return reverse('entries:index', kwargs=kwargs)
 
     @property
     def entry(self):
@@ -20,11 +29,11 @@ class Entry:
 
     @property
     def atom(self):
-        return self.plural + '_atom'
+        return reverse('entries:atom_by_kind', kwargs={'kind': self.plural})
 
     @property
     def rss(self):
-        return self.plural + '_rss'
+        return reverse('entries:rss_by_kind', kwargs={'kind': self.plural})
 
 
 Note = Entry(

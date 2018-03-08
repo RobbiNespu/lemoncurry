@@ -1,25 +1,23 @@
 from annoying.decorators import render_to
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from .. import kinds
 from ..models import Entry, Cat
 from ..pagination import paginate
 
 
 @render_to('entries/index.html')
 def by_kind(request, kind, page):
-    def url(page):
-        kwargs = {'page': page} if page > 1 else {}
-        return reverse('entries:' + kind.index, kwargs=kwargs)
-
+    kind = kinds.from_plural[kind]
     entries = Entry.objects.filter(kind=kind.id)
-    entries = paginate(queryset=entries, reverse=url, page=page)
+    entries = paginate(queryset=entries, reverse=kind.index_page, page=page)
     if hasattr(entries, 'content'):
         return entries
 
     return {
         'entries': entries,
-        'atom': 'entries:' + kind.atom,
-        'rss': 'entries:' + kind.rss,
+        'atom': kind.atom,
+        'rss': kind.rss,
         'title': kind.plural,
     }
 

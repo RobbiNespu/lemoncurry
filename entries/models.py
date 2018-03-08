@@ -135,18 +135,18 @@ class Entry(ModelMeta, TimeStampedModel):
     @property
     def url(self):
         kind = kinds.from_id[self.kind]
-        args = [self.id]
+        args = [kind.plural, self.id]
         if kind.slug:
             args.append(self.slug)
-        return reverse('entries:' + kind.entry, args=args)
+        return reverse('entries:entry', args=args)
 
     @property
     def amp_url(self):
         kind = kinds.from_id[self.kind]
-        args = [self.id]
+        args = [kind.plural, self.id]
         if kind.slug:
             args.append(self.slug)
-        return reverse('entries:' + kind.entry_amp, args=args)
+        return reverse('entries:entry_amp', args=args)
 
     @property
     def slug(self):
