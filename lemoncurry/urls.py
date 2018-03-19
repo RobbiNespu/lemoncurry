@@ -41,6 +41,7 @@ urlpatterns = [
     url('^auth/', include('lemonauth.urls')),
     url('^micropub', include('micropub.urls')),
     url('^s/', include('shorturls.urls')),
+    url('^webmention', include('webmention.urls')),
 
     url(r'^django-rq/', include('django_rq.urls')),
     url(r'^sitemap\.xml$', sitemap.index, maps, name='sitemap'),

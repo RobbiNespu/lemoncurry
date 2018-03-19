@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'lemonauth',
     'micropub',
     'users',
+    'webmention',
     'wellknowns',
 ]
 
