@@ -77,9 +77,9 @@ def create(request):
         reverse('home:index'),
         reverse('entries:atom'),
         reverse('entries:rss'),
-        reverse('entries:' + kind.index),
-        reverse('entries:' + kind.atom),
-        reverse('entries:' + kind.rss),
+        reverse('entries:index', kwargs={'kind': kind.plural}),
+        reverse('entries:atom_by_kind', kwargs={'kind': kind.plural}),
+        reverse('entries:rss_by_kind', kwargs={'kind': kind.plural}),
     )] + [urljoin(base, cat.url) for cat in cats]
     ping_hub.delay(perma, *others)
     send_mentions.delay(perma)
