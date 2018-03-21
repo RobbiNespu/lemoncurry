@@ -34,7 +34,6 @@ xrd = "*"
 django-push = "*"
 pyyaml = "*"
 django-annoying = "*"
-django-shorturls = "*"
 accept-types = "*"
 django-analytical = "*"
 django-model-utils = "*"
@@ -47,6 +46,7 @@ hiredis = "*"
 django-cors-headers = "*"
 pytest-django = "*"
 "argon2-cffi" = "*"
+python-baseconv = "*"
 
 
 [dev-packages]

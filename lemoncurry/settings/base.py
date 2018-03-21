@@ -81,12 +81,12 @@ INSTALLED_APPS = [
     'django_rq',
     'favicon',
     'meta',
-    'shorturls',
 
     'lemoncurry',
     'entries',
     'home',
     'lemonauth',
+    'lemonshort',
     'micropub',
     'users',
     'webmention',
@@ -240,8 +240,8 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': 'lemoncurry.debug.show_toolbar',
 }
 
-# django-shorturls
-# https://pypi.python.org/pypi/django-shorturls
+# lemonshort
+SHORT_BASE_URL = '/s/'
 SHORTEN_MODELS = {
     'e': 'entries.entry',
 }

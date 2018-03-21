@@ -8,6 +8,7 @@ from slugify import slugify
 from textwrap import shorten
 from urllib.parse import urljoin
 
+from lemonshort.short_url import short_url
 from meta.models import ModelMeta
 from model_utils.models import TimeStampedModel
 from users.models import Profile
@@ -147,6 +148,10 @@ class Entry(ModelMeta, TimeStampedModel):
         if kind.slug:
             args.append(self.slug)
         return reverse('entries:entry_amp', args=args)
+
+    @property
+    def short_url(self):
+        return short_url(self)
 
     @property
     def slug(self):

@@ -40,7 +40,7 @@ urlpatterns = [
     url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),
     url('^micropub', include('micropub.urls')),
-    url('^s/', include('shorturls.urls')),
+    url('^s/', include('lemonshort.urls')),
     url('^webmention', include('webmention.urls')),
 
     url(r'^django-rq/', include('django_rq.urls')),

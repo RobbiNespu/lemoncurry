@@ -1,4 +1,4 @@
-{% load bleach friendly_url humanize jsonify markdown shortlink %}<article class="card h-entry">
+{% load bleach friendly_url humanize jsonify markdown %}<article class="card h-entry">
 	{% if entry.photo %}<img class="card-img-top u-photo" src="{{ entry.photo.url }}" />{% endif %}
 
 	{% if entry.in_reply_to %}{% with reply=entry.reply_context %}
@@ -39,9 +39,9 @@
 			<i class="fas fa-bolt"></i>
 			amp
 		</a>
-		{% shortlink entry as short %}<a class="u-url" href="{{ short }}">
+		<a class="u-url" href="{{ entry.short_url }}">
 			<i class="fas fa-link"></i>
-			{{ short | friendly_url }}
+			{{ entry.short_url | friendly_url }}
 		</a>
 	</div>
 

@@ -1,10 +1,10 @@
-{% load absolute_url favtags friendly_url humanize jsonify lemoncurry_tags markdown shortlink theme_colour %}<!doctype html>
+{% load absolute_url favtags friendly_url humanize jsonify lemoncurry_tags markdown theme_colour %}<!doctype html>
 <html ⚡ lang="en" class="h-entry">
 	<head>
 		<meta charset="utf-8" />
 		<title>{{ entry.title }} ~ {% site_name %}</title>
 		<link rel="canonical" href="{% absolute_url entry.url %}">
-		{% shortlink entry as short %}<link rel="shortlink" href="{% absolute_url short %}" />
+		<link rel="shortlink" href="{% absolute_url entry.short_url %}" />
 		<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 		<script class="p-json-ld" type="application/ld+json">
 			{{ entry.json_ld | jsonify }}
@@ -132,9 +132,9 @@
 						amp
 					</a>
 
-					<a class="u-url" href="{% absolute_url short %}">
+					<a class="u-url" href="{% absolute_url entry.short_url %}">
 						🔗
-						{{ short | friendly_url }}
+						{{ entry.short_url | friendly_url }}
 					</a>
 
 					{% for c in entry.cats.all %}

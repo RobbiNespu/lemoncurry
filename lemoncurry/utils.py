@@ -6,8 +6,6 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.utils.html import strip_tags
 from os.path import join
-from shorturls import default_converter as converter
-from shorturls.templatetags.shorturl import ShortURL
 from types import SimpleNamespace
 from urllib.parse import urlencode, urljoin
 
@@ -51,14 +49,6 @@ def choose_type(request, content, reps=REPS):
     if type:
         return reps[type](content)
     return HttpResponse(status=406)
-
-
-def shortlink(obj):
-    prefix = ShortURL(None).get_prefix(obj)
-    tinyid = converter.from_decimal(obj.pk)
-    if hasattr(settings, 'SHORT_BASE_URL') and settings.SHORT_BASE_URL:
-        return urljoin(settings.SHORT_BASE_URL, prefix + tinyid)
-    return '/' + prefix + tinyid
 
 
 def bad_req(message):
