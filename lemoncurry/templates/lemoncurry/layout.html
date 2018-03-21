@@ -31,6 +31,8 @@
 
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 					integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css"
+					integrity="sha384-bHqbpRh/XW+phptvH9nQvMKHwPH1ZbOxpIeAB2D2OIEL4Ni7aZzZgMFpsRra+v1g" crossorigin="anonymous" />
 		{% compress css %}
 		<link rel="stylesheet" type="text/css" href={% static 'openwebicons/css/openwebicons.css' %} />
 		<link rel="stylesheet" type="text/css" href={% static 'tippy.js/tippy.css' %} />
@@ -111,9 +113,14 @@
 						integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"
 						integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" crossorigin="anonymous"
+						integrity="sha384-ZeLYJ2PNSQjvogWP559CDAf02Qb8FE5OyQicqtz/+UhZutbrwyr87Be7NPH/RgyC"></script>
 
 		{% compress js %}
 		<script src="{% static 'tippy.js/tippy.standalone.js' %}"></script>
+		<script type="text/javascript">
+			hljs.initHighlightingOnLoad();
+		</script>
 		{% block foot %}{% endblock %}
 		{% endcompress %}
 		{% analytical_body_bottom %}
