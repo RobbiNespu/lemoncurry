@@ -52,7 +52,7 @@ def nav_left(request):
 
 @register.inclusion_tag('lemoncurry/tags/nav.html')
 def nav_right(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         items = (
             MenuItem(label='admin', icon='fas fa-cog', url='admin:index'),
             MenuItem(label='log out', icon='fas fa-sign-out-alt', url='lemonauth:logout'),
