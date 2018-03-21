@@ -68,7 +68,7 @@ def create(request):
 
     entry.kind = kind.id
     entry.save()
-    entry.cats = cats
+    entry.cats.set(cats)
     entry.save()
 
     base = utils.origin(request)
