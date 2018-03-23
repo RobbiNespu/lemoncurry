@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'analytical',
     'annoying',
     'compressor',
+    'computed_property',
     'corsheaders',
     'debug_toolbar',
     'django_activeurl',

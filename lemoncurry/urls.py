@@ -36,6 +36,7 @@ maps = {'sitemaps': sections}
 urlpatterns = [
     url('', include('home.urls')),
     url('', include('entries.urls')),
+    url('', include('users.urls')),
     url('^.well-known/', include('wellknowns.urls')),
     url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),

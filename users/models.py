@@ -1,7 +1,9 @@
+from computed_property import ComputedCharField
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as DjangoUserManager
 from django.contrib.sites.models import Site as DjangoSite
 from django.utils.functional import cached_property
+from hashlib import md5, sha256
 from meta.models import ModelMeta
 from urllib.parse import urljoin
 from lemoncurry import utils
@@ -45,6 +47,21 @@ class User(ModelMeta, AbstractUser):
 
     # This is gonna need to change if I ever decide to add multiple-user support ;)
     url = '/'
+
+    email_md5 = ComputedCharField(
+        compute_from='calc_email_md5', max_length=32, unique=True
+    )
+    email_sha256 = ComputedCharField(
+        compute_from='calc_email_sha256', max_length=64, unique=True
+    )
+
+    @property
+    def calc_email_md5(self):
+        return md5(self.email.lower().encode('utf-8')).hexdigest()
+
+    @property
+    def calc_email_sha256(self):
+        return sha256(self.email.lower().encode('utf-8')).hexdigest()
 
     @property
     def name(self):

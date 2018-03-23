@@ -47,6 +47,7 @@ django-cors-headers = "*"
 pytest-django = "*"
 "argon2-cffi" = "*"
 python-baseconv = "*"
+django-computed-property = "*"
 
 
 [dev-packages]
