@@ -28,13 +28,12 @@
 			<p class="card-text">do you want to confirm your identity, <a class="code" href="{{ me }}">{{ me }}</a>, with this app?</p>
 			{% if params.response_type == 'code' %}
 			<p class="card-text">additionally, this app is requesting the following <i>scopes</i> - you can edit the scopes that will be granted to the app, if you wish</p>
-			<div class="custom-controls-stacked card-text">
+			<div class="card-text form-group">
 			{% for scope in scopes %}
-				<label class="custom-control custom-checkbox">
-					<input name="scope" type="checkbox" class="custom-control-input" checked value="{{ scope }}" />
-					<span class="custom-control-indicator"></span>
-					<span class="custom-control-description">{{ scope }}</span>
-				</label>
+			<div class="form-check">
+				<input class="form-check-input" id="scopes-{{ scope }}" name="scope" type="checkbox" checked value="{{ scope }}" />
+				<label class="form-check-label" for="scopes-{{ scope }}">{{ scope }}</label>
+			</div>
 			{% endfor %}
 			</div>
 			{% endif %}
