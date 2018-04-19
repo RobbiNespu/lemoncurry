@@ -4,5 +4,5 @@ from . import views
 app_name = 'webmention'
 urlpatterns = (
     url('^$', views.accept, name='accept'),
-    url('^s/(?P<id>\d+)$', views.status, name='status')
+    url('^s/(?P<mention_id>\d+)$', views.status, name='status')
 )

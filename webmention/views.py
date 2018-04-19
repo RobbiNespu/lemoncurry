@@ -54,15 +54,14 @@ def accept(request):
     mention.entry = entry
     mention.state = State.PENDING
     mention.save()
-    status = reverse('webmention:status', kwargs={'id': mention.id})
+    status_url = reverse('webmention:status', kwargs={'id': mention.id})
 
     res = HttpResponse(status=201)
-    res['Location'] = urljoin(origin, status)
+    res['Location'] = urljoin(origin, status_url)
     return res
 
 
-@csrf_exempt
 @require_GET
-def status(request, id):
-    mention = get_object_or_404(Webmention.objects, pk=id)
+def status(request, mention_id):
+    mention = get_object_or_404(Webmention.objects, pk=mention_id)
     return HttpResponse(mention.get_state_display())
