@@ -38,6 +38,7 @@ urlpatterns = [
     url('', include('entries.urls')),
     url('', include('users.urls')),
     url('^.well-known/', include('wellknowns.urls')),
+    url('^admin/doc/', include('django.contrib.admindocs.urls')),
     url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),
     url('^micropub', include('micropub.urls')),

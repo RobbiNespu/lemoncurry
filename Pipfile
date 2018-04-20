@@ -1,17 +1,12 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
-
 python_version = '3.6'
 
-
 [packages]
-
 django = "*"
 django-compressor = "*"
 gunicorn = "*"
@@ -48,6 +43,6 @@ pytest-django = "*"
 "argon2-cffi" = "*"
 python-baseconv = "*"
 django-computed-property = "*"
-
+docutils = "*"
 
 [dev-packages]
