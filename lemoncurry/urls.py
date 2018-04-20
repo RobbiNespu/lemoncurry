@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 from otp_agents.admin import TrustedAgentAdminSite
 
 import django.contrib.sitemaps.views as sitemap
@@ -37,10 +38,12 @@ urlpatterns = [
     url('', include('home.urls')),
     url('', include('entries.urls')),
     url('', include('users.urls')),
-    url('^.well-known/', include('wellknowns.urls')),
+    url(r'^\.well-known/', include('wellknowns.urls')),
     url('^admin/doc/', include('django.contrib.admindocs.urls')),
     url('^admin/', otp_admin_site.urls),
     url('^auth/', include('lemonauth.urls')),
+    url(r'^favicon\.ico$', RedirectView.as_view(
+        url=settings.MEDIA_URL + 'favicon/favicon.ico')),
     url('^micropub', include('micropub.urls')),
     url('^s/', include('lemonshort.urls')),
     url('^webmention', include('webmention.urls')),
