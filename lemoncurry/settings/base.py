@@ -263,3 +263,6 @@ PUSH_HUB = 'https://00dani.superfeedr.com/'
 # django-rq
 # https://github.com/ui/django-rq
 RQ_QUEUES = {'default': {'USE_REDIS_CACHE': 'default'}}
+
+# django-super-favicon
+FAVICON_STORAGE = 'django.core.files.storage.DefaultStorage'
