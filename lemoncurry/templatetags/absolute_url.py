@@ -1,10 +1,12 @@
 from django import template
+from django.contrib.sites.models import Site
 from urllib.parse import urljoin
-from ..utils import origin
 
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
-def absolute_url(context, url):
-    return urljoin(origin(context.request), url)
+@register.simple_tag
+@register.filter(is_safe=True)
+def absolute_url(url):
+    base = 'https://' + Site.objects.get_current().domain
+    return urljoin(base, url)
