@@ -24,6 +24,8 @@
 
 		<link rel="manifest" href="{% url 'wellknowns:manifest' %}" />
 		<meta name="theme-color" content="{% theme_colour 2 %}" />
+		{% get_package_json as package %}
+		<meta name="generator" content="{{ package.name }} {{ package.version }}" />
 
 		<meta property="og:url" content="{{ uri }}" />
 		<meta property="og:title" content="{% firstof title site_name %}" />
@@ -105,7 +107,6 @@
 			</nav>
 			{% endif %}
 
-			{% get_package_json as package %}
 			<p>powered by <a rel="code-repository" href="{{ package.repository }}/tree/v{{ package.version }}">{{ package.name }} {{ package.version }}</a></p>
 		</footer>
 
