@@ -10,12 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-import re
+from os import path
 
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -155,7 +153,7 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -175,19 +173,12 @@ PASSWORD_HASHERS = [
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
+PW_VALIDATOR_MODULE = 'django.contrib.auth.password_validation'
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': PW_VALIDATOR_MODULE + '.UserAttributeSimilarityValidator'},
+    {'NAME': PW_VALIDATOR_MODULE + '.MinimumLengthValidator'},
+    {'NAME': PW_VALIDATOR_MODULE + '.CommonPasswordValidator'},
+    {'NAME': PW_VALIDATOR_MODULE + '.NumericPasswordValidator'},
 ]
 
 LOGIN_URL = 'lemonauth:login'
@@ -213,7 +204,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = path.join(BASE_DIR, 'static')
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -221,11 +212,11 @@ STATICFILES_FINDERS = (
 )
 
 COMPRESS_PRECOMPILERS = (
-    ('text/stylus', './node_modules/.bin/stylus {infile} -u ./lemoncurry/static/lemoncurry/css/theme -o {outfile}'),
+    ('text/stylus', 'npx stylus -u ./static/lemoncurry/css/theme'),
 )
 
 MEDIA_URL = STATIC_URL + 'media/'
-MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+MEDIA_ROOT = path.join(STATIC_ROOT, 'media')
 
 # django-contrib-sites
 # https://docs.djangoproject.com/en/dev/ref/contrib/sites/
