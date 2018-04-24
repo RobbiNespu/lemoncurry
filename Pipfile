@@ -9,7 +9,7 @@ python_version = '3.6'
 [packages]
 django = "*"
 django-compressor = "*"
-gunicorn = "*"
+gunicorn = {extras = ["gevent"]}
 "psycopg2" = "*"
 pillow = "*"
 python-memcached = "*"
