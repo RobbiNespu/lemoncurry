@@ -143,7 +143,9 @@ CACHES = {
         'KEY_PREFIX': 'lemoncurry',
         'OPTIONS': {
             'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'SERIALIZER': 'django_redis.serializers.msgpack.MSGPackSerializer',
         },
+        'VERSION': 2,
     }
 }
 
