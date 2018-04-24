@@ -14,7 +14,6 @@ gunicorn = {extras = ["gevent"]}
 pillow = "*"
 python-memcached = "*"
 django-meta = "*"
-django-redis-cache = "*"
 django-activeurl = "*"
 django-otp = "*"
 qrcode = "*"
@@ -44,5 +43,6 @@ python-baseconv = "*"
 django-computed-property = "*"
 docutils = "*"
 django-super-favicon = "*"
+django-redis = "*"
 
 [dev-packages]

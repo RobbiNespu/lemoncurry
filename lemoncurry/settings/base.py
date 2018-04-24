@@ -138,11 +138,10 @@ WSGI_APPLICATION = 'lemoncurry.wsgi.application'
 
 CACHES = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': '127.0.0.1:6380',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6380/0',
         'KEY_PREFIX': 'lemoncurry',
         'OPTIONS': {
-            'DB': 0,
             'PARSER_CLASS': 'redis.connection.HiredisParser',
         },
     }
