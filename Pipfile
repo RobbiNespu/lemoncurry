@@ -45,5 +45,6 @@ docutils = "*"
 django-super-favicon = "*"
 django-redis = "*"
 gevent = "*"
+django-extensions = "*"
 
 [dev-packages]

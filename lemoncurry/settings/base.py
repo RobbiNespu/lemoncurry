@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_activeurl',
     'django_agent_trust',
+    'django_extensions',
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_rq',
