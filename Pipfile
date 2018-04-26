@@ -44,5 +44,6 @@ django-computed-property = "*"
 docutils = "*"
 django-super-favicon = "*"
 django-redis = "*"
+gevent = "*"
 
 [dev-packages]
