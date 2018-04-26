@@ -46,7 +46,7 @@
 						integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
 		{% analytical_head_bottom %}
 	</head>
-	<body>
+	<body{% block body_attr %}{% endblock %}>
 		{% analytical_body_top %}
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark">
@@ -57,8 +57,8 @@
 				</button>
 
 				<div class="collapse navbar-collapse" id="navbar">
-					{% nav_left request %}
-					{% nav_right request %}
+					{% block nav_left %}{% nav_left request %}{% endblock %}
+					{% block nav_right %}{% nav_right request %}{% endblock %}
 				</div>
 			</nav>
 			{% if request.resolver_match.view_name %}
