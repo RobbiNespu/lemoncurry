@@ -216,7 +216,7 @@ STATICFILES_FINDERS = (
 )
 
 COMPRESS_PRECOMPILERS = (
-    ('text/stylus', 'npx stylus -u ./static/lemoncurry/css/theme'),
+    ('text/stylus', 'npx stylus -u ./lemoncurry/static/lemoncurry/css/theme'),
 )
 
 MEDIA_URL = STATIC_URL + 'media/'
