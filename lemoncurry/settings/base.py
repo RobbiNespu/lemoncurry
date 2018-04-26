@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from os import path
 
 
+ADMINS = [
+    ('dani', 'dani@00dani.me'),
+]
+
 BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 
 
