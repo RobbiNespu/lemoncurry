@@ -61,6 +61,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
 
 INSTALLED_APPS = [
+    'lemoncurry',
+
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -86,7 +88,6 @@ INSTALLED_APPS = [
     'favicon',
     'meta',
 
-    'lemoncurry',
     'entries',
     'home',
     'lemonauth',
