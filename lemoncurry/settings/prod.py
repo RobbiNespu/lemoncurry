@@ -7,6 +7,7 @@ from .base import BASE_DIR, DATABASES
 ALLOWED_HOSTS = ['00dani.me']
 DEBUG = False
 SECRET_KEY = environ['DJANGO_SECRET_KEY']
+SERVER_EMAIL = 'lemoncurry@00dani.me'
 
 # Use Postgres instead of SQLite in production.
 DATABASES['default'] = {
