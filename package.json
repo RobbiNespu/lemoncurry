@@ -9,6 +9,6 @@
 	},
 	"dependencies": {
 		"openwebicons": "^1.4.3",
-		"tippy.js": "^1.4.1"
+		"tippy.js": "^2.5.2"
 	}
 }
