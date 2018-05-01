@@ -33,9 +33,13 @@ code, pre, .code, .pre
 		text-decoration none
 		line-height 1
 
-.tippy-popper[x-placement^=top] .tippy-tooltip
-	.tippy-arrow
-		border-top-color $base03
+for placement in top bottom left right
+	.tippy-popper[x-placement^={placement}] .tippy-tooltip.dark-theme .tippy-arrow
+		border-{placement}-color $base03
+
+.tippy-tooltip.dark-theme
+	background-color $base03
+	color $base04
 
 body
 	display flex
