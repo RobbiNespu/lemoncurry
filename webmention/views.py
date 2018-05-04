@@ -62,6 +62,25 @@ def accept(request):
 
 
 @require_GET
-def status(request, mention_id):
+def status(mention_id):
+    """
+    Retrieve the verification status of the specified webmention.
+
+    A webmention is accepted synchronously by the target site (me, in this
+    case) and then must be verified asynchronously - this means contacting the
+    source URL and confirming that it really does link to the target URL it
+    claimed to. Until this verification is complete, we can't assume the
+    mention is real and shouldn't display it anywhere.
+
+    Therefore, when a webmention is accepted, we return a Location header
+    pointing to this endpoint. The source site may, if desired, use this
+    endpoint to check whether their webmention has been verified or not.
+
+    The status is currently returned as a plain string, e.g., 'pending'.
+    However, eventually this will use a nice template instead, possibly
+    displaying additional information about the mention. There's no
+    standardised format for the status response, and most implementations
+    currently use a friendly human-readable format, so I'll be doing the same.
+    """
     mention = get_object_or_404(Webmention.objects, pk=mention_id)
     return HttpResponse(mention.get_state_display())
