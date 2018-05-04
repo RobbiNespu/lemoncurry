@@ -39,20 +39,36 @@ class UserManager(DjangoUserManager):
 
 
 class User(ModelMeta, AbstractUser):
+    """
+    A user in the system - each user will have a representative h-card
+    generated based on all their associated information and may author as many
+    h-entries (:model:`entries.Entry`) as they wish.
+    """
     objects = UserManager()
 
-    avatar = models.ImageField(upload_to=avatar_path)
-    note = models.TextField(blank=True)
-    xmpp = models.EmailField(blank=True)
+    avatar = models.ImageField(
+        upload_to=avatar_path,
+        help_text='an avatar or photo that represents this user'
+    )
+    note = models.TextField(
+        blank=True,
+        help_text='a bio or short description provided by the user'
+    )
+    xmpp = models.EmailField(
+        blank=True,
+        help_text='an XMPP address through which the user may be reached'
+    )
 
     # This is gonna need to change if I ever decide to add multiple-user support ;)
     url = '/'
 
     email_md5 = ComputedCharField(
-        compute_from='calc_email_md5', max_length=32, unique=True
+        compute_from='calc_email_md5', max_length=32, unique=True,
+        help_text="MD5 hash of the user's email, used for Libravatar"
     )
     email_sha256 = ComputedCharField(
-        compute_from='calc_email_sha256', max_length=64, unique=True
+        compute_from='calc_email_sha256', max_length=64, unique=True,
+        help_text="SHA-256 hash of the user's email, used for Libravatar"
     )
 
     @property
@@ -128,6 +144,13 @@ class ProfileManager(models.Manager):
 
 
 class Profile(models.Model):
+    """
+    Represents a particular :model:`users.User`'s identity on a particular
+    :model:`users.Site` - each user may have as many profiles on as many sites
+    as they wish, and all profiles will become `rel="me"` links on their
+    representative h-card. Additionally, :model:`entries.Syndication` is
+    tracked by linking each syndication to a particular profile.
+    """
     objects = ProfileManager()
     user = models.ForeignKey(
         User,
@@ -135,8 +158,15 @@ class Profile(models.Model):
         on_delete=models.CASCADE
     )
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    username = models.CharField(max_length=100)
-    display_name = models.CharField(max_length=100, blank=True)
+    username = models.CharField(
+        max_length=100,
+        help_text="the user's actual handle or ID on the remote site"
+    )
+    display_name = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="overrides the username for display - useful for sites that use ugly IDs"
+    )
 
     def __str__(self):
         if self.site.domain:
@@ -156,6 +186,11 @@ class Profile(models.Model):
 
 
 class Key(models.Model):
+    """
+    Represents a PGP key that belongs to a particular :model:`users.User`. Each
+    key will be added to the user's h-card with rel="pgpkey", a format
+    compatible with IndieAuth.com.
+    """
     user = models.ForeignKey(
         User,
         related_name='keys',
@@ -165,10 +200,23 @@ class Key(models.Model):
     file = models.FileField(upload_to='keys')
 
     @property
-    def key_id(self): return self.fingerprint[32:]
+    def key_id(self):
+        """
+        Returns the key ID, defined as the last eight characters of the key's
+        fingerprint. Key IDs are not cryptographically secure (it's easy to
+        forge a key with any key ID of your choosing), but when you have
+        already imported a key using its full fingerprint, the key ID is a
+        convenient way to refer to it.
+        """
+        return self.fingerprint[32:]
 
     def __str__(self):
         return self.key_id
 
     def pretty_print(self):
+        """
+        Groups the PGP fingerprint into four-character chunks for display, the
+        same way GnuPG does. This can make reading the fingerprint a little
+        friendlier.
+        """
         return " ".join(self.fingerprint[i:i+4] for i in range(0, 40, 4))
