@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import include, url
-from django.contrib import admin
+from django.urls import include, path
 from django.views.generic import RedirectView
 
+from django.contrib import admin
 import django.contrib.sitemaps.views as sitemap
+
 from entries.sitemaps import EntriesSitemap
 from home.sitemaps import HomeSitemap
 
@@ -28,28 +29,28 @@ sections = {
 }
 maps = {'sitemaps': sections}
 
-urlpatterns = [
-    url('', include('home.urls')),
-    url('', include('entries.urls')),
-    url('', include('users.urls')),
-    url(r'^\.well-known/', include('wellknowns.urls')),
-    url('^admin/doc/', include('django.contrib.admindocs.urls')),
-    url('^admin/', admin.site.urls),
-    url('^auth/', include('lemonauth.urls')),
-    url(r'^favicon\.ico$', RedirectView.as_view(
+urlpatterns = (
+    path('', include('home.urls')),
+    path('', include('entries.urls')),
+    path('', include('users.urls')),
+    path('.well-known/', include('wellknowns.urls')),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('admin/', admin.site.urls),
+    path('auth/', include('lemonauth.urls')),
+    path('favicon.ico', RedirectView.as_view(
         url=settings.MEDIA_URL + 'favicon/favicon.ico')),
-    url('^micropub', include('micropub.urls')),
-    url('^s/', include('lemonshort.urls')),
-    url('^webmention', include('webmention.urls')),
+    path('micropub', include('micropub.urls')),
+    path('s/', include('lemonshort.urls')),
+    path('webmention', include('webmention.urls')),
 
-    url(r'^django-rq/', include('django_rq.urls')),
-    url(r'^sitemap\.xml$', sitemap.index, maps, name='sitemap'),
-    url(r'^sitemaps/(?P<section>.+)\.xml$', sitemap.sitemap, maps,
-        name='django.contrib.sitemaps.views.sitemap'),
-]
+    path('django-rq/', include('django_rq.urls')),
+    path('sitemap.xml', sitemap.index, maps, name='sitemap'),
+    path('sitemaps/<section>.xml', sitemap.sitemap, maps,
+         name='django.contrib.sitemaps.views.sitemap'),
+)
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    urlpatterns = (
+        path('__debug__/', include(debug_toolbar.urls)),
+    ) + urlpatterns
