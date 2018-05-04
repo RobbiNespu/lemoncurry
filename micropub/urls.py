@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
 app_name = 'micropub'
 urlpatterns = (
-    url('^$', views.micropub, name='micropub'),
+    path('', views.micropub, name='micropub'),
 )
