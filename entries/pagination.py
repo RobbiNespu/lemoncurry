@@ -17,7 +17,7 @@ def paginate(queryset, reverse, page):
 
     # If the first page was requested, redirect to the clean version of the URL
     # with no page suffix.
-    if page == '1':
+    if page == 1:
         return redirect(Page(1).url)
 
     paginator = Paginator(queryset, 10)

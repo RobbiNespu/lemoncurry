@@ -14,7 +14,7 @@ class Entry:
         return self.index_page()
 
     def index_page(self, page=0):
-        kwargs = {'kind': self.plural}
+        kwargs = {'kind': self}
         if page > 1:
             kwargs['page'] = page
         return reverse('entries:index', kwargs=kwargs)
@@ -29,11 +29,11 @@ class Entry:
 
     @property
     def atom(self):
-        return reverse('entries:atom_by_kind', kwargs={'kind': self.plural})
+        return reverse('entries:atom_by_kind', kwargs={'kind': self})
 
     @property
     def rss(self):
-        return reverse('entries:rss_by_kind', kwargs={'kind': self.plural})
+        return reverse('entries:rss_by_kind', kwargs={'kind': self})
 
 
 Note = Entry(
@@ -80,3 +80,13 @@ all = (Note, Article, Photo)
 on_home = {k.id for k in all if k.on_home}
 from_id = {k.id: k for k in all}
 from_plural = {k.plural: k for k in all}
+
+
+class EntryKindConverter:
+    regex = '|'.join(k.plural for k in all)
+
+    def to_python(self, plural):
+        return from_plural[plural]
+
+    def to_url(self, k):
+        return k.plural

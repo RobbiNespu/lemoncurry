@@ -43,7 +43,9 @@ class Cat(models.Model):
 class EntryManager(models.Manager):
     def get_queryset(self):
         qs = super(EntryManager, self).get_queryset()
-        return qs.select_related('author').prefetch_related('cats', 'syndications')
+        return (qs
+                .select_related('author')
+                .prefetch_related('cats', 'syndications'))
 
 
 class Entry(ModelMeta, TimeStampedModel):
@@ -99,7 +101,11 @@ class Entry(ModelMeta, TimeStampedModel):
     def title(self):
         if self.name:
             return self.name
-        return shorten(utils.to_plain(self.paragraphs[0]), width=100, placeholder='…')
+        return shorten(
+            utils.to_plain(self.paragraphs[0]),
+            width=100,
+            placeholder='…'
+        )
 
     @property
     def excerpt(self):
@@ -137,7 +143,7 @@ class Entry(ModelMeta, TimeStampedModel):
     @property
     def url(self):
         kind = kinds.from_id[self.kind]
-        args = [kind.plural, self.id]
+        args = [kind, self.id]
         if kind.slug:
             args.append(self.slug)
         return reverse('entries:entry', args=args)
@@ -145,7 +151,7 @@ class Entry(ModelMeta, TimeStampedModel):
     @property
     def amp_url(self):
         kind = kinds.from_id[self.kind]
-        args = [kind.plural, self.id]
+        args = [kind, self.id]
         if kind.slug:
             args.append(self.slug)
         return reverse('entries:entry_amp', args=args)

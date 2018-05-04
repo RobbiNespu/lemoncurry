@@ -45,7 +45,7 @@ def nav_left(request):
     items = (MenuItem(
         label=k.plural,
         icon=k.icon,
-        url=('entries:index', (k.plural,))
+        url=('entries:index', (k,))
     ) for k in kinds.all)
     return {'items': items, 'request': request}
 
@@ -55,11 +55,13 @@ def nav_right(request):
     if request.user.is_authenticated:
         items = (
             MenuItem(label='admin', icon='fas fa-cog', url='admin:index'),
-            MenuItem(label='log out', icon='fas fa-sign-out-alt', url='lemonauth:logout'),
+            MenuItem(label='log out', icon='fas fa-sign-out-alt',
+                     url='lemonauth:logout'),
         )
     else:
         items = (
-            MenuItem(label='log in', icon='fas fa-sign-in-alt', url='lemonauth:login'),
+            MenuItem(label='log in', icon='fas fa-sign-in-alt',
+                     url='lemonauth:login'),
         )
     return {'items': items, 'request': request}
 

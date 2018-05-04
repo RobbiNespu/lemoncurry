@@ -12,7 +12,7 @@ breadcrumbs.add('home:index', 'home')
 
 
 @render_to('home/index.html')
-def index(request, page):
+def index(request, page=None):
     def url(page):
         kwargs = {'page': page} if page != 1 else {}
         return reverse('home:index', kwargs=kwargs)
