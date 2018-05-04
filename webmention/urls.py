@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
 app_name = 'webmention'
 urlpatterns = (
-    url('^$', views.accept, name='accept'),
-    url('^s/(?P<mention_id>\d+)$', views.status, name='status')
+    path('', views.accept, name='accept'),
+    path('s/<int:mention_id>', views.status, name='status')
 )
