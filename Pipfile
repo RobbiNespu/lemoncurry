@@ -46,5 +46,6 @@ django-super-favicon = "*"
 django-redis = "*"
 gevent = "*"
 django-extensions = "*"
+python-magic = "*"
 
 [dev-packages]

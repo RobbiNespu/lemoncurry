@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 from os import path
 
+APPEND_SLASH = False
 
 ADMINS = [
     ('dani', 'dani@00dani.me'),

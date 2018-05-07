@@ -1,10 +1,13 @@
 from django.http import JsonResponse
+from django.urls import reverse
 from lemoncurry import requests
+from lemoncurry.utils import absolute_url
 from . import error
 
 
 def config(request):
     config = syndicate_to(request)
+    config['media-endpoint'] = absolute_url(request, reverse('micropub:media'))
     return config
 
 

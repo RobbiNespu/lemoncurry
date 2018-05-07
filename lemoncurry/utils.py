@@ -26,6 +26,10 @@ def origin(request):
     return '{0}://{1}'.format(request.scheme, request.site.domain)
 
 
+def absolute_url(request, url):
+    return urljoin(origin(request), url)
+
+
 def uri(request):
     return origin(request) + request.path
 
