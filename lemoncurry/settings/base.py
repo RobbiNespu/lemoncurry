@@ -235,6 +235,7 @@ AGENT_COOKIE_SECURE = True
 
 # django-cors-headers
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/(?!admin|auth/(?:login|logout|indie)).*$'
 
 # django-debug-toolbar
 # https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
