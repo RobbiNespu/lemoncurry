@@ -63,6 +63,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     'lemoncurry',
+    'pyup_django',
 
     'django.contrib.admin',
     'django.contrib.admindocs',

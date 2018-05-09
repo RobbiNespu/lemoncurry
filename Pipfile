@@ -47,5 +47,6 @@ django-redis = "*"
 gevent = "*"
 django-extensions = "*"
 python-magic = "*"
+pyup-django = "*"
 
 [dev-packages]
