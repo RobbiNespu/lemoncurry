@@ -13,7 +13,4 @@ repos:
       - id: mixed-line-ending
         args:
           - --fix=lf
-      - id: name-tests-test
-        args:
-          - --django
       - id: trailing-whitespace
