@@ -33,7 +33,7 @@
 			</ul>
 		</div>
 
-		<div class="card-footer">
+		{% if user.keys.exists %}<div class="card-footer">
 			<ul class="profiles">
 				{% for key in user.keys.all %}<li>
 					<a class="u-key" href="{{ key.file.url }}">
@@ -42,15 +42,15 @@
 				</li>
 				{% endfor %}
 			</ul>
-		</div>
+		</div>{% endif %}
 
-		<div class="card-footer">
+		{% if user.profiles.exists %}<div class="card-footer">
 			<ul class="profiles">
 				{% for profile in user.profiles.all %}<li>
 					<a class="u-url" rel="me" href="{{ profile.url }}" title="{{ profile }}"><i class="{{ profile.site.icon }}" aria-hidden="true"></i><span class="sr-only">{{ profile }}</span></a>
 				</li>{% endfor %}
 			</ul>
-		</div>
+		</div>{% endif %}
 
 		<script class="p-json-ld" type="application/ld+json">{{ user.json_ld | jsonify }}</script>
 	</article>
