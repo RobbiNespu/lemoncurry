@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'django_agent_trust',
     'django_extensions',
     'django_otp',
+    'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
     'django_rq',
     'favicon',
@@ -160,8 +161,8 @@ CACHES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lemoncurry'
     }
 }
 

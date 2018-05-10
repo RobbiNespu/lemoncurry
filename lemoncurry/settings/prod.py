@@ -9,12 +9,8 @@ DEBUG = False
 SECRET_KEY = environ['DJANGO_SECRET_KEY']
 SERVER_EMAIL = 'lemoncurry@00dani.me'
 
-# Use Postgres instead of SQLite in production.
-DATABASES['default'] = {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'lemoncurry',
-    'USER': 'lemoncurry',
-}
+# Authenticate as an app-specific Postgres user in production.
+DATABASES['default']['USER'] = 'lemoncurry'
 
 SHORT_BASE_URL = 'https://nya.as/'
 
