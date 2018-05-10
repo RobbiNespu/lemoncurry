@@ -73,6 +73,7 @@ def create(request):
 
     base = utils.origin(request)
     perma = urljoin(base, entry.url)
+    short = urljoin(base, entry.short_url)
     others = [urljoin(base, url) for url in (
         reverse('home:index'),
         reverse('entries:atom'),
@@ -86,4 +87,5 @@ def create(request):
 
     res = HttpResponse(status=201)
     res['Location'] = perma
+    res['Link'] = '<{}>; rel="shortlink"'.format(short)
     return res
