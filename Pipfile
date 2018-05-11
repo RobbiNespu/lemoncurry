@@ -10,7 +10,7 @@ python_version = '3.6'
 django = "*"
 django-compressor = "*"
 gunicorn = {extras = ["gevent"]}
-"psycopg2" = "*"
+"psycopg2-binary" = "*"
 pillow = "*"
 python-memcached = "*"
 django-meta = "*"
