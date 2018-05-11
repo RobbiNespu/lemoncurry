@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
@@ -6,6 +7,13 @@ from urllib.parse import urljoin
 from lemoncurry.templatetags.markdown import markdown
 from ..kinds import on_home
 from ..models import Entry
+
+
+class Atom1FeedWithHub(Atom1Feed):
+    def add_root_elements(self, handler):
+        super().add_root_elements(handler)
+        handler.startElement('link', {'rel': 'hub', 'href': settings.PUSH_HUB})
+        handler.endElement('link')
 
 
 class EntriesFeed(Feed):
@@ -59,7 +67,7 @@ class RssByKind(EntriesFeed):
 
 
 class AtomByKind(RssByKind):
-    feed_type = Atom1Feed
+    feed_type = Atom1FeedWithHub
     subtitle = RssByKind.description
 
 
@@ -80,5 +88,5 @@ class RssHomeEntries(EntriesFeed):
 
 
 class AtomHomeEntries(RssHomeEntries):
-    feed_type = Atom1Feed
+    feed_type = Atom1FeedWithHub
     subtitle = RssHomeEntries.description
