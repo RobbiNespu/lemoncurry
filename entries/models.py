@@ -137,6 +137,10 @@ class Entry(ModelMeta, TimeStampedModel):
         return '{0} {1}: {2}'.format(self.kind, self.id, self.title)
 
     def get_absolute_url(self):
+        return self.absolute_url
+
+    @property
+    def absolute_url(self):
         base = 'https://' + Site.objects.get_current().domain
         return urljoin(base, self.url)
 

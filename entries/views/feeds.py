@@ -3,7 +3,6 @@ from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
-from urllib.parse import urljoin
 from lemoncurry.templatetags.markdown import markdown
 from ..kinds import on_home
 from ..models import Entry
@@ -17,6 +16,11 @@ class Atom1FeedWithHub(Atom1Feed):
 
 
 class EntriesFeed(Feed):
+    item_guid_is_permalink = True
+
+    def item_link(self, entry):
+        return entry.absolute_url
+
     def item_title(self, entry):
         return entry.title
 
@@ -30,13 +34,12 @@ class EntriesFeed(Feed):
         return entry.author.email
 
     def item_author_link(self, entry):
-        base = 'https://' + Site.objects.get_current().domain
-        return urljoin(base, entry.author.url)
+        return entry.author.absolute_url
 
     def item_pubdate(self, entry):
         return entry.published
 
-    def item_updatedate(self, entry):
+    def item_updateddate(self, entry):
         return entry.updated
 
     def item_categories(self, entry):
