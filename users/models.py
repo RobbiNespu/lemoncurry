@@ -84,7 +84,11 @@ class User(ModelMeta, AbstractUser):
         return '{0} {1}'.format(self.first_name, self.last_name)
 
     def get_absolute_url(self):
-        return self.url
+        return self.absolute_url
+
+    @property
+    def absolute_url(self):
+        return self.full_url
 
     @property
     def full_url(self):
