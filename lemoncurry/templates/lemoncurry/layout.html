@@ -36,9 +36,11 @@
 					integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous" />
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css"
 					integrity="sha384-bHqbpRh/XW+phptvH9nQvMKHwPH1ZbOxpIeAB2D2OIEL4Ni7aZzZgMFpsRra+v1g" crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/openwebicons@1.4.3/css/openwebicons.min.css"
+					integrity="sha384-Ljk0G9f8GyEhAzrdHNkQc89A/Kpq+sy09gejdAPyMyTDnPe4aDfS/ppZ/rDGM0Y9" crossorigin="anonymous" />
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/tippy.js@2.5.2/dist/tippy.css"
+					integrity="sha384-JsezPuW/bNd38848K5/8rIEbB+23QGQ8faCF8xEmjFT3i1qujgGiewfYevzMO3J1" crossorigin="anonymous" />
 		{% compress css %}
-		<link rel="stylesheet" type="text/css" href={% static 'openwebicons/css/openwebicons.css' %} />
-		<link rel="stylesheet" type="text/css" href={% static 'tippy.js/tippy.css' %} />
 		<link rel="stylesheet" type="text/stylus" href="{% static 'lemoncurry/css/layout.styl' %}" />
 		{% block styles %}{% endblock %}
 		{% endcompress %}
@@ -118,9 +120,10 @@
 						integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" crossorigin="anonymous"
 						integrity="sha384-ZeLYJ2PNSQjvogWP559CDAf02Qb8FE5OyQicqtz/+UhZutbrwyr87Be7NPH/RgyC"></script>
+		<script src="https://unpkg.com/tippy.js@2.5.2/dist/tippy.standalone.min.js" crossorigin="anonymous"
+						integrity="sha384-VEMCz3fC5atUNN+ezSHq2AZIBciT3aWGEZsStnW58gtO9PYb3wenWsYNoxLTbi/M"></script>
 
 		{% compress js %}
-		<script src="{% static 'tippy.js/tippy.standalone.js' %}"></script>
 		<script type="text/javascript">
 			hljs.initHighlightingOnLoad();
 		</script>

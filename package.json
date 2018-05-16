@@ -7,8 +7,5 @@
 		"js-yaml": "^3.10.0",
 		"stylus": "^0.54.5"
 	},
-	"dependencies": {
-		"openwebicons": "^1.4.3",
-		"tippy.js": "^2.5.2"
-	}
+	"dependencies": {}
 }
