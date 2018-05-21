@@ -307,29 +307,15 @@
         },
         "gevent": {
             "hashes": [
-                "sha256:38a19431ebad52dea385e4da39b64329b292f876113f0db045969aa0d377fc8b",
-                "sha256:6a095f3fc9245d02e4cf4e9d30c35ed2dc795b412aed1d10bf2e288676dece02",
-                "sha256:172c57ef7e3ae2dfd65689eac426a63f085ec63ee756268f5a4f8fc00a155f3c",
-                "sha256:3b1977d719a9c900fd5266d8f3bc66ddb001ab2f12183bdc29c9e3da458c6467",
-                "sha256:9d5073a4fda2bf4d67f4cb2c498f493b379e652fd1cc568d7c916747fabb8774",
-                "sha256:b44667eb4f96357a540685be636dc5cd972c5f707275b30671f469808bcea261",
-                "sha256:e8d33a7b84e1750d5f55f14b2409244215f069372d083a4d176dfbac330ab99b",
-                "sha256:b3b9769f0c26c3cfe3fa43c40cef8cacd210ca31f7d82d3e9eef583356e7ce46",
-                "sha256:03ee27df7e4157b54edf865bc5c417d33eedf9af4497a46f3ff702262dc9b665",
-                "sha256:3a475bdd0ee4130a1f1e786702dc37fb5cbf106677fa7394e43bf99f88446341",
-                "sha256:442564ea89078d9ff8a673ed5f52ebd697af270fcbaaede8d6e21603e9983e30",
-                "sha256:97f442aee9f444d37dbd70acdcb0f1fa23afaca5233a3a0e90b5d6af56be2ec2",
-                "sha256:42bad7668c4ca76cd5d60282b548263f25be3b08727457b024eda0c73e6639ed",
-                "sha256:059cc49b2181e15ad1e803e42fc1ebdd93128ac74a7bfd00226c89f4c4ae9098",
-                "sha256:1aee3b45a413ebc3b6b392d73bc7470b4c570fd252b49609560779b10da5403e",
-                "sha256:1beed4d7de0bb28dbcf17435df70b26f81a79c5a65394c9335dd1c41f22814b9",
-                "sha256:5cce166a8410720da1bd9790ca9fc3755061154ed5e2279c2b194bd41ebd13e2",
-                "sha256:e7c29bdb88111d9f99b398ce6a49eb7cacf237770b9ebd5916df4c964d888f9d",
-                "sha256:890118871d1fed8c6c43a3b3972c4056c6779a72c6e70303e7971f44e0effa6f",
-                "sha256:d2aefa7e6797aaebac237f774188bd02379a55099fd7f8b83b9a000caade6348",
-                "sha256:595ef44ddb3dd85529887ba9d9db507a18e3775863119cb506d649a3ace93fd4"
+                "sha256:a8f040c132654735422cfe5e3d720963b606e6a27f0e5abfd1ca20189dcad6d5",
+                "sha256:a1aa86f7ad04fcd11425e7e1548ef6d45cd9764baa655a07e06c060e54022e77",
+                "sha256:d0227d11b873452064cd23b6e533dfc4c3cb5095990e4119a55a77b5df4ec03a",
+                "sha256:d17f3c777bbc3a61c5f32f9e925849c876d0251d0fbb44b5f71b0f99002c1f5b",
+                "sha256:8b8b1337c701649f5701f8ba53aa2488b407de9df2a96a2d42b11b0624f7125e",
+                "sha256:0771afe671926e1a15656385c7bc50ce8696182f37fed4762eb2aeb4b9fe3e52",
+                "sha256:600d02a31c08936fe4a5181756009a4a3663403b41bc122df039dae0aa3e3831"
             ],
-            "version": "==1.3.0"
+            "version": "==1.3.1"
         },
         "greenlet": {
             "hashes": [
