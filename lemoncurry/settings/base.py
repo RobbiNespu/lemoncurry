@@ -104,6 +104,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -162,7 +163,8 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lemoncurry'
+        'NAME': 'lemoncurry',
+        'CONN_MAX_AGE': 3600
     }
 }
 
@@ -219,6 +221,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 COMPRESS_PRECOMPILERS = (
     ('text/stylus', 'npx stylus -u ./lemoncurry/static/lemoncurry/css/theme'),
