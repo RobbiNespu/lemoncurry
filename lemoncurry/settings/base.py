@@ -125,8 +125,14 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'lemoncurry.jinja2.environment',
+        },
+    },
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

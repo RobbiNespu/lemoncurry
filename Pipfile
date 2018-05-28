@@ -46,6 +46,7 @@ gevent = "*"
 django-extensions = "*"
 python-magic = "*"
 pyup-django = "*"
+"jinja2" = "*"
 
 [dev-packages]
 ptpython = "*"
