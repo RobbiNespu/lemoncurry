@@ -50,3 +50,5 @@ pyup-django = "*"
 [dev-packages]
 ptpython = "*"
 pytest-django = "*"
+werkzeug = "*"
+watchdog = "*"
