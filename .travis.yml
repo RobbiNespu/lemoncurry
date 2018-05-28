@@ -1,8 +1,11 @@
 language: python
 cache:
-  pip: true
   directories:
-    - $HOME/.local/share/virtualenvs
+    - $PIP_CACHE_DIR
+    - $PIPENV_CACHE_DIR
+env:
+  - PIP_CACHE_DIR=$HOME/.cache/pip
+  - PIPENV_CACHE_DIR=$HOME/.cache/pipenv
 python:
   - '3.6'
 install:
