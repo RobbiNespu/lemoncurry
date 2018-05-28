@@ -1,9 +1,10 @@
 from django.apps import apps
 from django.conf import settings
+from typing import Any, Dict, Type
 
 from .convert import id_to_abc
 
-prefixes = {}
+prefixes = {}  # type: Dict[Type[Any], str]
 
 
 def short_url(entity):

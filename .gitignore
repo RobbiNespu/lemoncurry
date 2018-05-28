@@ -15,6 +15,7 @@ media
 # <django-project-name>/staticfiles/
 
 # End of https://www.gitignore.io/api/django
+/.mypy_cache
 /.pytest_cache
 /static
 node_modules

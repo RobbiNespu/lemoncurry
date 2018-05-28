@@ -13,8 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from typing import Tuple
+
 from django.conf import settings
 from django.urls import include, path
+from django.urls.resolvers import URLPattern
 from django.views.generic import RedirectView
 
 from django.contrib import admin
@@ -47,10 +50,10 @@ urlpatterns = (
     path('sitemap.xml', sitemap.index, maps, name='sitemap'),
     path('sitemaps/<section>.xml', sitemap.sitemap, maps,
          name='django.contrib.sitemaps.views.sitemap'),
-)
+)  # type: Tuple[URLPattern, ...]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = (
+    urlpatterns += (
         path('__debug__/', include(debug_toolbar.urls)),
-    ) + urlpatterns
+    )

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 from os import path
+from typing import List
 
 APPEND_SLASH = False
 
@@ -30,7 +31,7 @@ SECRET_KEY = '6riil57g@r^wprf7mdy((+bs&(6l*phcn9&fd$l0@t-kzj+xww'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []  # type: List[str]
 INTERNAL_IPS = ['127.0.0.1', '::1']
 
 # Settings to tighten up security - these can safely be on in dev mode too,
