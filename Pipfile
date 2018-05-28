@@ -47,6 +47,7 @@ django-extensions = "*"
 python-magic = "*"
 pyup-django = "*"
 "jinja2" = "*"
+msgpack = "*"
 
 [dev-packages]
 ptpython = "*"
