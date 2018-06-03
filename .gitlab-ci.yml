@@ -12,8 +12,7 @@ variables:
 
 cache:
   paths:
-    - $PIP_CACHE_DIR
-    - $PIPENV_CACHE_DIR
+    - .cache
 
 test:
   script:
