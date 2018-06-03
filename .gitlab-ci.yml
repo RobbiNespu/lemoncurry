@@ -1,16 +1,16 @@
 image: python:3.6
 variables:
   GIT_SUBMODULE_STRATEGY: normal
-  PIP_CACHE_DIR: $CI_PROJECT_DIR/.pip-cache
-  PIPENV_VENV_IN_PROJECT: yeppers
+  PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+  PIPENV_CACHE_DIR: $CI_PROJECT_DIR/.cache/pipenv
 
 cache:
   paths:
-    - .pip-cache
-    - .venv
+    - $PIP_CACHE_DIR
+    - $PIPENV_CACHE_DIR
 
 test:
   script:
     - pip install pipenv
-    - pipenv install
+    - pipenv sync --dev
     - pipenv run pytest
