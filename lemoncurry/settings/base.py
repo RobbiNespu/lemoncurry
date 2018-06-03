@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from os import path
+from os import environ, path
 from typing import List
 
 APPEND_SLASH = False
@@ -170,7 +170,10 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lemoncurry',
+        'NAME': environ.get('POSTGRES_DB', 'lemoncurry'),
+        'USER': environ.get('POSTGRES_USER'),
+        'PASSWORD': environ.get('POSTGRES_PASSWORD'),
+        'HOST': environ.get('POSTGRES_HOST', 'localhost'),
         'CONN_MAX_AGE': 3600
     }
 }
