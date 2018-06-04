@@ -8,6 +8,6 @@ class EntriesSitemap(sitemaps.Sitemap):
 
     def lastmod(self, entry):
         return entry.updated
-    
+
     def location(self, entry):
         return entry.url
