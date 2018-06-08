@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.cache import cache_page
 from PIL import Image
 
 from lemoncurry import utils
@@ -12,6 +13,7 @@ def try_libravatar_org(hash, get):
     return HttpResponseRedirect(url)
 
 
+@cache_page(60 * 15)
 def libravatar(request, hash):
     g = request.GET
     size = g.get('s', g.get('size', 80))
@@ -42,8 +44,12 @@ def libravatar(request, hash):
         return try_libravatar_org(hash, g)
 
     im = Image.open(user.avatar)
-    im_resized = im.resize((size, size))
+    image_type = im.format
+    natural_size = min(im.size)
 
-    response = HttpResponse(content_type='image/'+im.format.lower())
-    im_resized.save(response, im.format)
+    im = im.crop((0, 0, natural_size, natural_size))
+    im = im.resize((size, size), resample=Image.HAMMING)
+
+    response = HttpResponse(content_type='image/'+image_type.lower())
+    im.save(response, image_type)
     return response
