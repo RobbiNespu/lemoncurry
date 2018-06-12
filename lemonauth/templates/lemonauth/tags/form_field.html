@@ -1,6 +1,0 @@
-<div class="form-group">
-	<label for="{{ field.id_for_label }}">{{ field.label | lower }}</label>
-	<input id="{{ field.id_for_label }}" class="form-control{% if field.errors %}is-invalid{% endif %}" type="{{ field.field.widget.input_type }}" required
-				 name="{{ field.html_name }}"{% if field.value %} value="{{ field.value }}"{% endif %}{% if field.help_text %} aria-describedby="{{ field.id_for_label }}-help"{% endif %} />
-	{% if field.help_text %}<p id="{{ field.id_for_label }}-help" class="form-text">{{ field.help_text }}</p>{% endif %}
-</div>
