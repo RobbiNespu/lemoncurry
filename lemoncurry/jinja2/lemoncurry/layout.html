@@ -31,8 +31,43 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbar">
-        </div>
+        {% activeurl %}<div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav">
+          {% for kind in entry_kinds %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ kind.index }}">
+                <i class="{{ kind.icon }} fa-fw" aria-hidden="true"></i>
+                {{ kind.plural }}
+              </a>
+            </li>
+          {% endfor %}
+          </ul>
+
+          <ul class="navbar-nav">
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('admin:index') }}">
+                <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
+                admin
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('lemonauth:logout') }}">
+                <i class="fas fa-sign-out-alt fa-fw" aria-hidden="true"></i>
+                log out
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('lemonauth:login') }}">
+                <i class="fas fa-sign-in-alt fa-fw" aria-hidden="true"></i>
+                log in
+              </a>
+            </li>
+          {% endif %}
+          </ul>
+        </div>{% endactiveurl %}
+
       </nav>
     </header>
 
