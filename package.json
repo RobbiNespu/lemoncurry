@@ -1,7 +1,7 @@
 {
 	"name": "lemoncurry",
 	"version": "1.9.8",
-	"repository": "https://gitlab.com/00dani/lemoncurry",
+	"repository": "https://git.00dani.me/00dani/lemoncurry",
 	"license": "MIT",
 	"devDependencies": {
 		"js-yaml": "^3.10.0",
