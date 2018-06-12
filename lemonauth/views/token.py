@@ -1,10 +1,9 @@
-from django.contrib.auth import get_user_model
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from urllib.parse import urljoin
 
 from .. import tokens
+from ..models import IndieAuthCode
 from lemoncurry import utils
 
 
@@ -16,7 +15,7 @@ class TokenView(View):
             return token
         res = {
             'me': token.me,
-            'client_id': token.client,
+            'client_id': token.client_id,
             'scope': token.scope,
         }
         return utils.choose_type(req, res)
@@ -24,26 +23,27 @@ class TokenView(View):
     def post(self, req):
         post = req.POST
         try:
-            code = tokens.decode(post.get('code'))
-        except Exception:
+            code = IndieAuthCode.objects.get(pk=post.get('code'))
+        except IndieAuthCode.DoesNotExist:
+            return utils.forbid('invalid auth code')
+        code.delete()
+        if code.expired:
             return utils.forbid('invalid auth code')
 
-        if code['typ'] != 'code':
+        if code.response_type != 'code':
             return utils.bad_req(
                 'this endpoint only supports response_type=code'
             )
-        if code['cid'] != post.get('client_id'):
+        if code.client_id != post.get('client_id'):
             return utils.forbid('client id did not match')
-        if code['uri'] != post.get('redirect_uri'):
+        if code.redirect_uri != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
-        user = get_user_model().objects.get(pk=code['uid'])
-        me = urljoin(utils.origin(req), user.url)
-        if me != post.get('me'):
+        if code.me != post.get('me'):
             return utils.forbid('me did not match')
 
         return utils.choose_type(req, {
             'access_token': tokens.gen_token(code),
-            'me': me,
-            'scope': code['sco'],
+            'me': code.me,
+            'scope': code.scope,
         })

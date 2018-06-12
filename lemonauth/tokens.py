@@ -1,10 +1,5 @@
-from jose import jwt
-
-from datetime import datetime, timedelta
-from django.contrib.auth import get_user_model
-from django.conf import settings
-
 from micropub.views import error
+from .models import IndieAuthCode, Token
 
 
 def auth(request):
@@ -25,54 +20,29 @@ def auth(request):
         return error.unauthorized()
 
     try:
-        token = decode(token)
-    except Exception as e:
+        token = Token.objects.get(pk=token)
+    except Token.DoesNotExist:
         return error.forbidden()
 
-    return MicropubToken(token)
-
-
-class MicropubToken:
-    def __init__(self, tok):
-        self.user = get_user_model().objects.get(pk=tok['uid'])
-        self.client = tok['cid']
-        self.scope = tok['sco']
-
-        self.me = self.user.full_url
-        self.scopes = self.scope.split(' ')
-
-    def __contains__(self, scope):
-        return scope in self.scopes
-
-
-def encode(payload):
-    return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
-
-
-def decode(token):
-    return jwt.decode(token, settings.SECRET_KEY, algorithms=('HS256',))
+    return token
 
 
 def gen_auth_code(req):
-    code = {
-        'uid': req.user.id,
-        'cid': req.POST['client_id'],
-        'uri': req.POST['redirect_uri'],
-        'typ': req.POST.get('response_type', 'id'),
-        'iat': datetime.utcnow(),
-        'exp': datetime.utcnow() + timedelta(seconds=30),
-    }
+    code = IndieAuthCode()
+    code.user = req.user
+    code.client_id = req.POST['client_id']
+    code.redirect_uri = req.POST['redirect_uri']
+    code.response_type = req.POST.get('response_type', 'id')
     if 'scope' in req.POST:
-        code['sco'] = ' '.join(req.POST.getlist('scope'))
-
-    return encode(code)
+        code.scope = ' '.join(req.POST.getlist('scope'))
+    code.save()
+    return code.id
 
 
 def gen_token(code):
-    tok = {
-        'uid': code['uid'],
-        'cid': code['cid'],
-        'sco': code['sco'],
-        'iat': datetime.utcnow(),
-    }
-    return encode(tok)
+    tok = Token()
+    tok.user = code.user
+    tok.client_id = code.client_id
+    tok.scope = code.scope
+    tok.save()
+    return tok.id

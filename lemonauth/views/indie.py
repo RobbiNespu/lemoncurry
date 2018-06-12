@@ -1,5 +1,4 @@
 from annoying.decorators import render_to
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -11,6 +10,7 @@ from lemoncurry import breadcrumbs, requests, utils
 from urllib.parse import urlencode, urljoin, urlunparse, urlparse
 
 from .. import tokens
+from ..models import IndieAuthCode
 
 breadcrumbs.add('lemonauth:indie', parent='home:index')
 
@@ -90,25 +90,26 @@ class IndieView(TemplateView):
     def post(self, request):
         post = request.POST.dict()
         try:
-            code = tokens.decode(post.get('code'))
-        except Exception:
+            code = IndieAuthCode.objects.get(pk=post.get('code'))
+        except IndieAuthCode.DoesNotExist:
             # if anything at all goes wrong when decoding the auth code, bail
             # out immediately.
             return utils.forbid('invalid auth code')
+        code.delete()
+        if code.expired:
+            return utils.forbid('invalid auth code')
 
-        if code['typ'] != 'id':
+        if code.response_type != 'id':
             return utils.bad_req(
                 'this endpoint only supports response_type=id'
             )
-        if code['cid'] != post.get('client_id'):
+        if code.client_id != post.get('client_id'):
             return utils.forbid('client id did not match')
-        if code['uri'] != post.get('redirect_uri'):
+        if code.redirect_uri != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
-        user = get_user_model().objects.get(pk=code['uid'])
-        me = urljoin(utils.origin(request), user.url)
         # If we got here, it's valid! Yay!
-        return utils.choose_type(request, {'me': me}, {
+        return utils.choose_type(request, {'me': code.me}, {
             'application/x-www-form-urlencoded': utils.form_encoded_response,
             'application/json': JsonResponse,
         })
