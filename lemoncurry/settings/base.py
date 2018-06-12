@@ -252,12 +252,6 @@ AGENT_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/(?!admin|auth/(?:login|logout|indie)).*$'
 
-# django-debug-toolbar
-# https://django-debug-toolbar.readthedocs.io/en/stable/configuration.html
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': 'lemoncurry.debug.show_toolbar',
-}
-
 # lemonshort
 SHORT_BASE_URL = '/s/'
 SHORTEN_MODELS = {

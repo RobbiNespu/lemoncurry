@@ -35,10 +35,6 @@
 			{{ entry.updated | naturaltime }}
 		</time>
 		{% endif %}
-		<a class="u-url" href="{{ entry.amp_url }}">
-			<i class="fas fa-bolt"></i>
-			amp
-		</a>
 		<a class="u-url" href="{{ entry.short_url }}">
 			<i class="fas fa-link"></i>
 			{{ entry.short_url | friendly_url }}

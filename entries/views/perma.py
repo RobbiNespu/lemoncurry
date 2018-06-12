@@ -13,11 +13,3 @@ def entry(request, kind, id, slug=None):
         'title': entry.title,
         'meta': entry.as_meta(request)
     }
-
-
-@render_to('entries/entry_amp.html')
-def entry_amp(request, kind, id, slug=None):
-    entry = get_object_or_404(Entry, pk=id)
-    if request.path != entry.amp_url:
-        return redirect(entry.amp_url, permanent=True)
-    return {'entry': entry}

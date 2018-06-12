@@ -24,10 +24,6 @@ class Entry:
         return self.plural + '_entry'
 
     @property
-    def entry_amp(self):
-        return self.entry + '_amp'
-
-    @property
     def atom(self):
         return reverse('entries:atom_by_kind', kwargs={'kind': self})
 

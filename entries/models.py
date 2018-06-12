@@ -153,14 +153,6 @@ class Entry(ModelMeta, TimeStampedModel):
         return reverse('entries:entry', args=args)
 
     @property
-    def amp_url(self):
-        kind = kinds.from_id[self.kind]
-        args = [kind, self.id]
-        if kind.slug:
-            args.append(self.slug)
-        return reverse('entries:entry_amp', args=args)
-
-    @property
     def short_url(self):
         return short_url(self)
 

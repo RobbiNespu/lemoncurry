@@ -32,10 +32,6 @@ urlpatterns = (
     path('<kind:kind>/atom', feeds.AtomByKind(), name='atom_by_kind'),
     path('<kind:kind>/rss', feeds.RssByKind(), name='rss_by_kind'),
 
-    path('<kind:kind>/<int:id>/amp', perma.entry_amp, name='entry_amp'),
-    path('<kind:kind>/<int:id>/<slug:slug>/amp',
-         perma.entry_amp, name='entry_amp'),
-
     path('<kind:kind>/<int:id>', perma.entry, name='entry'),
     path('<kind:kind>/<int:id>/<slug:slug>', perma.entry, name='entry'),
 )
