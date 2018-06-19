@@ -26,13 +26,14 @@
   <body{% block body_attr %}{% endblock %}>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark">
-        <a class="navbar-brand" ref="home" href="{{ url('home:index') }}">{{ request.site.name }}</a>
+        <a class="navbar-brand" rel="home" href="{{ url('home:index') }}">{{ request.site.name }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
                 aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        {% activeurl %}<div class="collapse navbar-collapse" id="navbar">
+        {% activeurl %}
+        <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav">
           {% for kind in entry_kinds %}
             <li class="nav-item">
@@ -67,7 +68,8 @@
             </li>
           {% endif %}
           </ul>
-        </div>{% endactiveurl %}
+        </div>
+        {% endactiveurl %}
 
       </nav>
     </header>
