@@ -1,0 +1,20 @@
+{% extends 'lemoncurry/layout.html' %}
+
+{% block html_attr %}
+ class="h-feed"{{ super() }}
+{%- endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/stylus" href="{{ static('entries/css/h-entry.styl') }}" />
+{% endblock %}
+
+{% import 'entries/h-entry.html' as h %}
+{% block main %}
+      <ol class="list-unstyled entries">
+        {% for entry in entries %}
+        <li>
+          {{ h.hEntry(entry, indent_width=10) }}
+        </li>
+        {% endfor %}
+      </ol>
+{% endblock %}
