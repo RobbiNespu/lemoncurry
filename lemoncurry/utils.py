@@ -7,11 +7,16 @@ from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.utils.html import strip_tags
 from os.path import join
 from types import SimpleNamespace
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlencode, urljoin, urlparse
 
 from .templatetags.markdown import markdown
 
 cache = SimpleNamespace(package_json=None)
+
+
+def friendly_url(url):
+    (scheme, netloc, path, params, q, fragment) = urlparse(url)
+    return netloc + path
 
 
 def load_package_json():

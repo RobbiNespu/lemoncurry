@@ -1,0 +1,64 @@
+{% macro hEntry(entry, indent_width) -%}
+{%- set i = ' ' * indent_width -%}
+<article class="card h-entry">
+  {% if entry.photo %}
+  {{i}}<img class="card-img-top u-photo" src="{{ entry.photo.url }}" />
+
+  {% endif %}
+  {{i}}<div class="card-body">
+    {% if entry.name %}
+    {{i}}<h4 class="card-title p-name">{{ entry.name }}</h4>
+    {% endif %}
+    {{i}}<div class="e-content">
+      {{i}}{{ entry.content | indent(indent_width + 6) }}
+    {{i}}</div>
+  {{i}}</div>
+
+  {{i}}<div class="card-footer">
+    {{i}}<a class="p-author h-card" href="{{ entry.author.url }}">
+      {{i}}<img class="u-photo" src="{{ entry.author.avatar.url }}" />
+      {{i}}{{ entry.author.name }}
+    {{i}}</a>
+    {{i}}<a class="u-uid u-url" href="{{ entry.url }}">
+      {{i}}<time class="dt-published" datetime="{{ entry.published.isoformat() }}">
+        {{i}}<i class="fas fa-calendar" aria-hidden="true"></i>
+        {{i}}{{ entry.published | naturaltime }}
+      {{i}}</time>
+    {{i}}</a>
+    {% if entry.updated != entry.published %}
+    {{i}}<time class="dt-updated" datetime="{{ entry.updated.isoformat() }}">
+      {{i}}<i class="fas fa-pencil-alt" aria-hidden="true"></i>
+      {{i}}{{ entry.updated | naturaltime }}
+    {{i}}</time>
+    {% endif %}
+    {{i}}<a class="u-url" href="{{ entry.short_url }}">
+      {{i}}<i class="fas fa-link" aria-hidden="true"></i>
+      {{i}}{{ entry.short_url | friendly_url }}
+    {{i}}</a>
+  {{i}}</div>
+
+  {% if entry.cats.exists() %}
+  {{i}}<div class="card-footer">
+    {% for c in entry.cats.all() %}
+    {{i}}<a class="p-category" href="{{ c.url }}">
+      {{i}}<i class="fas fa-paw" aria-hidden="true"></i>
+      {{i}}{{ c.name }}
+    {{i}}</a>
+    {% endfor %}
+  {{i}}</div>
+
+  {% endif %}
+  {% if entry.syndications.exists() %}
+  {{i}}<div class="card-footer">
+    {% for s in entry.syndications.all() %}
+    {{i}}<a class="u-syndication" href="{{ s.url }}">
+      {{i}}<i class="{{ s.profile.site.icon }}" aria-hidden="true"></i>
+      {{i}}{{ s.profile }}
+    {{i}}</a>
+    {% endfor %}
+  {{i}}</div>
+
+  {% endif %}
+  {{i}}<script class="p-json-ld" type="application/ld+json">{{ entry.json_ld | tojson }}</script>
+{{i}}</article>
+{%- endmacro %}
