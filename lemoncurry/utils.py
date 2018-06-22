@@ -6,12 +6,27 @@ from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.utils.html import strip_tags
 from os.path import join
-from types import SimpleNamespace
+from typing import Any, Dict, Optional
 from urllib.parse import urlencode, urljoin, urlparse
 
 from .templatetags.markdown import markdown
 
-cache = SimpleNamespace(package_json=None)
+
+class PackageJson:
+    data: Optional[Dict[str, Any]]
+
+    def __init__(self) -> None:
+        self.data = None
+
+    def load(self) -> Dict[str, Any]:
+        if self.data is None:
+            with open(join(settings.BASE_DIR, 'package.json')) as f:
+                self.data = json.load(f)
+        assert self.data is not None
+        return self.data
+
+
+PACKAGE = PackageJson()
 
 
 def friendly_url(url):
@@ -19,12 +34,8 @@ def friendly_url(url):
     return netloc + path
 
 
-def load_package_json():
-    if cache.package_json:
-        return cache.package_json
-    with open(join(settings.BASE_DIR, 'package.json')) as f:
-        cache.package_json = json.load(f)
-    return cache.package_json
+def load_package_json() -> Dict[str, Any]:
+    return PACKAGE.load()
 
 
 def origin(request):
