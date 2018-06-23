@@ -34,12 +34,12 @@ class TokenView(View):
             return utils.bad_req(
                 'this endpoint only supports response_type=code'
             )
-        if code.client_id != post.get('client_id'):
+        if 'client_id' in post and code.client_id != post['client_id']:
             return utils.forbid('client id did not match')
         if code.redirect_uri != post.get('redirect_uri'):
             return utils.forbid('redirect uri did not match')
 
-        if code.me != post.get('me'):
+        if 'me' in post and code.me != post['me']:
             return utils.forbid('me did not match')
 
         return utils.choose_type(req, {

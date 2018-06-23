@@ -29,7 +29,7 @@ def canonical(url):
 @method_decorator(csrf_exempt, name='dispatch')
 class IndieView(TemplateView):
     template_name = 'lemonauth/indie.html'
-    required_params = ('me', 'client_id', 'redirect_uri')
+    required_params = ('client_id', 'redirect_uri')
 
     @method_decorator(login_required)
     @method_decorator(render_to(template_name))
@@ -43,9 +43,8 @@ class IndieView(TemplateView):
                     'parameter {0} is required'.format(param)
                 )
 
-        me = canonical(params['me'])
-        user = urljoin(utils.origin(request), request.user.url)
-        if user != me:
+        me = request.user.full_url
+        if 'me' in params and me != canonical(params['me']):
             return utils.forbid(
                 'you are logged in but not as {0}'.format(me)
             )
