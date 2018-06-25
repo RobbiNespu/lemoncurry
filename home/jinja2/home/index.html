@@ -1,0 +1,102 @@
+{% extends 'lemoncurry/layout.html' %}
+
+{% block html_attr %}
+ class="h-feed"{{ super() }}
+{%- endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/stylus" href="{{ static('home/css/index.styl') }}" />
+    <link rel="stylesheet" type="text/stylus" href="{{ static('entries/css/h-entry.styl') }}" />
+{% endblock %}
+
+{% block head %}
+  {% for key in user.keys.all() %}
+    <link rel="pgpkey" href="{{ key.file.url }}" />
+  {% endfor %}
+{% endblock %}
+
+{% block main %}
+      <aside class="author">
+        <article class="h-card p-author card">
+          <a class="u-uid u-url" href="{{ user.full_url }}">
+          {% if user.avatar %}
+            <img class="u-photo card-img-top" src="{{ user.avatar.url }}" alt="{{ user.name }}" />
+          {% endif %}
+          </a>
+
+          <div class="card-body">
+            <h4 class="p-name card-title">
+              <span class="p-given-name">{{ user.first_name }}</span> <span class="p-family-name">{{ user.last_name }}</span>
+            </h4>
+            {% if user.note %}
+            <div class="p-note">
+              {{ user.note | markdown }}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="card-footer">
+            <ul class="profiles">
+              <li>
+                <a class="u-email" rel="me" href="mailto:{{ user.email }}">
+                  <i class="fas fa-envelope" aria-hidden="true"></i>
+                  {{ user.email }}
+                </a>
+              </li>
+              {% if user.xmpp %}
+
+              <li>
+                <a class="u-impp" rel="me" href="xmpp:{{ user.xmpp }}">
+                  <i class="openwebicons-xmpp" aria-hidden="true"></i>
+                  {{ user.xmpp }}
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+          {% if user.keys.exists() %}
+
+          <div class="card-footer">
+            <ul class="profiles">
+              {% for key in user.keys.all() %}
+              <a class="u-key" href="{{ key.file.url }}">
+                <i class="fas fa-key" aria-hidden="true"></i>
+                {{ key.pretty_print() }}
+              </a>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% if user.profiles.exists() %}
+
+          <div class="card-footer">
+            <ul class="profiles">
+              {% for profile in user.profiles.all() %}
+              <a class="u-url" rel="me" href="{{ profile.url }}" title="{{ profile }}">
+                <i class="{{ profile.site.icon }}" aria-hidden="true"></i>
+                <span class="sr-only">{{ profile }}</span>
+              </a>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <script class="p-json-ld" type="application/ld+json">{{ user.json_ld | tojson }}</script>
+        </article>
+      </aside>
+
+      {% import 'entries/h-entry.html' as h %}
+      <ol class="list-unstyled entries">
+        {% for entry in entries %}
+        <li>
+          {{ h.hEntry(entry, indent_width=10) }}
+        </li>
+        {% endfor %}
+      </ol>
+{% endblock %}
+
+{% block foot %}
+    <script type="text/javascript">
+      tippy('.profiles [title]', {arrow: true});
+    </script>
+{% endblock %}
