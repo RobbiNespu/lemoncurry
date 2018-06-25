@@ -9,8 +9,10 @@
         <form class="card" method="post" action="{{ url('lemonauth:indie_approve') }}">
           <h4 class="card-header h-x-app">
             {% if app %}
-            <img class="u-logo p-name" src="{{ app.logo[0] }}" alt="{{ app.name[0] }}">
-            sign in to {{ app.name[0] }} (<a class="u-url code" href="{{ params.client_id }}">{{ params.client_id }}</a>)?
+            {% if app.logo is defined %}
+            <img class="u-logo" src="{{ app.logo[0] }}" alt="{{ app.name[0] }}" />
+            {% endif %}
+            sign in to <span class="p-name">{{ app.name[0] }}</span> (<a class="u-url code" href="{{ params.client_id }}">{{ params.client_id }}</a>)?
             {% else %}
             sign in to <a class="u-url p-name code" href="{{ params.client_id }}">{{ params.client_id }}</a>?
             {% endif %}
