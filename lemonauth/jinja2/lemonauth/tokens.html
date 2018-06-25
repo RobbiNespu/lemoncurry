@@ -1,0 +1,68 @@
+{% extends 'lemoncurry/layout.html' %}
+
+{% block main %}
+      <div class="container">
+        <div class="card-columns">
+        {% for _, c in clients | dictsort %}
+          <div class="h-x-app card">
+            {% if c.app.logo %}
+            <img class="u-photo card-img-top" src="{{ c.app.logo[0] }}" alt="{{ c.app.name[0] }}" />
+
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">
+                <span class="p-name">{{ c.app.name[0] if c.app else (c.id | friendly_url) }}</span>
+                <span class="badge badge-light">
+                  <span class="p-count">{{ c.count }}</span>
+                  {{ 'tokens' if c.count > 1 else 'token' }}
+                </span>
+              </h5>
+
+              <h6 class="card-subtitle mb-2">
+                <a class="u-url" href="{{ c.id }}">{{ c.id }}</a>
+              </h6>
+
+              <p class="card-text">this client has access to the scopes:</p>
+            </div>
+
+            <ul class="list-group list-group-flush">
+              {% for scope in c.scopes %}
+              <li class="p-scope list-group-item">{{ scope }}</li>
+              {% endfor %}
+            </ul>
+
+            <form class="card-footer text-right" action="{{ url('lemonauth:tokens_revoke', kwargs={'client_id': c.id}) }}">
+              {{ csrf_input }}
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-ban" aria-hidden="true"></i>
+                revoke access
+              </button>
+            </form>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+{% endblock %}
+
+{% block foot %}
+    <script type="text/javascript">
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+        var $f = $(this);
+        if ($f.data('deleting')) return;
+        $f.data('deleting', true);
+        $f.find('button').prop({disabled: true})
+          .find('[data-fa-i2svg]').removeClass('fa-ban').addClass('fa-circle-notch fa-spin');
+        $.ajax({
+          headers: {'X-CSRFToken': $f.find('[name="csrfmiddlewaretoken"]').val()},
+          method: 'DELETE',
+          url: $f.attr('action'),
+        }).then(function() {
+          var $app = $f.parent('.h-x-app');
+          return $app.hide(function() {
+            $app.remove();
+          });
+        });
+      });
+    </script>
+{% endblock %}

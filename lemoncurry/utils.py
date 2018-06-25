@@ -31,6 +31,8 @@ PACKAGE = PackageJson()
 
 def friendly_url(url):
     (scheme, netloc, path, params, q, fragment) = urlparse(url)
+    if path == '/':
+        return netloc
     return netloc + path
 
 

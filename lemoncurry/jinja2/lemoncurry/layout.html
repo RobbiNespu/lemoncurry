@@ -62,6 +62,12 @@
           <ul class="navbar-nav">
           {% if request.user.is_authenticated %}
             <li class="nav-item">
+              <a class="nav-link" href="{{ url('lemonauth:tokens') }}">
+                <i class="fas fa-cookie-bite fa-fw" aria-hidden="true"></i>
+                tokens
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ url('admin:index') }}">
                 <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
                 admin
@@ -133,8 +139,8 @@
       <p>powered by <a rel="code-repository" href="{{ package.repository }}/src/tag/v{{ package.version }}">{{ package.name }} {{ package.version }}</a></p>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"
+            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" crossorigin="anonymous"
