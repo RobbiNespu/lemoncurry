@@ -10,7 +10,7 @@
     {{i}}<h4 class="card-title p-name">{{ entry.name }}</h4>
     {% endif %}
     {{i}}<div class="e-content">
-      {{i}}{{ entry.content | indent(indent_width + 6) }}
+      {{i}}{{ entry.content | markdown }}
     {{i}}</div>
   {{i}}</div>
 

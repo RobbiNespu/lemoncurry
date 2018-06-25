@@ -7,7 +7,8 @@ from compressor.contrib.jinja2ext import CompressorExtension
 from django_activeurl.ext.django_jinja import ActiveUrl
 
 from entries.kinds import all as entry_kinds
-from .utils import friendly_url, load_package_json
+from .markdown import markdown
+from ..utils import friendly_url, load_package_json
 
 
 def environment(**options):
@@ -19,6 +20,7 @@ def environment(**options):
     )
     env.filters.update({
         'friendly_url': friendly_url,
+        'markdown': markdown,
         'naturaltime': naturaltime,
     })
     env.globals.update({
