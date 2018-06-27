@@ -17,6 +17,6 @@ SHORT_BASE_URL = 'https://nya.as/'
 STATIC_ROOT = join(BASE_DIR, '..', 'static')
 MEDIA_ROOT = join(BASE_DIR, '..', 'media')
 STATIC_URL = 'https://cdn.00dani.me/'
-MEDIA_URL = STATIC_URL + 'media/'
+MEDIA_URL = STATIC_URL + 'm/'
 META_SITE_DOMAIN = '00dani.me'
 META_FB_APPID = '145311792869199'
