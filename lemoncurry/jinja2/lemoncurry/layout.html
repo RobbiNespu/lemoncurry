@@ -13,10 +13,12 @@
     {% endif %}
     {% block head %}{% endblock %}
 
+    <base href="{{ request.build_absolute_uri(url('home:index')) }}" />
     <link rel="authorization_endpoint" href="{{ url('lemonauth:indie') }}" />
+    <link rel="canonical" href="{{ request.build_absolute_uri() }}" />
+    <link rel="hub" href="{{ settings.PUSH_HUB }}" />
     <link rel="manifest" href="{{ url('wellknowns:manifest') }}" />
     <link rel="micropub" href="{{ url('micropub:micropub') }}" />
-    <link rel="hub" href="{{ settings.PUSH_HUB }}" />
     <link rel="token_endpoint" href="{{ url('lemonauth:token') }}" />
 
     <meta name="generator" content="{{ package.name }} {{ package.version }}" />
