@@ -71,6 +71,9 @@ def create(request):
     entry.cats.set(cats)
     entry.save()
 
+    for url in props.get('syndication', []):
+        entry.syndications.create(url=url)
+
     base = utils.origin(request)
     perma = urljoin(base, entry.url)
     short = urljoin(base, entry.short_url)
