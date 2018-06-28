@@ -43,8 +43,8 @@
       {% endfor %}
       {% for s in entry.syndications.all() %}
       {{i}}<a class="u-syndication card-link" href="{{ s.url }}">
-        {{i}}<i class="{{ s.profile.site.icon }}" aria-hidden="true"></i>
-        {{i}}{{ s.profile }}
+        {{i}}<i class="{{ s.site.icon }}" aria-hidden="true"></i>
+        {{i}}{{ s.site.domain }}
       {{i}}</a>
       {% endfor %}
     {{i}}</div>

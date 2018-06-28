@@ -1,17 +1,19 @@
+from computed_property import ComputedCharField
 from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
+from django.contrib.sites.models import Site as DjangoSite
 from django.db import models
 from django.urls import reverse
+from django.utils.functional import cached_property
 from itertools import groupby
 from mf2util import interpret
 from slugify import slugify
 from textwrap import shorten
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 from lemonshort.short_url import short_url
 from meta.models import ModelMeta
 from model_utils.models import TimeStampedModel
-from users.models import Profile
+from users.models import Site
 
 from . import kinds
 from lemoncurry import requests, utils
@@ -141,7 +143,7 @@ class Entry(ModelMeta, TimeStampedModel):
 
     @property
     def absolute_url(self):
-        base = 'https://' + Site.objects.get_current().domain
+        base = 'https://' + DjangoSite.objects.get_current().domain
         return urljoin(base, self.url)
 
     @property
@@ -162,7 +164,7 @@ class Entry(ModelMeta, TimeStampedModel):
 
     @property
     def json_ld(self):
-        base = 'https://' + Site.objects.get_current().domain
+        base = 'https://' + DjangoSite.objects.get_current().domain
         url = urljoin(base, self.url)
 
         posting = {
@@ -190,21 +192,31 @@ class Entry(ModelMeta, TimeStampedModel):
         ordering = ['-created']
 
 
-class SyndicationManager(models.Manager):
-    def get_queryset(self):
-        qs = super(SyndicationManager, self).get_queryset()
-        return qs.select_related('profile__site')
-
-
 class Syndication(models.Model):
-    objects = SyndicationManager()
     entry = models.ForeignKey(
         Entry,
         related_name='syndications',
         on_delete=models.CASCADE
     )
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     url = models.CharField(max_length=255)
 
+    domain = ComputedCharField(
+        compute_from='calc_domain', max_length=255,
+    )
+
+    def calc_domain(self):
+        domain = urlparse(self.url).netloc
+        if domain.startswith('www.'):
+            domain = domain[4:]
+        return domain
+
+    @cached_property
+    def site(self):
+        d = self.domain
+        try:
+            return Site.objects.get(domain=d)
+        except Site.DoesNotExist:
+            return Site(name=d, domain=d, icon='fas fa-newspaper')
+
     class Meta:
-        ordering = ['profile']
+        ordering = ['domain']
