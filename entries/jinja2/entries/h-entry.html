@@ -20,18 +20,6 @@
       {{i}}<i class="fas fa-link" aria-hidden="true"></i>
       {{i}}{{ entry.short_url | friendly_url }}
     {{i}}</a>
-    {% for c in entry.cats.all() %}
-    {{i}}<a class="p-category" href="{{ c.url }}">
-      {{i}}<i class="fas fa-paw" aria-hidden="true"></i>
-      {{i}}{{ c.name }}
-    {{i}}</a>
-    {% endfor %}
-    {% for s in entry.syndications.all() %}
-    {{i}}<a class="u-syndication" href="{{ s.url }}">
-      {{i}}<i class="{{ s.profile.site.icon }}" aria-hidden="true"></i>
-      {{i}}{{ s.profile }}
-    {{i}}</a>
-    {% endfor %}
   {{i}}</aside>
 
   {{i}}<div class="card">
@@ -46,6 +34,19 @@
       {{i}}<div class="e-content">
         {{i}}{{ entry.content | markdown }}
       {{i}}</div>
+
+      {% for c in entry.cats.all() %}
+      {{i}}<a class="p-category card-link" href="{{ c.url }}">
+        {{i}}<i class="fas fa-paw" aria-hidden="true"></i>
+        {{i}}{{ c.name }}
+      {{i}}</a>
+      {% endfor %}
+      {% for s in entry.syndications.all() %}
+      {{i}}<a class="u-syndication card-link" href="{{ s.url }}">
+        {{i}}<i class="{{ s.profile.site.icon }}" aria-hidden="true"></i>
+        {{i}}{{ s.profile }}
+      {{i}}</a>
+      {% endfor %}
     {{i}}</div>
   {{i}}</div>
 
