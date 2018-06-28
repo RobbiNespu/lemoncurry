@@ -9,6 +9,7 @@ from django_activeurl.ext.django_jinja import ActiveUrl
 
 from entries.kinds import all as entry_kinds
 from .markdown import markdown
+from ..theme import color as theme_color
 from ..utils import friendly_url, load_package_json
 
 
@@ -29,6 +30,7 @@ def environment(**options):
         'package': load_package_json(),
         'settings': settings,
         'static': staticfiles_storage.url,
+        'theme_color': theme_color,
         'url': reverse,
     })
     return env
