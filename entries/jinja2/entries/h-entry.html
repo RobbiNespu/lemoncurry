@@ -9,12 +9,12 @@
     {{i}}<a class="u-uid u-url" href="{{ entry.url }}">
       {{i}}<time class="dt-published media" datetime="{{ entry.published.isoformat() }}">
         {{i}}<i class="fas fa-fw fa-calendar" aria-hidden="true"></i>
-        {{i}}<div class="media-body">{{ entry.published | naturaltime }}</div>
+        {{i}}<div class="media-body">{{ entry.published | ago }}</div>
         {{i}}</time>
     {{i}}</a>
-    {{i}}<time class="dt-updated media" datetime="{{ entry.updated.isoformat() }}"{% if (entry.updated | naturaltime) == (entry.published | naturaltime) %} hidden{% endif %}>
+    {{i}}<time class="dt-updated media" datetime="{{ entry.updated.isoformat() }}"{% if (entry.updated | ago) == (entry.published | ago) %} hidden{% endif %}>
       {{i}}<i class="fas fa-fw fa-pencil-alt" aria-hidden="true"></i>
-      {{i}}<div class="media-body">{{ entry.updated | naturaltime }}</div>
+      {{i}}<div class="media-body">{{ entry.updated | ago }}</div>
     {{i}}</time>
     {{i}}<a class="u-url media" href="{{ entry.short_url }}">
       {{i}}<i class="fas fa-fw fa-link" aria-hidden="true"></i>

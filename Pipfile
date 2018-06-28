@@ -48,6 +48,7 @@ pyup-django = "*"
 "jinja2" = "*"
 msgpack = "*"
 django-randomslugfield = "*"
+ago = "*"
 
 [dev-packages]
 ptpython = "*"
