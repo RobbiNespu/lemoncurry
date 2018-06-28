@@ -24,7 +24,7 @@ def manifest(request):
         'start_url': urljoin(base, start_url),
 
         'background_color': color(0),
-        'theme_color': color(10),
+        'theme_color': color(3),
     }
 
     return JsonResponse(app, content_type='application/manifest+json')
