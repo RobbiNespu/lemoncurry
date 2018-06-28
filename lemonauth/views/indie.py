@@ -16,14 +16,14 @@ breadcrumbs.add('lemonauth:indie', parent='home:index')
 
 
 def canonical(url):
-    (scheme, loc, path, params, q, fragment) = urlparse(url)
+    if '//' not in url:
+        url = '//' + url
+    (scheme, netloc, path, params, query, fragment) = urlparse(url)
+    if not scheme or scheme == 'http':
+        scheme = 'https'
     if not path:
         path = '/'
-    if not loc:
-        loc, path = path, ''
-    if not scheme:
-        scheme = 'https'
-    return urlunparse((scheme, loc, path, params, q, fragment))
+    return urlunparse((scheme, netloc, path, params, query, fragment))
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -44,10 +44,12 @@ class IndieView(TemplateView):
                 )
 
         me = request.user.full_url
-        if 'me' in params and me != canonical(params['me']):
-            return utils.forbid(
-                'you are logged in but not as {0}'.format(me)
-            )
+        if 'me' in params:
+            param_me = canonical(params['me'])
+            if me != param_me:
+                return utils.forbid(
+                    'you are logged in as {}, not as {}'.format(me, param_me)
+                )
 
         redirect_uri = urljoin(params['client_id'], params['redirect_uri'])
 
