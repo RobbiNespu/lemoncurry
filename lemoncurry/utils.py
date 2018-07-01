@@ -30,10 +30,12 @@ PACKAGE = PackageJson()
 
 
 def friendly_url(url):
+    if '//' not in url:
+        url = '//' + url
     (scheme, netloc, path, params, q, fragment) = urlparse(url)
     if path == '/':
         return netloc
-    return netloc + path
+    return "{}\u200B{}".format(netloc, path)
 
 
 def load_package_json() -> Dict[str, Any]:

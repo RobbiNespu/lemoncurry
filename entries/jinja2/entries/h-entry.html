@@ -7,12 +7,12 @@
       {{i}}<span class="p-name sr-only">{{ entry.author.name }}</span>
     {{i}}</a>
     {{i}}<a class="u-uid u-url" href="{{ entry.url }}">
-      {{i}}<time class="dt-published media" datetime="{{ entry.published.isoformat() }}">
+      {{i}}<time class="dt-published media" datetime="{{ entry.published.isoformat() }}" title="{{ entry.published.isoformat() }}">
         {{i}}<i class="fas fa-fw fa-calendar" aria-hidden="true"></i>
         {{i}}<div class="media-body">{{ entry.published | ago }}</div>
         {{i}}</time>
     {{i}}</a>
-    {{i}}<time class="dt-updated media" datetime="{{ entry.updated.isoformat() }}"{% if (entry.updated | ago) == (entry.published | ago) %} hidden{% endif %}>
+    {{i}}<time class="dt-updated media" datetime="{{ entry.updated.isoformat() }}" title="{{ entry.updated.isoformat() }}"{% if (entry.updated | ago) == (entry.published | ago) %} hidden{% endif %}>
       {{i}}<i class="fas fa-fw fa-pencil-alt" aria-hidden="true"></i>
       {{i}}<div class="media-body">{{ entry.updated | ago }}</div>
     {{i}}</time>

@@ -33,6 +33,9 @@ ol.entries, div.entry
 			max-width 10rem
 			> :first-child
 				margin-right 2px
+				display none
+				@media (min-width $sm)
+					display inline-block
 	> .card
 		flex 1
 	.e-content
