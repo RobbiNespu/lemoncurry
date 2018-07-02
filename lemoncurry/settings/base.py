@@ -118,6 +118,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'lemoncurry.middleware.ResponseExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'lemoncurry.urls'

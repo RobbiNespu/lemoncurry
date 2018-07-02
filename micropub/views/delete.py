@@ -17,8 +17,6 @@ def delete(request):
         return error.unsupported_type(request.content_type)
     url = normalise[request.content_type](request)
     entry = from_url(url)
-    if isinstance(entry, HttpResponse):
-        return entry
 
     if entry.author != request.token.user:
         return error.forbid('entry belongs to another user')
