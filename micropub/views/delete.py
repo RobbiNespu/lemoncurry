@@ -1,10 +1,8 @@
 from django.http import HttpResponse
-from django.urls import resolve, Resolver404
-from urllib.parse import urlparse
 from ronkyuu import webmention
 
+from entries.from_url import from_url
 from entries.jobs import ping_hub, send_mentions
-from entries.models import Entry
 
 from . import error
 
@@ -18,27 +16,9 @@ def delete(request):
     if request.content_type not in normalise:
         return error.unsupported_type(request.content_type)
     url = normalise[request.content_type](request)
-    if not url:
-        return error.bad_req('url parameter required')
-
-    if '//' not in url:
-        url = '//' + url
-    url = urlparse(url, scheme='https')
-
-    if url.scheme not in ('http', 'https') or url.netloc != request.site.domain:
-        return error.bad_req('url does not point to this site')
-    try:
-        match = resolve(url.path)
-    except Resolver404:
-        return error.bad_req('url does not point to a valid page on this site')
-
-    if match.view_name != 'entries:entry':
-        return error.bad_req('url does not point to an entry on this site')
-
-    try:
-        entry = Entry.objects.get(pk=match.kwargs['id'])
-    except Entry.DoesNotExist:
-        return error.bad_req('url does not point to an existing entry')
+    entry = from_url(url)
+    if isinstance(entry, HttpResponse):
+        return entry
 
     if entry.author != request.token.user:
         return error.forbid('entry belongs to another user')
