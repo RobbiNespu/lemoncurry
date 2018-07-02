@@ -11,6 +11,7 @@ from lemoncurry.utils import absolute_url
 from . import error
 
 ACCEPTED_MEDIA_TYPES = (
+    'image/gif',
     'image/jpeg',
     'image/png',
 )
