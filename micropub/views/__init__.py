@@ -18,10 +18,7 @@ actions = {
 @csrf_exempt
 @require_http_methods(['GET', 'HEAD', 'POST'])
 def micropub(request):
-    token = tokens.auth(request)
-    if hasattr(token, 'content'):
-        return token
-    request.token = token
+    request.token = tokens.auth(request)
     if request.method in ('GET', 'HEAD'):
         return query(request)
 

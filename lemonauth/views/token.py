@@ -11,8 +11,6 @@ from lemoncurry import utils
 class TokenView(View):
     def get(self, req):
         token = tokens.auth(req)
-        if hasattr(token, 'content'):
-            return token
         res = {
             'me': token.me,
             'client_id': token.client_id,

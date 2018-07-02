@@ -1,6 +1,8 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 
+from lemoncurry.middleware import ResponseException
+
 
 def paginate(queryset, reverse, page):
     class Page:
@@ -18,7 +20,7 @@ def paginate(queryset, reverse, page):
     # If the first page was requested, redirect to the clean version of the URL
     # with no page suffix.
     if page == 1:
-        return redirect(Page(1).url)
+        raise ResponseException(redirect(Page(1).url))
 
     paginator = Paginator(queryset, 10)
     entries = paginator.page(page or 1)

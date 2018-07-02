@@ -21,8 +21,6 @@ ACCEPTED_MEDIA_TYPES = (
 @require_POST
 def media(request):
     token = tokens.auth(request)
-    if hasattr(token, 'content'):
-        return token
     if 'file' not in request.FILES:
         return error.bad_req(
             "a file named 'file' must be provided to the media endpoint"

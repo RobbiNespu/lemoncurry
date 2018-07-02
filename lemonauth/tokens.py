@@ -1,3 +1,4 @@
+from lemoncurry.middleware import ResponseException
 from micropub.views import error
 from .models import IndieAuthCode, Token
 
@@ -6,23 +7,25 @@ def auth(request):
     if 'HTTP_AUTHORIZATION' in request.META:
         auth = request.META.get('HTTP_AUTHORIZATION').split(' ')
         if auth[0] != 'Bearer':
-            return error.bad_req('auth type {0} not supported'.format(auth[0]))
+            raise ResponseException(error.bad_req(
+                'auth type {0} not supported'.format(auth[0])
+            ))
         if len(auth) != 2:
-            return error.bad_req(
+            raise ResponseException(error.bad_req(
                 'invalid Bearer auth format, must be Bearer <token>'
-            )
+            ))
         token = auth[1]
     elif 'access_token' in request.POST:
         token = request.POST.get('access_token')
     elif 'access_token' in request.GET:
         token = request.GET.get('access_token')
     else:
-        return error.unauthorized()
+        raise ResponseException(error.unauthorized())
 
     try:
         token = Token.objects.get(pk=token)
     except Token.DoesNotExist:
-        return error.forbidden()
+        raise ResponseException(error.forbidden())
 
     return token
 

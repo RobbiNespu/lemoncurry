@@ -9,8 +9,6 @@ from ..pagination import paginate
 def by_kind(request, kind, page=None):
     entries = Entry.objects.filter(kind=kind.id)
     entries = paginate(queryset=entries, reverse=kind.index_page, page=page)
-    if hasattr(entries, 'content'):
-        return entries
 
     return {
         'entries': entries,
@@ -31,8 +29,6 @@ def by_cat(request, slug, page=None):
     cat = get_object_or_404(Cat, slug=slug)
     entries = cat.entries.all()
     entries = paginate(queryset=entries, reverse=url, page=page)
-    if hasattr(entries, 'content'):
-        return entries
 
     return {
         'entries': entries,

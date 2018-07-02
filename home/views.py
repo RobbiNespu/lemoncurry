@@ -24,10 +24,6 @@ def index(request, page=None):
     entries = user.entries.filter(kind__in=kinds.on_home)
     entries = pagination.paginate(queryset=entries, reverse=url, page=page)
 
-    # If we got a valid HTTP response, just return it without rendering.
-    if hasattr(entries, 'content'):
-        return entries
-
     return {
         'user': user,
         'entries': entries,
