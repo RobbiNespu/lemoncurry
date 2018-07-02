@@ -1,4 +1,3 @@
-import json
 from django.urls import reverse
 from django.http import HttpResponse
 from urllib.parse import urljoin
@@ -30,7 +29,7 @@ def form_to_mf2(request):
 
 def create(request):
     normalise = {
-        'application/json': json.load,
+        'application/json': lambda r: r.json,
         'application/x-www-form-urlencoded': form_to_mf2,
     }
     if 'create' not in request.token:
@@ -77,15 +76,7 @@ def create(request):
     base = utils.origin(request)
     perma = urljoin(base, entry.url)
     short = urljoin(base, entry.short_url)
-    others = [urljoin(base, url) for url in (
-        reverse('home:index'),
-        reverse('entries:atom'),
-        reverse('entries:rss'),
-        reverse('entries:index', kwargs={'kind': kind}),
-        reverse('entries:atom_by_kind', kwargs={'kind': kind}),
-        reverse('entries:rss_by_kind', kwargs={'kind': kind}),
-    )] + [urljoin(base, cat.url) for cat in cats]
-    ping_hub.delay(perma, *others)
+    ping_hub.delay(*entry.affected_urls)
     send_mentions.delay(perma)
 
     res = HttpResponse(status=201)

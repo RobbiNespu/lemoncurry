@@ -147,6 +147,24 @@ class Entry(ModelMeta, TimeStampedModel):
         return urljoin(base, self.url)
 
     @property
+    def affected_urls(self):
+        base = 'https://' + DjangoSite.objects.get_current().domain
+        kind = kinds.from_id[self.kind]
+        urls = {
+            self.url,
+            reverse('entries:index', kwargs={'kind': kind}),
+            reverse('entries:atom_by_kind', kwargs={'kind': kind}),
+            reverse('entries:rss_by_kind', kwargs={'kind': kind}),
+        } | {cat.url for cat in self.cats.all()}
+        if kind.on_home:
+            urls |= {
+                reverse('home:index'),
+                reverse('entries:atom'),
+                reverse('entries:rss')
+            }
+        return {urljoin(base, u) for u in urls}
+
+    @property
     def url(self):
         kind = kinds.from_id[self.kind]
         args = [kind, self.id]
