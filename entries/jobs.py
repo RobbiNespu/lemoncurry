@@ -14,9 +14,10 @@ def ping_hub(*urls):
 
 
 @job
-def send_mentions(source):
-    result = webmention.findMentions(source)
-    for target in result['refs']:
+def send_mentions(source, targets=None):
+    if targets is None:
+        targets = webmention.findMentions(source)['refs']
+    for target in targets:
         status, endpoint = webmention.discoverEndpoint(target)
         if endpoint is not None and status == 200:
             webmention.sendWebmention(source, target, endpoint)

@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.urls import resolve, Resolver404
 from urllib.parse import urlparse
+from ronkyuu import webmention
 
-from entries.jobs import ping_hub
+from entries.jobs import ping_hub, send_mentions
 from entries.models import Entry
 
 from . import error
@@ -42,7 +43,12 @@ def delete(request):
     if entry.author != request.token.user:
         return error.forbid('entry belongs to another user')
 
-    urls = entry.affected_urls
+    perma = entry.absolute_url
+    pings = entry.affected_urls
+    mentions = webmention.findMentions(perma)['refs']
+
     entry.delete()
-    ping_hub.delay(urls)
+
+    ping_hub.delay(*pings)
+    send_mentions.delay(perma, mentions)
     return HttpResponse(status=204)
