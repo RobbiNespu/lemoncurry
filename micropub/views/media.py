@@ -8,7 +8,7 @@ import magic
 
 from lemonauth import tokens
 from lemoncurry.utils import absolute_url
-from . import error
+from .. import error
 
 ACCEPTED_MEDIA_TYPES = (
     'image/gif',
@@ -22,12 +22,12 @@ ACCEPTED_MEDIA_TYPES = (
 def media(request):
     token = tokens.auth(request)
     if 'file' not in request.FILES:
-        return error.bad_req(
+        raise error.bad_req(
             "a file named 'file' must be provided to the media endpoint"
         )
     file = request.FILES['file']
     if file.content_type not in ACCEPTED_MEDIA_TYPES:
-        return error.bad_req(
+        raise error.bad_req(
             'unacceptable file type {0}'.format(file.content_type)
         )
 
@@ -39,7 +39,7 @@ def media(request):
         sha.update(chunk)
 
     if mime != file.content_type:
-        return error.bad_req(
+        raise error.bad_req(
             'detected file type {0} did not match specified file type {1}'
             .format(mime, file.content_type)
         )

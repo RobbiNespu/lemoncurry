@@ -26,6 +26,6 @@ def micropub(request):
     if request.content_type == 'application/json':
         request.json = json.load(request)
         action = request.json.get('action', 'create')
-    if action in actions:
-        return actions[action](request)
-    return error.bad_req('unknown action: {}'.format(action))
+    if action not in actions:
+        raise error.bad_req('unknown action: {}'.format(action))
+    return actions[action](request)

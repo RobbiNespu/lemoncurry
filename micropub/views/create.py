@@ -7,7 +7,7 @@ from entries.models import Cat, Entry
 from entries.kinds import Article, Note, Reply, Like, Repost
 from lemoncurry import utils
 
-from . import error
+from .. import error
 
 
 def form_to_mf2(request):
@@ -33,14 +33,14 @@ def create(request):
         'application/x-www-form-urlencoded': form_to_mf2,
     }
     if 'create' not in request.token:
-        return error.bad_scope('create')
+        raise error.bad_scope('create')
     if request.content_type not in normalise:
-        return error.unsupported_type(request.content_type)
+        raise error.unsupported_type(request.content_type)
     body = normalise[request.content_type](request)
     if 'type' not in body:
-        return error.bad_req('mf2 object type required')
+        raise error.bad_req('mf2 object type required')
     if body['type'] != ['h-entry']:
-        return error.bad_req('only h-entry supported')
+        raise error.bad_req('only h-entry supported')
 
     entry = Entry(author=request.token.user)
     props = body.get('properties', {})
