@@ -1,8 +1,11 @@
 from django.http import JsonResponse
 from django.urls import reverse
+
+from entries.from_url import from_url
 from lemoncurry import requests
 from lemoncurry.utils import absolute_url
 from .. import error
+
 
 
 def config(request):
@@ -12,19 +15,22 @@ def config(request):
 
 
 def source(request):
-    get = request.GET
-    if 'url' not in get:
+    if 'url' not in request.GET:
         raise error.bad_req('must specify url parameter for source query')
-    mf2 = requests.mf2(get['url']).to_dict(filter_by_type='h-entry')
-    if not mf2:
-        raise error.bad_req('no h-entry at the requested url')
-    entry = mf2[0]
-    keys = get.getlist('properties', []) + get.getlist('properties[]', [])
-    if not keys:
-        return entry
+    entry = from_url(request.GET['url'])
+    props = {}
 
-    props = entry['properties']
-    return {'properties': {k: props[k] for k in keys if k in props}}
+    keys = set(request.GET.getlist('properties') + request.GET.getlist('properties[]'))
+    if not keys or 'content' in keys:
+        props['content'] = [entry.content]
+    if (not keys or 'category' in keys) and entry.cats.exists():
+        props['category'] = [cat.name for cat in entry.cats.all()]
+    if (not keys or 'name' in keys) and entry.name:
+        props['name'] = [entry.name]
+    if (not keys or 'syndication' in keys) and entry.syndications.exists():
+        props['syndication'] = [synd.url for synd in entry.syndications.all()]
+
+    return {'type': ['h-entry'], 'properties': props}
 
 
 def syndicate_to(request):
