@@ -175,7 +175,6 @@ DATABASES = {
         'USER': environ.get('POSTGRES_USER'),
         'PASSWORD': environ.get('POSTGRES_PASSWORD'),
         'HOST': environ.get('POSTGRES_HOST', 'localhost'),
-        'CONN_MAX_AGE': 3600
     }
 }
 
