@@ -70,6 +70,10 @@ class User(ModelMeta, AbstractUser):
         compute_from='calc_email_sha256', max_length=64, unique=True,
         help_text="SHA-256 hash of the user's email, used for Libravatar"
     )
+    openid_sha256 = ComputedCharField(
+        compute_from='calc_openid_sha256', max_length=64, unique=True,
+        help_text="SHA-256 hash of the user's OpenID URL, used for Libravatar"
+    )
 
     @property
     def calc_email_md5(self):
@@ -78,6 +82,10 @@ class User(ModelMeta, AbstractUser):
     @property
     def calc_email_sha256(self):
         return sha256(self.email.lower().encode('utf-8')).hexdigest()
+
+    @property
+    def calc_openid_sha256(self):
+        return sha256(self.full_url.encode('utf-8')).hexdigest()
 
     @property
     def name(self):

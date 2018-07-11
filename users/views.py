@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.cache import cache_page
 from PIL import Image
@@ -25,9 +26,9 @@ def libravatar(request, hash):
         return utils.bad_req('size parameter must be between 1 and 512')
 
     if len(hash) == 32:
-        where = {'email_md5': hash}
+        where = Q(email_md5=hash)
     elif len(hash) == 64:
-        where = {'email_sha256': hash}
+        where = Q(email_sha256=hash) | Q(openid_sha256=hash)
     else:
         return utils.bad_req('hash must be either md5 or sha256')
 
@@ -36,7 +37,7 @@ def libravatar(request, hash):
     # for MD5 hashes, since Gravatar doesn't support SHA-256), so this ensures
     # all the most likely places are checked.
     try:
-        user = User.objects.get(**where)
+        user = User.objects.get(where)
     except User.DoesNotExist:
         return try_libravatar_org(hash, g)
 
