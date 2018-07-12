@@ -11,5 +11,4 @@ def entry(request, kind, id, slug=None):
     return {
         'entry': entry,
         'title': entry.title,
-        'meta': entry.as_meta(request)
     }

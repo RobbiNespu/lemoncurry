@@ -29,7 +29,6 @@ def index(request, page=None):
         'entries': entries,
         'atom': reverse('entries:atom'),
         'rss': reverse('entries:rss'),
-        'meta': user.as_meta(request),
     }
 
 
