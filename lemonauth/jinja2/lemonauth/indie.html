@@ -71,6 +71,11 @@
 
 {% block foot %}
 <script type="text/javascript">
-	tippy('[data-tippy-theme]', {arrow: true});
+  tippy('[data-tippy-theme]', {
+    arrow: true,
+    content: function(element) {
+      return document.querySelector(element.getAttribute('data-tippy-html')).innerHTML;
+    }
+  });
 </script>
 {% endblock %}

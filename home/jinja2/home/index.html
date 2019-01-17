@@ -97,6 +97,11 @@
 
 {% block foot %}
     <script type="text/javascript">
-      tippy('.profiles [title]', {arrow: true});
+      tippy('.profiles [title]', {
+        arrow: true,
+        content: function(element) {
+          return element.getAttribute('title');
+        }
+      });
     </script>
 {% endblock %}
