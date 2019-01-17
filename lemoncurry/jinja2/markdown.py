@@ -4,10 +4,10 @@ from markdown import Markdown
 from .bleach import bleach
 
 md = Markdown(extensions=(
-    'markdown.extensions.extra',
-    'markdown.extensions.headerid',
-    'markdown.extensions.sane_lists',
-    'markdown.extensions.smarty',
+    'extra',
+    'sane_lists',
+    'smarty',
+    'toc',
 ))
 
 
