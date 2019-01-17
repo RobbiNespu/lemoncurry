@@ -1,6 +1,6 @@
 {
 	"name": "lemoncurry",
-	"version": "1.10.0",
+	"version": "1.10.1",
 	"repository": "https://git.00dani.me/00dani/lemoncurry",
 	"license": "MIT",
 	"devDependencies": {
