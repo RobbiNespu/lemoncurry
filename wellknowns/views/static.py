@@ -1,5 +1,5 @@
 from django.views.generic.base import RedirectView
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
 
 
 def redirect_to_static(file):
