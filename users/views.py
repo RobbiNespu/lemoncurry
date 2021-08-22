@@ -21,9 +21,9 @@ def libravatar(request, hash):
     try:
         size = int(size)
     except ValueError:
-        return utils.bad_req('size parameter must be an integer')
+        size = 80
     if not 1 <= size <= 512:
-        return utils.bad_req('size parameter must be between 1 and 512')
+        size = 512
 
     if len(hash) == 32:
         where = Q(email_md5=hash)
