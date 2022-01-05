@@ -4,7 +4,7 @@
 	"repository": "https://git.00dani.me/00dani/lemoncurry",
 	"license": "MIT",
 	"devDependencies": {
-		"js-yaml": "^3.10.0",
+		"js-yaml": "^3.13.1",
 		"stylus": "^0.54.5"
 	},
 	"dependencies": {}
